@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/recordImg">
+        <file>resource/recordImg/播放（选中）.png</file>
+        <file>resource/recordImg/播放.png</file>
+        <file>resource/recordImg/查询（未选中）.png</file>
+        <file>resource/recordImg/查询（选中）.png</file>
+        <file>resource/recordImg/进度球.png</file>
+        <file>resource/recordImg/全屏（选中）.png</file>
+        <file>resource/recordImg/全屏.png</file>
+        <file>resource/recordImg/日历（选中）.png</file>
+        <file>resource/recordImg/日历.png</file>
+        <file>resource/recordImg/下拉.png</file>
+        <file>resource/recordImg/下载（选中）拷贝2.png</file>
+        <file>resource/recordImg/暂停（选中）.png</file>
+        <file>resource/recordImg/暂停.png</file>
+    </qresource>
+</RCC>
