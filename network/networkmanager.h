@@ -92,7 +92,7 @@ public:
     //get请求操作
     void getUserDetailInfoRequest(qint32 id = 0);
     void getUserListInfoRequest(qint32 page_index = 0, qint32 page_size = 0, qint32 group_id = 0, qint32 group_category_id = 0);
-    //void getIntercomDetailInfoRequest(qint32 id = 0);
+    void getIntercomDetailInfoRequest(qint32 id = 0);
     void getIntercomListInfoRequest(qint32 page_index = 0, qint32 page_size = 0, qint32 group_id = 0, qint32 group_category_id = 0);
     void getGroupDetailInfoRequest(qint32 id = 0);
     void getGroupListInfoRequest(qint32 page_index = 0, qint32 page_size = 0);
@@ -122,7 +122,6 @@ public:
     void parseJsonAlarmDetailInfo(const Json::Value& object, alarmDetailType& alarmDetail);
     void parseJsonAlarmListInfo(const Json::Value& object, alarmListType& alarmList);
     void parseJsonConfigInfo(const Json::Value& objec, ConfigType& configDetail);
-//    void test(QByteArray &data, bool flag, POST_GET_CATEGORY category);
 
 //    void creatCategoryNode(categoryNodeType *node, Node* parentNode, TreeModel *model);
 //    //
