@@ -129,6 +129,7 @@ public:
 
 //    void createMeetingListNode();
 //    void createIntercomListNode();
+    void window();
 
 //    void queryMeetingListNodeInfo(Node::nodeInfoType node);
 //    void queryIntercomListNodeInfo(Node::nodeInfoType node);
