@@ -1,4 +1,4 @@
-#ifndef NETWORKMANAGER_H
+﻿#ifndef NETWORKMANAGER_H
 #define NETWORKMANAGER_H
 
 #include <QObject>
@@ -124,12 +124,12 @@ public:
     void parseJsonConfigInfo(const Json::Value& objec, ConfigType& configDetail);
 
 //    void creatCategoryNode(categoryNodeType *node, Node* parentNode, TreeModel *model);
-//    //
 //    Q_INVOKABLE void jointUserInfo();
 
-//    void createMeetingListNode();
+    void createMeetingListNode();
 //    void createIntercomListNode();
-    void window();
+void linux_window();
+
 
 //    void queryMeetingListNodeInfo(Node::nodeInfoType node);
 //    void queryIntercomListNodeInfo(Node::nodeInfoType node);
