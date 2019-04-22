@@ -126,10 +126,8 @@ public:
 //    void creatCategoryNode(categoryNodeType *node, Node* parentNode, TreeModel *model);
 //    Q_INVOKABLE void jointUserInfo();
 
-    void createMeetingListNode();
+//    void createMeetingListNode();
 //    void createIntercomListNode();
-void linux_window();
-
 
 //    void queryMeetingListNodeInfo(Node::nodeInfoType node);
 //    void queryIntercomListNodeInfo(Node::nodeInfoType node);
