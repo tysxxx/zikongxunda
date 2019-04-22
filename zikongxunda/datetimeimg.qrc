@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/dateTimeImg">
+        <file>resource/dateTimeImg/bk.png</file>
+        <file>resource/dateTimeImg/ComboBoxArrow.png</file>
+        <file>resource/dateTimeImg/DTNext.png</file>
+        <file>resource/dateTimeImg/DTPrev.png</file>
+    </qresource>
+</RCC>
