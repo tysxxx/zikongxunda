@@ -164,6 +164,7 @@ public slots:
     void networkReplyFinished(QNetworkReply *reply);
     void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
     void getListInfo();
+    void networkReplyError(QNetworkReply::NetworkError error);
 
 
 //    void dealUserInfo(TreeModel *model);

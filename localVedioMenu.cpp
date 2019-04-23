@@ -19,15 +19,16 @@ localVedioMenu::~localVedioMenu()
 void localVedioMenu::init()
 {
     m_rect.setRect(180,90,250,264);
-    m_widget = new QWidget();
+    m_widget = new QFrame();
     m_widget->setWindowFlags((Qt::FramelessWindowHint));//设置窗体无边框
+    //m_widget->setAttribute(Qt::WA_TranslucentBackground);
     m_widget->setGeometry(m_rect);
-    //m_widget->setStyleSheet("QWidget{background-color:gray;border-top-left-radius:10px;border-top-right-radius:10px;border-bottom-left-radius:10px;border-bottom-right-radius:10px;}");
-    m_widget->setStyleSheet("QWidget{background-color:black;border-radius:10px;}");//四个角都设置为圆角，半径10px
-    QGraphicsOpacityEffect *opacityEffect=new QGraphicsOpacityEffect;
-    m_widget->setGraphicsEffect(opacityEffect);
-    opacityEffect->setOpacity(0.8);
+    m_widget->setStyleSheet("QFrame{border-radius:10px; background-color:rgb(4, 11, 23);}");//四个角都设置为圆角，半径10px
+//    QGraphicsOpacityEffect *opacityEffect=new QGraphicsOpacityEffect;
+//    m_widget->setGraphicsEffect(opacityEffect);
+//    opacityEffect->setOpacity(0.8);
 
+    m_widget->setWindowOpacity(0.8);
     m_font_size = 23;
     m_curr_item = 0;//光标默认停留在第一个item处
     m_font.setPointSize(m_font_size);
@@ -35,7 +36,17 @@ void localVedioMenu::init()
     set_lists();
     m_showStatu = false;
 
+
+
 }
+
+void localVedioMenu::paintEvent(QPaintEvent *)
+ {
+     QStyleOption opt;
+     opt.init(this);
+     QPainter p(this);
+     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+ }
 
 localVedioMenu* localVedioMenu::instance()
 {
@@ -65,11 +76,21 @@ bool localVedioMenu::change_localVedioMenu_show_statu()
 
 bool localVedioMenu::set_widget_rect(QRect* rect)
 {
-    if(rect == NULL)
-        return false;
+//    if(rect == NULL)
+//        return false;
     m_rect = *rect;
     qDebug()<<m_rect.x()<<" "<<m_rect.y()<<" "<<m_rect.width()<<" "<<m_rect.height();
-    m_widget->setGeometry(m_rect);
+//    m_widget->setGeometry(m_rect);
+
+    if(localMonitorMenu){
+        localMonitorMenu->close();
+        localMonitorMenu->deleteLater();
+        localMonitorMenu = nullptr;
+    }else{
+        localMonitorMenu = new LocalMonitorMenu(*rect);
+        localMonitorMenu->setGeometry(*rect);
+        localMonitorMenu->show();
+    }
     return true;
 }
 

@@ -220,8 +220,9 @@ void NetworkManager::httpPost(QUrl &url, string &str)
 
     request.setUrl(QUrl(url));
     netReply = netManager->post(request, QString::fromStdString(str).toUtf8());
-    connect(netReply, SIGNAL(downloadProgress(qint64, qint64)),
-            this, SLOT(downloadProgress(qint64, qint64)));
+    connect(netReply, SIGNAL(downloadProgress(qint64, qint64)), this, SLOT(downloadProgress(qint64, qint64)));
+    connect(netReply, SIGNAL(error(QNetworkReply::NetworkError)),this, SLOT(networkReplyError(QNetworkReply::NetworkError)));
+
 }
 
 //http get请求
@@ -232,8 +233,14 @@ void NetworkManager::httpGet(QUrl &url)
     netRequest.setUrl(url);
 
     netReply = netManager->get(netRequest);
-    connect(netReply, SIGNAL(downloadProgress(qint64, qint64)),
-            this, SLOT(downloadProgress(qint64, qint64)));
+    connect(netReply, SIGNAL(downloadProgress(qint64, qint64)), this, SLOT(downloadProgress(qint64, qint64)));
+    connect(netReply, SIGNAL(error(QNetworkReply::NetworkError)),this, SLOT(networkReplyError(QNetworkReply::NetworkError)));
+}
+
+//请求错误时错误处理
+void NetworkManager::networkReplyError(QNetworkReply::NetworkError error)
+{
+    qDebug() << "NetworkReply error:" << error;
 }
 
 //获取各数据列表.依次获取

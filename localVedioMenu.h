@@ -3,6 +3,8 @@
 #include "window_common.h"
 #include "pushButtonMenu.h"
 #include "screenModeMenu.h"
+#include <QFrame>
+#include "localMonitor/localmonitormenu.h"
 
 class localVedioMenu : public QWidget
 {
@@ -17,6 +19,8 @@ public:
     bool change_localVedioMenu_show_statu();
     bool set_widget_rect(QRect* rect);
     void set_lists();
+
+    void paintEvent(QPaintEvent *);
 private:
     bool add_one_pushbutton(const char* name);
     bool set_button_backGround(int item);
@@ -28,7 +32,7 @@ private slots:
     void pushButton4_click_slot();
 
 private:
-    QWidget *m_widget;
+    QFrame *m_widget;
     QGridLayout* m_gridLayout;
     QVBoxLayout *verticalLayout;
     QSpacerItem* m_verticalSpacer0;
@@ -44,6 +48,8 @@ private:
     int m_font_size;//字体大小
     QPushButton* m_button_list[10] = {NULL};//按键对象指针列表
     int m_button_cnt;//添加的按键个数
+
+    LocalMonitorMenu *localMonitorMenu=nullptr;
 };
 
 #endif // LOCALVEDIOMENU_H

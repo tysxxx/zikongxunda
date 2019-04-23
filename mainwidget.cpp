@@ -97,17 +97,10 @@ void MainWidget::timerUpdate(void)
 //登录界面调用
 void MainWidget::login_btn_clicked_slot()
 {
+    if(!loginUiInstance){
     loginUiInstance = new LoginUi();
     loginUiInstance->open();
-//    //if(!loginUIAnimation)
-//        loginUIAnimation = new QPropertyAnimation(loginUiInstance, "geometry");
-//        loginUIAnimation->setDuration(5000);
-//    QRect rect = loginUiInstance->geometry();
-//    qDebug() << "loginUi geometry:" << rect.x() << rect.y() << rect.width() << rect.height()<<endl;
-//    loginUIAnimation->setStartValue(rect);
-//    rect= QRect(rect.x(), rect.y(), 10, 10);
-//    loginUIAnimation->setEndValue(rect);
-//    loginUIAnimation->start();
+    }
 }
 
 //登录状态处理
@@ -131,7 +124,7 @@ void MainWidget::pushButton_local_vedio_click_slot()
         rect.setRect(ui->pushButton_local_vedio->geometry().x()+ui->pushButton_local_vedio->geometry().width()+2+4,ui->pushButton_local_vedio->geometry().y()+ui->frame_status->geometry().height()+2,WIDTH/6,HEIGHT/3);
 
         localVedioMenu::instance()->set_widget_rect(&rect);
-        localVedioMenu::instance()->change_localVedioMenu_show_statu();
+        //localVedioMenu::instance()->change_localVedioMenu_show_statu();
     }else
         {
             m_vedioSearch->goToInitStatu();//这里也要透明显示视频窗口，因此要确保播放器的显示窗口关闭，不然用户会看到窗口重叠显示

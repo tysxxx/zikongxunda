@@ -20,7 +20,7 @@ void LoginUi::init()
     setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
     setWindowModality(Qt::ApplicationModal);
     setAttribute(Qt::WA_DeleteOnClose);
-    setStyleSheet("background: rgba(255, 255, 255, 80%); width:320px; height: 360px");
+    setStyleSheet("QDialog{background: rgba(255, 0, 0, 20%); width:320px; height: 360px}");
 
     loginTitle = new QLabel(tr("登录"));
     loginTitle->setAlignment(Qt::AlignCenter);

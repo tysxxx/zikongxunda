@@ -59,7 +59,7 @@ private:
     vedioMeeting* m_vedioMeetting;
     electronicMap* m_electronicMap;
     vedioSearch* m_vedioSearch;
-    LoginUi *loginUiInstance;
+    LoginUi *loginUiInstance=nullptr;
 
     QGridLayout* m_gridLayout_stack_central;
     QGraphicsOpacityEffect *m_opacityEffect;
