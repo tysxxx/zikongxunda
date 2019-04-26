@@ -48,19 +48,21 @@ void LocalMonitorMenu::init()
     lastBtnId = buttonGroup->id(grabBtn);
     for(auto button: buttonGroup->buttons()){
         button->setStyleSheet("QPushButton{height: 40px; background-color: transparent; color: white;"
-                              " font: 21px; text-align:left; padding-left: 20px}");
+                              " font: 21px; text-align:left; padding-left: 29px}");
     }
     grabBtn->setStyleSheet("QPushButton{height: 40px; background-color: #649bf1; color: white;"
-                           "font: 21px; text-align:left; padding-left: 20px}");
+                           "font: 21px; text-align:left; padding-left: 29px}");
 
     //控件布局
     QVBoxLayout *btnLayout = new QVBoxLayout;
     btnLayout->setMargin(0);
+    btnLayout->addSpacing(10);
     btnLayout->addWidget(grabBtn);
     btnLayout->addWidget(layoutSwitchBtn);
     btnLayout->addWidget(videoRecordBtn);
     btnLayout->addWidget(grabDirBtn);
     btnLayout->addWidget(videoRecordDirBtn);
+    btnLayout->addSpacing(10);
 
     setLayout(btnLayout);
 }
@@ -91,9 +93,9 @@ void LocalMonitorMenu::focusOutEvent(QFocusEvent *focusEvent)
 void LocalMonitorMenu::btnClickedSlot(QAbstractButton* button)
 {
     buttonGroup->button(lastBtnId)->setStyleSheet("QPushButton{height: 40px; background-color: transparent; color: white;"
-                                                  " font: 21px; text-align:left; padding-left: 20px}");
+                                                  " font: 21px; text-align:left; padding-left: 29px}");
     button->setStyleSheet("QPushButton{height: 40px; background-color: #649bf1; color: white; font: 21px; text-align:left;"
-                          " padding-left: 20px}");
+                          " padding-left: 29px}");
     lastBtnId = buttonGroup->id(button);
 
     //先关闭
@@ -117,8 +119,6 @@ void LocalMonitorMenu::btnClickedSlot(QAbstractButton* button)
     }else if(lastBtnId == buttonGroup->id(videoRecordDirBtn)){
         videoRecordDirBtnClickedSlot();
     }
-
-
 }
 
 //抓拍按键处理

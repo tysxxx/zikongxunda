@@ -2,13 +2,12 @@
 #include <QApplication>
 #include <QTextCodec>
 #include <QDebug>
-//#include "../hisi3531aLib/zkdevdefine.h"
-//#include "../hisi3531aLib/zkCarDevEnginge.h"
 #include "nofocusrectstyle.h"
 #include "zkCarDevEnginge.h"
 #include <QFontDatabase>
 #include <QFile>
 #include <QtPlugin>
+#include <QDesktopWidget>
 
 QString loadFontFamily();
 #define FONT_PATH   "/mnt/Anyv/php/htdocs/storage/qt4.8_arm_share/lib/font/SourceHanSans-Regular.otf"
@@ -22,16 +21,25 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 
-    QApplication a(argc, argv);
-    a.setFont(loadFontFamily());
+    QApplication app(argc, argv);
+    app.setFont(loadFontFamily());
     QApplication::addLibraryPath(PLUGINS_LIB_PAHT); //显示jpg格式文件
-    NoFocusRectStyle *style = new NoFocusRectStyle(a.style());//去掉控件被选中时的虚线框
-    a.setStyle(style);
-    MainWidget w;
-    w.show();
-    w.init();//只有在show以后才能获取到窗口的真实尺寸
+    NoFocusRectStyle *style = new NoFocusRectStyle(app.style());//去掉控件被选中时的虚线框
+    app.setStyle(style);
 
-    return a.exec();
+    QRect rect;
+    //获取屏幕尺寸
+    QDesktopWidget *desktopWidget = QApplication::desktop();
+    if(desktopWidget){
+        rect = desktopWidget->availableGeometry();
+    }
+
+    MainWidget mainWidget;
+    mainWidget.setGeometry(rect);
+    mainWidget.init();//只有在show以后才能获取到窗口的真实尺寸
+    mainWidget.show();
+
+    return app.exec();
 }
 
 

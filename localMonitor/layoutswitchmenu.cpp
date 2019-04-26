@@ -23,7 +23,7 @@ void LayoutSwitchMenu::init()
 
     //标题
     titleLabel = new QLabel(tr("布局切换"));
-    titleLabel->setStyleSheet("color: #649bf1; background-color: transparent; font-size: 16px; text-align:left; padding-left: 20px");
+    titleLabel->setStyleSheet("color: #649bf1; background-color: transparent; font-size: 16px; text-align:left; padding-left: 29px");
 
     //按键
     oneBtn = new QPushButton(tr("一分屏"));
@@ -31,7 +31,7 @@ void LayoutSwitchMenu::init()
     oneBtnLabel->setStyleSheet("background-color: transparent");
     oneBtnLabel->setPixmap(QPixmap(":/statusLog/resource/icon/一分屏.png"));
     QHBoxLayout  *oneBtnHBoxLayout = new QHBoxLayout;
-    oneBtnHBoxLayout->setContentsMargins(20, 0, 0, 0);
+    oneBtnHBoxLayout->setContentsMargins(29, 0, 0, 0);
     oneBtnHBoxLayout->addWidget(oneBtnLabel);
     oneBtn->setLayout(oneBtnHBoxLayout);
 
@@ -40,7 +40,7 @@ void LayoutSwitchMenu::init()
     twoBtnLabel->setStyleSheet("background-color: transparent");
     twoBtnLabel->setPixmap(QPixmap(":/statusLog/resource/icon/二分屏.png"));
     QHBoxLayout  *twoBtnHBoxLayout = new QHBoxLayout;
-    twoBtnHBoxLayout->setContentsMargins(20, 0, 0, 0);
+    twoBtnHBoxLayout->setContentsMargins(29, 0, 0, 0);
     twoBtnHBoxLayout->addWidget(twoBtnLabel);
     twoBtn->setLayout(twoBtnHBoxLayout);
 
@@ -49,7 +49,7 @@ void LayoutSwitchMenu::init()
     fourBtnLabel->setStyleSheet("background-color: transparent");
     fourBtnLabel->setPixmap(QPixmap(":/statusLog/resource/icon/四分屏.png"));
     QHBoxLayout  *fourBtnHBoxLayout = new QHBoxLayout;
-    fourBtnHBoxLayout->setContentsMargins(20, 0, 0, 0);
+    fourBtnHBoxLayout->setContentsMargins(29, 0, 0, 0);
     fourBtnHBoxLayout->addWidget(fourBtnLabel);
     fourBtn->setLayout(fourBtnHBoxLayout);
 
@@ -58,7 +58,7 @@ void LayoutSwitchMenu::init()
     nineBtnLabel->setStyleSheet("background-color: transparent");
     nineBtnLabel->setPixmap(QPixmap(":/statusLog/resource/icon/九分屏.png"));
     QHBoxLayout  *nineBtnHBoxLayout = new QHBoxLayout;
-    nineBtnHBoxLayout->setContentsMargins(20, 0, 0, 0);
+    nineBtnHBoxLayout->setContentsMargins(29, 0, 0, 0);
     nineBtnHBoxLayout->addWidget(nineBtnLabel);
     nineBtn->setLayout(nineBtnHBoxLayout);
 
@@ -67,7 +67,7 @@ void LayoutSwitchMenu::init()
     sixteenBtnLabel->setStyleSheet("background-color: transparent");
     sixteenBtnLabel->setPixmap(QPixmap(":/statusLog/resource/icon/十六分屏.png"));
     QHBoxLayout  *sixteenBtnHBoxLayout = new QHBoxLayout;
-    sixteenBtnHBoxLayout->setContentsMargins(20, 0, 0, 0);
+    sixteenBtnHBoxLayout->setContentsMargins(29, 0, 0, 0);
     sixteenBtnHBoxLayout->addWidget(sixteenBtnLabel);
     sixteenBtn->setLayout(sixteenBtnHBoxLayout);
 
@@ -81,10 +81,10 @@ void LayoutSwitchMenu::init()
     lastBtnId = buttonGroup->id(oneBtn);
     for(auto button: buttonGroup->buttons()){
         button->setStyleSheet("QPushButton{height: 40px; background-color: transparent; color: white; "
-                              "font: 21px; text-align:left; padding-left: 60px}");
+                              "font: 21px; text-align:left; padding-left: 69px}");
     }
     oneBtn->setStyleSheet("QPushButton{height: 40px; background-color: #649bf1; color: white; "
-                          "font: 21px; text-align:left; padding-left: 60px}");
+                          "font: 21px; text-align:left; padding-left: 69px}");
     //控件布局
     QVBoxLayout *btnLayout = new QVBoxLayout;
     btnLayout->setMargin(0);
@@ -113,9 +113,9 @@ void LayoutSwitchMenu::paintEvent(QPaintEvent *)
 void LayoutSwitchMenu::btnClickedSlot(QAbstractButton* button)
 {
     buttonGroup->button(lastBtnId)->setStyleSheet("QPushButton{height: 40px; background-color: transparent; color: white;"
-                                                  " font: 21px; text-align:left; padding-left: 60px}");
+                                                  " font: 21px; text-align:left; padding-left: 69px}");
     button->setStyleSheet("QPushButton{height: 40px; background-color: #649bf1; color: white;"
-                          "font: 21px; text-align:left; padding-left: 60px}");
+                          "font: 21px; text-align:left; padding-left: 69px}");
     lastBtnId = buttonGroup->id(button);
     if(lastBtnId == buttonGroup->id(oneBtn)){
          oneBtnClickedSlot();

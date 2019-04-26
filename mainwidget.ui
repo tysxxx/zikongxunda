@@ -48,7 +48,7 @@
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(0, 0, 0);</string>
+          <string notr="true">background-color: #040b17;</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -121,7 +121,7 @@
             <item>
              <widget class="QPushButton" name="loginBtn">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -129,7 +129,7 @@
               <property name="minimumSize">
                <size>
                 <width>100</width>
-                <height>57</height>
+                <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
@@ -361,7 +361,7 @@
      <item row="1" column="0">
       <widget class="QFrame" name="frame_menu">
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(0, 0, 0);</string>
+        <string notr="true">background-color: #040b17;</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
@@ -407,7 +407,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_local_vedio">
+           <widget class="QPushButton" name="localMonitorBtn">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -428,7 +428,7 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>26</pointsize>
+              <pointsize>24</pointsize>
              </font>
             </property>
             <property name="styleSheet">
@@ -454,9 +454,9 @@ background-color: rgb(0, 0, 255);</string>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_interaction">
+           <widget class="QPushButton" name="intercomBtn">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -475,7 +475,7 @@ background-color: rgb(0, 0, 255);</string>
             </property>
             <property name="font">
              <font>
-              <pointsize>26</pointsize>
+              <pointsize>24</pointsize>
              </font>
             </property>
             <property name="styleSheet">
@@ -500,7 +500,7 @@ background-color: rgb(0, 0, 255);</string>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_vedio_meet">
+           <widget class="QPushButton" name="videoMeetingBtn">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -521,7 +521,7 @@ background-color: rgb(0, 0, 255);</string>
             </property>
             <property name="font">
              <font>
-              <pointsize>26</pointsize>
+              <pointsize>24</pointsize>
              </font>
             </property>
             <property name="styleSheet">
@@ -546,9 +546,9 @@ background-color: rgb(0, 0, 255);</string>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_map">
+           <widget class="QPushButton" name="mapBtn">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -567,7 +567,7 @@ background-color: rgb(0, 0, 255);</string>
             </property>
             <property name="font">
              <font>
-              <pointsize>26</pointsize>
+              <pointsize>24</pointsize>
              </font>
             </property>
             <property name="styleSheet">
@@ -592,9 +592,9 @@ background-color: rgb(0, 0, 255);</string>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_consult_record">
+           <widget class="QPushButton" name="videoConsultBtn">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -613,7 +613,7 @@ background-color: rgb(0, 0, 255);</string>
             </property>
             <property name="font">
              <font>
-              <pointsize>26</pointsize>
+              <pointsize>24</pointsize>
              </font>
             </property>
             <property name="styleSheet">
@@ -638,9 +638,9 @@ background-color: rgb(0, 0, 255);</string>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_set_para">
+           <widget class="QPushButton" name="settingBtn">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -659,7 +659,7 @@ background-color: rgb(0, 0, 255);</string>
             </property>
             <property name="font">
              <font>
-              <pointsize>26</pointsize>
+              <pointsize>24</pointsize>
              </font>
             </property>
             <property name="styleSheet">
@@ -674,6 +674,9 @@ background-color: rgb(0, 0, 255);</string>
            <spacer name="verticalSpacer_2">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Preferred</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>

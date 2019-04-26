@@ -1,6 +1,7 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
+#include <QButtonGroup>
 #include "window_common.h"
 #include "./UI/ui_mainwidget.h"
 #include "onescreen.h"
@@ -9,13 +10,13 @@
 #include "nineScreen.h"
 #include "sixteenScreen.h"
 #include "localVedioMenu.h"
-#include "interactionManager.h"
 #include "vedioMeeting.h"
 #include "electronicMap.h"
 #include "vedioSearch.h"
 #include "login/loginui.h"
 #include <QPropertyAnimation>
 #include "localMonitor/localmonitormenu.h"
+#include "intercom/intercomui.h"
 
 class MainWidget : public QWidget, private Ui::MainWidget
 {
@@ -25,7 +26,7 @@ public:
     explicit MainWidget(QWidget *parent = 0);
     ~MainWidget();
 
-    bool init();
+    void init();
     static int m_curScreen;//当前分屏
     static long long m_winFd;//窗口句柄
     static QStackedWidget* m_stackedWidget_central_show;
@@ -38,15 +39,15 @@ private:
     bool window_user_regist(long long winFd,INPUT_DEV_TYPE_E user_devType,int user_devId);//窗口使用者注册
     bool window_user_cancel(long long winFd);//窗口使用者注销
     bool update_central_show_rect();
-    bool updateButtonSheetStyle();//更新菜单按钮的背景色
 
 public slots:
     void timerUpdate(void);
-    void pushButton_local_vedio_click_slot();
-    void pushButton_interaction_click_slot();
-    void pushButton_vedio_meet_click_slot();
-    void pushButton_electronic_meeting_click_slot();
-    void pushButton_consult_record_click_slot();
+    void localMonitorBtnClickedSlot();
+    void intercomBtnClickedSlot();
+    void videoMeetingBtnClickedSlot();
+    void mapBtnClickedSlot();
+    void videoConsultBtnClickedSlot();
+    void btnClickedSlot(QAbstractButton* button);
     void login_btn_clicked_slot();
     void userLoginStatusHandler(bool status);
     void loginUiCloseSlot();
@@ -58,7 +59,7 @@ private:
     fourScreen m_fourscreen;
     nineScreen m_ninescreen;
     sixteenScreen m_sixteenscreen;
-    interactionManager* m_interactionManage;
+
     vedioMeeting* m_vedioMeetting;
     electronicMap* m_electronicMap;
     vedioSearch* m_vedioSearch;
@@ -72,8 +73,11 @@ private:
     static list<WINDOW_PROPERTY_ST> m_window_list;
     static RECT_ST m_central_show_rect;
 
+    QButtonGroup *buttonGroup;
     QPropertyAnimation *loginUIAnimation;
     LocalMonitorMenu *localMonitorMenu=nullptr;
+    IntercomUi *intercomUi;
+    int lastBtnId;
 };
 
 #endif // MAINWIDGET_H

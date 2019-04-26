@@ -6,6 +6,7 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QObject>
+#include <QCloseEvent>
 #include "network/networkmanager.h"
 
 class LoginUi : public QDialog
@@ -15,8 +16,13 @@ public:
     LoginUi(QWidget *parent = 0);
     ~LoginUi();
 
+    void paintEvent(QPaintEvent *);
+    void closeEvent(QCloseEvent *);
+
     QString loginUserName(){return loginUser->text();}
     QString loginUserPasswd(){return loginPasswd->text();}
+signals:
+    void loginUiClose();
 private slots:
     void loginBtn_clicked_slot();
     void logoutBtn_clicked_slot();

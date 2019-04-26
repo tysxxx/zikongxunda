@@ -2,6 +2,8 @@
 #include <QDebug>
 #include <QVBoxLayout>
 #include <QMessageBox>
+#include <QStyleOption>
+#include <QPainter>
 
 LoginUi::LoginUi(QWidget *parent)
     :QDialog(parent)
@@ -14,13 +16,29 @@ LoginUi::~LoginUi()
 
 }
 
+void LoginUi::closeEvent(QCloseEvent *)
+{
+    emit loginUiClose();
+}
+
+//重载paintEvent事件
+void LoginUi::paintEvent(QPaintEvent *)
+{
+    QStyleOption opt;
+    opt.init(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+}
+
 //初始化
 void LoginUi::init()
 {
+    //setWindowFlags((Qt::FramelessWindowHint));
+    //setAttribute(Qt::WA_TranslucentBackground);
     setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
     setWindowModality(Qt::ApplicationModal);
     setAttribute(Qt::WA_DeleteOnClose);
-    setStyleSheet("QDialog{background: rgba(255, 0, 0, 20%); width:320px; height: 360px}");
+    //setStyleSheet("QDialog{width:320px; height: 360px}");
 
     loginTitle = new QLabel(tr("登录"));
     loginTitle->setAlignment(Qt::AlignCenter);
