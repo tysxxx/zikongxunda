@@ -2,6 +2,9 @@
 #include <QStyleOption>
 #include <QPainter>
 #include <QDebug>
+#include <QLabel>
+#include <QDir>
+#include "windowdefine.h"
 
 LocalMonitorMenu::LocalMonitorMenu(QRect rect)
 {
@@ -10,13 +13,23 @@ LocalMonitorMenu::LocalMonitorMenu(QRect rect)
     init();
 }
 
+LocalMonitorMenu::~LocalMonitorMenu()
+{
+    if(layoutSwitchMenu){
+        layoutSwitchMenu->close();
+        layoutSwitchMenu->deleteLater();
+    }
+    layoutSwitchMenu = nullptr;
+}
+
 //初始化
 void LocalMonitorMenu::init()
 {
     //窗口设置背景和形状
     setWindowFlags((Qt::FramelessWindowHint));
     setAttribute(Qt::WA_TranslucentBackground);
-    setStyleSheet("QFrame{border-radius:10px; background:rgba(4, 11, 23, 80%);}"); //必须使用%
+    setStyleSheet("QFrame{border-radius:10px; background:rgba(4, 11, 23, 80%);}"); //必须使用%,只对QFrame起作用
+    //setStyleSheet("border-radius:10px; background:rgba(4, 11, 23, 80%);"); //包括子控件都起作用
 
     //按键
     grabBtn = new QPushButton(tr("本地抓拍"));
@@ -34,9 +47,11 @@ void LocalMonitorMenu::init()
     connect(buttonGroup, SIGNAL(buttonClicked(QAbstractButton*)), SLOT(btnClickedSlot(QAbstractButton*)));
     lastBtnId = buttonGroup->id(grabBtn);
     for(auto button: buttonGroup->buttons()){
-        button->setStyleSheet("QPushButton{height: 40px; background-color: transparent; color: white; font: 21px; text-align:left}");
+        button->setStyleSheet("QPushButton{height: 40px; background-color: transparent; color: white;"
+                              " font: 21px; text-align:left; padding-left: 20px}");
     }
-    grabBtn->setStyleSheet("QPushButton{height: 40px; background-color: #649bf1; color: white; font: 21px; text-align:left}");
+    grabBtn->setStyleSheet("QPushButton{height: 40px; background-color: #649bf1; color: white;"
+                           "font: 21px; text-align:left; padding-left: 20px}");
 
     //控件布局
     QVBoxLayout *btnLayout = new QVBoxLayout;
@@ -52,49 +67,45 @@ void LocalMonitorMenu::init()
 
 //重载paintEvent事件
 void LocalMonitorMenu::paintEvent(QPaintEvent *)
- {
-     QStyleOption opt;
-     opt.init(this);
-     QPainter p(this);
-     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
- }
-
-//抓拍按键处理
-void LocalMonitorMenu::grapBtnClickedSlot()
 {
-    qDebug() << "grapBtnClickedSlot";
+    QStyleOption opt;
+    opt.init(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 }
 
-//布局按键处理
-void LocalMonitorMenu::layoutSwitchBtnClickedSlot()
+//光标事件
+void LocalMonitorMenu::focusInEvent(QFocusEvent *focusEvent)
 {
-    qDebug() << "layoutSwitchBtnClickedSlot";
+    qDebug() << "focus in";
+    QFrame::focusInEvent(focusEvent);
 }
 
-//本地录像处理
-void LocalMonitorMenu::videoRecordBtnClickedSlot()
+void LocalMonitorMenu::focusOutEvent(QFocusEvent *focusEvent)
 {
-    qDebug() << "videoRecordBtnClickedSlot";
+    QFrame::focusInEvent(focusEvent);
+    qDebug() << "focus out";
 }
 
-//打开抓拍文件目录
-void LocalMonitorMenu::grabDirBtnClickedSlot()
-{
-    qDebug() << "grabDirBtnClickedSlot";
-}
-
-//打开录像文件目录
-void LocalMonitorMenu::videoRecordDirBtnClickedSlot()
-{
-    qDebug() << "videoRecordDirBtnClickedSlot";
-}
-
-//
+//按键处理
 void LocalMonitorMenu::btnClickedSlot(QAbstractButton* button)
 {
-    buttonGroup->button(lastBtnId)->setStyleSheet("QPushButton{height: 40px; background-color: transparent; color: white; font: 21px; text-align:left}");
-    button->setStyleSheet("QPushButton{height: 40px; background-color: #649bf1; color: white; font: 21px; text-align:left}");
+    buttonGroup->button(lastBtnId)->setStyleSheet("QPushButton{height: 40px; background-color: transparent; color: white;"
+                                                  " font: 21px; text-align:left; padding-left: 20px}");
+    button->setStyleSheet("QPushButton{height: 40px; background-color: #649bf1; color: white; font: 21px; text-align:left;"
+                          " padding-left: 20px}");
     lastBtnId = buttonGroup->id(button);
+
+    //先关闭
+    if(lastBtnId != buttonGroup->id(layoutSwitchBtn))
+    {
+        if(layoutSwitchMenu){
+            layoutSwitchMenu->close();
+            layoutSwitchMenu->deleteLater();
+        }
+        layoutSwitchMenu = nullptr;
+    }
+
     if(lastBtnId == buttonGroup->id(grabBtn)){
          grapBtnClickedSlot();
     }else if(lastBtnId == buttonGroup->id(layoutSwitchBtn)){
@@ -106,7 +117,79 @@ void LocalMonitorMenu::btnClickedSlot(QAbstractButton* button)
     }else if(lastBtnId == buttonGroup->id(videoRecordDirBtn)){
         videoRecordDirBtnClickedSlot();
     }
+
+
 }
+
+//抓拍按键处理
+void LocalMonitorMenu::grapBtnClickedSlot()
+{
+    list<DEVICEINFO_S> dev_list;
+    zkCarDevEngine::instance()->get_dev_list(&dev_list); //获取设备列表
+
+    list<DEVICEINFO_S>::iterator it = dev_list.begin();
+    for(;it != dev_list.end();++it)
+    {
+        zkCarDevEngine::instance()->zkTakePicture((*it).devType,(*it).devId);
+    }
+}
+
+//布局按键处理
+void LocalMonitorMenu::layoutSwitchBtnClickedSlot()
+{
+    qDebug() << "layoutSwitchBtnClickedSlot";
+    if(layoutSwitchMenu)
+        return;
+
+    QRect rect;
+    rect.setX(geometry().x() + geometry().width() + 5);
+    rect.setY(geometry().y());
+    rect.setWidth(217);
+    rect.setHeight(308);
+    layoutSwitchMenu = new LayoutSwitchMenu(rect);
+    layoutSwitchMenu->setGeometry(rect);
+    layoutSwitchMenu->show();
+}
+
+//本地录像处理
+void LocalMonitorMenu::videoRecordBtnClickedSlot()
+{
+
+}
+
+//打开抓拍文件目录
+void LocalMonitorMenu::grabDirBtnClickedSlot()
+{
+    QString fileName = QFileDialog::getOpenFileName(nullptr, tr("抓拍文件目录"), "/tys", tr("图片文件(*png *jpg *jpeg);;"));
+    if(fileName.isEmpty())
+        return;
+    qDebug() << "file name: " << fileName;
+    grabFileWin = new QDialog;
+    grabFileWin->setAttribute(Qt::WA_DeleteOnClose);
+
+    QLabel *imageLabel = new QLabel;
+    imageLabel->setAlignment(Qt::AlignCenter);
+    imageLabel->setPixmap(QPixmap(fileName));
+
+    QScrollArea *scrollArea = new QScrollArea;
+    scrollArea->setWidgetResizable(true);
+    scrollArea->setWidget(imageLabel);
+
+     QVBoxLayout *layout = new QVBoxLayout;
+     layout->setMargin(0);
+     layout->addWidget(scrollArea);
+
+     grabFileWin->setLayout(layout);
+     grabFileWin->open();
+}
+
+//打开录像文件目录
+void LocalMonitorMenu::videoRecordDirBtnClickedSlot()
+{
+    QString fileName = QFileDialog::getOpenFileName(nullptr, tr("录像文件目录"),"/tys", tr("图片文件(*png *jpg *jpeg);;"));
+}
+
+
 
 
 

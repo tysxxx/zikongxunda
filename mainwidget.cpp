@@ -12,6 +12,7 @@ MainWidget::MainWidget(QWidget *parent) :
     ui(new Ui::MainWidget)
 {
     ui->setupUi(this);
+    ui->frame_menu->setFixedWidth(185);
     setWindowFlags((Qt::FramelessWindowHint));//设置窗体无边框
     QTimer *timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(timerUpdate()));
@@ -65,6 +66,16 @@ MainWidget::MainWidget(QWidget *parent) :
     connect(NetworkManager::instance(), SIGNAL(userLoginStatus(bool)), this, SLOT(userLoginStatusHandler(bool)));
 }
 
+//析构
+MainWidget::~MainWidget()
+{
+    if(loginUiInstance){
+        loginUiInstance->close();
+        delete loginUiInstance;
+    }
+    loginUiInstance = nullptr;
+}
+
 bool MainWidget::init()
 {
     update_central_show_rect();
@@ -98,21 +109,27 @@ void MainWidget::timerUpdate(void)
 void MainWidget::login_btn_clicked_slot()
 {
     if(!loginUiInstance){
-    loginUiInstance = new LoginUi();
-    loginUiInstance->open();
+        loginUiInstance = new LoginUi();
+        connect(loginUiInstance, SIGNAL(loginUiClose()), SLOT(loginUiCloseSlot()));
+        loginUiInstance->open();
     }
 }
 
-//登录状态处理
+//登录状态(成功/失败)处理
 void MainWidget::userLoginStatusHandler(bool status)
 {
-    if(status){
+    if(status){ //成功
         ui->loginBtn->setText(loginUiInstance->loginUserName());
-        loginUiInstance->close();
-        if(loginUiInstance)
-            delete loginUiInstance;
+        if(loginUiInstance){
+            loginUiInstance->close();
+        }
         loginUiInstance = nullptr;
     }
+}
+
+void MainWidget::loginUiCloseSlot()
+{
+    loginUiInstance = nullptr;
 }
 
 //本地监控
@@ -123,8 +140,18 @@ void MainWidget::pushButton_local_vedio_click_slot()
         QRect rect;
         rect.setRect(ui->pushButton_local_vedio->geometry().x()+ui->pushButton_local_vedio->geometry().width()+2+4,ui->pushButton_local_vedio->geometry().y()+ui->frame_status->geometry().height()+2,WIDTH/6,HEIGHT/3);
 
-        localVedioMenu::instance()->set_widget_rect(&rect);
+        //localVedioMenu::instance()->set_widget_rect(&rect);
         //localVedioMenu::instance()->change_localVedioMenu_show_statu();
+        if(localMonitorMenu){
+            localMonitorMenu->close();
+            localMonitorMenu->deleteLater();
+            localMonitorMenu = nullptr;
+        }else{
+            localMonitorMenu = new LocalMonitorMenu(rect);
+            localMonitorMenu->setGeometry(rect);
+            localMonitorMenu->show();
+        }
+
     }else
         {
             m_vedioSearch->goToInitStatu();//这里也要透明显示视频窗口，因此要确保播放器的显示窗口关闭，不然用户会看到窗口重叠显示

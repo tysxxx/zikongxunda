@@ -183,10 +183,6 @@ private:
 //    qint32 m_groupID;
 //    qint32 m_groupCategoryID;
 
-//    QVariantMap m_configInfoObject;
-
-
-
     userDetailType m_userDetailInfo;
     userListType m_userListInfo;
     categoryListType m_categoryListInfo;

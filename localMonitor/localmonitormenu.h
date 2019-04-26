@@ -5,15 +5,22 @@
 #include <QPushButton>
 #include <QButtonGroup>
 #include <QVBoxLayout>
+#include <QFocusEvent>
+#include <QFileDialog>
+#include <QScrollArea>
+#include "layoutswitchmenu.h"
 
 class LocalMonitorMenu : public QFrame
 {
     Q_OBJECT
 public:
     LocalMonitorMenu(QRect rect);
+    ~LocalMonitorMenu();
 
     void init();
     void paintEvent(QPaintEvent *);
+    void focusInEvent(QFocusEvent *);
+    void focusOutEvent(QFocusEvent *);
 private slots:
     void grapBtnClickedSlot();
     void layoutSwitchBtnClickedSlot();
@@ -30,6 +37,10 @@ private:
     QPushButton *videoRecordDirBtn;
     QButtonGroup *buttonGroup;
     int lastBtnId;
+
+    LayoutSwitchMenu *layoutSwitchMenu=nullptr;
+    QDialog *grabFileWin;
+
 };
 
 #endif // LOCALMONITORMENU_H

@@ -13,8 +13,9 @@
 #include "vedioMeeting.h"
 #include "electronicMap.h"
 #include "vedioSearch.h"
-#include "loginui.h"
+#include "login/loginui.h"
 #include <QPropertyAnimation>
+#include "localMonitor/localmonitormenu.h"
 
 class MainWidget : public QWidget, private Ui::MainWidget
 {
@@ -22,6 +23,8 @@ class MainWidget : public QWidget, private Ui::MainWidget
 
 public:
     explicit MainWidget(QWidget *parent = 0);
+    ~MainWidget();
+
     bool init();
     static int m_curScreen;//当前分屏
     static long long m_winFd;//窗口句柄
@@ -46,7 +49,7 @@ public slots:
     void pushButton_consult_record_click_slot();
     void login_btn_clicked_slot();
     void userLoginStatusHandler(bool status);
-
+    void loginUiCloseSlot();
 private:
     Ui::MainWidget *ui;
     QStackedWidget *m_pStackedWidget;
@@ -70,6 +73,7 @@ private:
     static RECT_ST m_central_show_rect;
 
     QPropertyAnimation *loginUIAnimation;
+    LocalMonitorMenu *localMonitorMenu=nullptr;
 };
 
 #endif // MAINWIDGET_H

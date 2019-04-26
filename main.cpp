@@ -8,9 +8,11 @@
 #include "zkCarDevEnginge.h"
 #include <QFontDatabase>
 #include <QFile>
+#include <QtPlugin>
 
 QString loadFontFamily();
 #define FONT_PATH   "/mnt/Anyv/php/htdocs/storage/qt4.8_arm_share/lib/font/SourceHanSans-Regular.otf"
+#define PLUGINS_LIB_PAHT "/mnt/Anyv/php/htdocs/storage/qt4.8_arm_share/plugins"
 
 int main(int argc, char *argv[])
 {
@@ -22,6 +24,7 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
     a.setFont(loadFontFamily());
+    QApplication::addLibraryPath(PLUGINS_LIB_PAHT); //显示jpg格式文件
     NoFocusRectStyle *style = new NoFocusRectStyle(a.style());//去掉控件被选中时的虚线框
     a.setStyle(style);
     MainWidget w;
