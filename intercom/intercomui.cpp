@@ -67,12 +67,6 @@ void IntercomUi::paintEvent(QPaintEvent *)
 //按键处理
 void IntercomUi::btnClickedSlot(QAbstractButton* button)
 {
-//    buttonGroup->button(lastBtnId)->setStyleSheet("QPushButton{border: 2px solid white; border-right:none; "
-//                                   "border-top-left-radius: 10px; border-bottom-left-radius: 10px;"
-//                                   "background-color: transparent; color: white; height: 46px}");
-//    button->setStyleSheet("QPushButton{border: 2px solid white; border-right:none; "
-//                                   "border-top-left-radius: 10px; border-bottom-left-radius: 10px;"
-//                                   "background-color: #649bf1; color: white; height: 46px}");
     lastBtnId = buttonGroup->id(button);
     if(button == userInteractBtn){
         groupInteractBtn->setStyleSheet("QPushButton{border: 2px solid white; border-left:none; "

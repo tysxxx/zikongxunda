@@ -23,31 +23,33 @@ SOURCES += main.cpp\
         mainwidget.cpp \
     onescreen.cpp \
     fourscreen.cpp \
-    button_localvedio_listwidget.cpp \
-    localVedioMenu.cpp \
-    screenModeMenu.cpp \
+    #button_localvedio_listwidget.cpp \
+    #localVedioMenu.cpp \
+    #screenModeMenu.cpp \
     pushButtonMenu.cpp \
     twoScreen.cpp \
     nineScreen.cpp \
     sixteenScreen.cpp \
     electronicMap.cpp \
-    interactionManager.cpp \
     vedioMeeting.cpp \
     vedioSearch.cpp \
     dateTimeButton.cpp \
     date.cpp \
     mediaplayer.cpp \
-    loginui.cpp \
-    network/networkmanager.cpp
+    network/networkmanager.cpp \
+    localMonitor/localmonitormenu.cpp \
+    localMonitor/layoutswitchmenu.cpp \
+    login/loginui.cpp \
+    intercom/intercomui.cpp
 
 HEADERS  += mainwidget.h \
     onescreen.h \
     fourscreen.h \
     window_common.h \
-    button_localvedio_listwidget.h \
+    #button_localvedio_listwidget.h \
     nofocusrectstyle.h \
-    localVedioMenu.h \
-    screenModeMenu.h \
+    #localVedioMenu.h \
+    #screenModeMenu.h \
     pushButtonMenu.h \
     windowdefine.h \
     zkCarDevEnginge.h \
@@ -56,15 +58,17 @@ HEADERS  += mainwidget.h \
     nineScreen.h \
     sixteenScreen.h \
     electronicMap.h \
-    interactionManager.h \
     vedioMeeting.h \
     vedioSearch.h \
     dateTimeButton.h \
     date.h \
     mediaplayer.h \
-    loginui.h \
     network/networkmanager.h \
-    network/type.h
+    network/type.h \
+    localMonitor/localmonitormenu.h \
+    localMonitor/layoutswitchmenu.h \
+    login/loginui.h \
+    intercom/intercomui.h
 
 FORMS    += mainwidget.ui \
     onescreen.ui \
@@ -73,7 +77,6 @@ FORMS    += mainwidget.ui \
     ninescreen.ui \
     sixteenscreen.ui \
     electronicmap.ui \
-    interactionmanager.ui \
     vediomeeting.ui \
     vediosearch.ui \
     mediaplayer.ui
