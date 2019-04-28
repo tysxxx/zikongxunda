@@ -83,7 +83,8 @@ void MainWidget::init()
     zkCarDevEngine::instance()->get_dev_list(&m_dev_list);
     show_all_device();
 
-    intercomUi = new IntercomUi();
+    QRect rect = QRect(x(), y(), width(), height());
+    intercomUi = new IntercomUi(rect);
     m_vedioMeetting = new vedioMeeting();
     m_electronicMap = new electronicMap();
     m_vedioSearch = new vedioSearch();

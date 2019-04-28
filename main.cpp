@@ -32,6 +32,7 @@ int main(int argc, char *argv[])
     QDesktopWidget *desktopWidget = QApplication::desktop();
     if(desktopWidget){
         rect = desktopWidget->availableGeometry();
+        qDebug() << "availableGeometry: " << rect;
     }
 
     MainWidget mainWidget;

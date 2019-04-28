@@ -4,13 +4,17 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QButtonGroup>
-
+#include <QTreeView>
+#include <QTreeWidget>
+#include <QListWidget>
+#include <QTreeWidgetItem>
+#include <QRect>
 
 class IntercomUi : public QWidget
 {
     Q_OBJECT
 public:
-    explicit IntercomUi(QWidget *parent = nullptr);
+    explicit IntercomUi(QRect rect, QWidget *parent = nullptr);
     ~IntercomUi();
 
     void init();
@@ -24,6 +28,10 @@ private:
     QPushButton *groupInteractBtn;
     QButtonGroup *buttonGroup;
     int lastBtnId;
+
+    QTreeWidget *userInteractList;
+    QListWidget *groupInteractList;
+
 };
 
 #endif // INTERCOMUI_H

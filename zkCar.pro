@@ -23,9 +23,6 @@ SOURCES += main.cpp\
         mainwidget.cpp \
     onescreen.cpp \
     fourscreen.cpp \
-    #button_localvedio_listwidget.cpp \
-    #localVedioMenu.cpp \
-    #screenModeMenu.cpp \
     pushButtonMenu.cpp \
     twoScreen.cpp \
     nineScreen.cpp \
