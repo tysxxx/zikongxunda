@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QtPlugin>
 #include <QDesktopWidget>
+#include "mainUI/mainui.h"
 
 QString loadFontFamily();
 #define FONT_PATH   "/mnt/Anyv/php/htdocs/storage/qt4.8_arm_share/lib/font/SourceHanSans-Regular.otf"
@@ -20,6 +21,8 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+
+    QWSServer::setBackground(QColor(0, 0, 0, 0));
 
     QApplication app(argc, argv);
     app.setFont(loadFontFamily());
@@ -35,10 +38,16 @@ int main(int argc, char *argv[])
         qDebug() << "availableGeometry: " << rect;
     }
 
-    MainWidget mainWidget;
-    mainWidget.setGeometry(rect);
-    mainWidget.init();//只有在show以后才能获取到窗口的真实尺寸
-    mainWidget.show();
+//    MainWidget mainWidget;
+//    mainWidget.setGeometry(rect);
+//    mainWidget.init();//只有在show以后才能获取到窗口的真实尺寸
+//    mainWidget.show();
+
+    //rect.setWidth(rect.width()-1);
+    MainUi mainUi(rect);
+    mainUi.setGeometry(rect);
+    mainUi.init();
+    mainUi.show();
 
     return app.exec();
 }

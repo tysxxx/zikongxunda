@@ -8,17 +8,15 @@
 
 LocalMonitorMenu::LocalMonitorMenu(QRect rect)
 {
-    qDebug() << rect.x() << rect.y() << rect.width() << rect.height();
+    qDebug() << "localMonitorMenu: " << rect.x() << rect.y() << rect.width() << rect.height();
     //setGeometry(rect);
     init();
 }
 
 LocalMonitorMenu::~LocalMonitorMenu()
 {
-    if(layoutSwitchMenu){
+    if(layoutSwitchMenu)
         layoutSwitchMenu->close();
-        layoutSwitchMenu->deleteLater();
-    }
     layoutSwitchMenu = nullptr;
 }
 
@@ -28,8 +26,8 @@ void LocalMonitorMenu::init()
     //窗口设置背景和形状
     setWindowFlags((Qt::FramelessWindowHint));
     setAttribute(Qt::WA_TranslucentBackground);
-    setStyleSheet("QFrame{border-radius:10px; background:rgba(4, 11, 23, 80%);}"); //必须使用%,只对QFrame起作用
-    //setStyleSheet("border-radius:10px; background:rgba(4, 11, 23, 80%);"); //包括子控件都起作用
+    setAttribute(Qt::WA_DeleteOnClose);
+    setStyleSheet("QFrame{border-radius:10px; background:rgba(4, 11, 23, 80%);}"); //必须使用%
 
     //按键
     grabBtn = new QPushButton(tr("本地抓拍"));
@@ -99,12 +97,10 @@ void LocalMonitorMenu::btnClickedSlot(QAbstractButton* button)
     lastBtnId = buttonGroup->id(button);
 
     //先关闭
-    if(lastBtnId != buttonGroup->id(layoutSwitchBtn))
+    if(button != layoutSwitchBtn)
     {
-        if(layoutSwitchMenu){
+        if(layoutSwitchMenu)
             layoutSwitchMenu->close();
-            layoutSwitchMenu->deleteLater();
-        }
         layoutSwitchMenu = nullptr;
     }
 
@@ -141,11 +137,12 @@ void LocalMonitorMenu::layoutSwitchBtnClickedSlot()
     if(layoutSwitchMenu)
         return;
 
-    QRect rect;
-    rect.setX(geometry().x() + geometry().width() + 5);
-    rect.setY(geometry().y());
-    rect.setWidth(217);
-    rect.setHeight(308);
+    //设置窗口的位置
+    QRect rect(geometry().x() + geometry().width() + 5,
+               geometry().y(),
+               217,
+               308);
+
     layoutSwitchMenu = new LayoutSwitchMenu(rect);
     layoutSwitchMenu->setGeometry(rect);
     layoutSwitchMenu->show();
@@ -175,12 +172,12 @@ void LocalMonitorMenu::grabDirBtnClickedSlot()
     scrollArea->setWidgetResizable(true);
     scrollArea->setWidget(imageLabel);
 
-     QVBoxLayout *layout = new QVBoxLayout;
-     layout->setMargin(0);
-     layout->addWidget(scrollArea);
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->setMargin(0);
+    layout->addWidget(scrollArea);
 
-     grabFileWin->setLayout(layout);
-     grabFileWin->open();
+    grabFileWin->setLayout(layout);
+    grabFileWin->open();
 }
 
 //打开录像文件目录

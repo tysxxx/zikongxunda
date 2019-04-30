@@ -5,6 +5,7 @@
 #include <QIcon>
 #include <QImage>
 #include "mainwidget.h"
+#include "mainUI/mainui.h"
 
 LayoutSwitchMenu::LayoutSwitchMenu(QRect rect)
 {
@@ -18,8 +19,8 @@ void LayoutSwitchMenu::init()
     //窗口设置背景和形状
     setWindowFlags((Qt::FramelessWindowHint));
     setAttribute(Qt::WA_TranslucentBackground);
-    setStyleSheet("QFrame{border-radius:10px; background:rgba(4, 11, 23, 80%);}"); //必须使用%,只对QFrame起作用
-    //setStyleSheet("border-radius:10px; background:rgba(4, 11, 23, 80%);"); //包括子控件都起作用
+    setAttribute(Qt::WA_DeleteOnClose);
+    setStyleSheet("QFrame{border-radius:10px; background:rgba(4, 11, 23, 80%);}"); //必须使用%
 
     //标题
     titleLabel = new QLabel(tr("布局切换"));
@@ -133,36 +134,31 @@ void LayoutSwitchMenu::btnClickedSlot(QAbstractButton* button)
 //一分屏按键处理
 void LayoutSwitchMenu::oneBtnClickedSlot()
 {
-    MainWidget::m_curScreen = ONESCREENSHOW;
-    MainWidget::setScreenModel(1);
+    MainUi::layoutSwitchMode(MainUi::LayoutMode::one);
 }
 
 //二分屏按键处理
 void LayoutSwitchMenu::twoBtnClickedSlot()
 {
-    MainWidget::m_curScreen = TWOSCREENSHOW;
-    MainWidget::setScreenModel(2);
+    MainUi::layoutSwitchMode(MainUi::LayoutMode::two);
 }
 
 //四分屏按键处理
 void LayoutSwitchMenu::fourBtnClickedSlot()
 {
-    MainWidget::m_curScreen = FOURSCREENSHOW;
-    MainWidget::setScreenModel(4);
+    MainUi::layoutSwitchMode(MainUi::LayoutMode::four);
 }
 
 //九分屏按键处理
 void LayoutSwitchMenu::nineBtnClickedSlot()
 {
-    MainWidget::m_curScreen = NINESCREENSHOW;
-    MainWidget::setScreenModel(9);
+    MainUi::layoutSwitchMode(MainUi::LayoutMode::nine);
 }
 
 //十六分屏按键处理
 void LayoutSwitchMenu::sixteenBtnClickedSlot()
 {
-    MainWidget::m_curScreen = SIXTEENSCREENSHOW;
-    MainWidget::setScreenModel(16);
+    MainUi::layoutSwitchMode(MainUi::LayoutMode::sixteen);
 }
 
 

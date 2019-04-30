@@ -21,32 +21,19 @@ void LoginUi::closeEvent(QCloseEvent *)
     emit loginUiClose();
 }
 
-//重载paintEvent事件
-void LoginUi::paintEvent(QPaintEvent *)
-{
-    QStyleOption opt;
-    opt.init(this);
-    QPainter p(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-}
-
 //初始化
 void LoginUi::init()
 {
-    //setWindowFlags((Qt::FramelessWindowHint));
-    //setAttribute(Qt::WA_TranslucentBackground);
-    setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
-    setWindowModality(Qt::ApplicationModal);
+    //界面设置
+    setWindowModality(Qt::WindowModal);
     setAttribute(Qt::WA_DeleteOnClose);
-    //setStyleSheet("QDialog{width:320px; height: 360px}");
 
     loginTitle = new QLabel(tr("登录"));
     loginTitle->setAlignment(Qt::AlignCenter);
-    loginTitle->setLineWidth(10);
     QFont font = loginTitle->font();
     font.setLetterSpacing(QFont::AbsoluteSpacing, 10); //设置字体间隔
     loginTitle->setFont(font);
-    loginTitle->setStyleSheet("font-size: 20px; ");
+    loginTitle->setStyleSheet("font: 20px;");
 
     loginUser = new QLineEdit;
     loginUser->setPlaceholderText("请输入账号");
@@ -79,6 +66,16 @@ void LoginUi::init()
     connect(loginBtn, SIGNAL(clicked()), this, SLOT(loginBtn_clicked_slot()));
     connect(logoutBtn, SIGNAL(clicked()), this, SLOT(logoutBtn_clicked_slot()));
 }
+
+//重载paintEvent事件
+void LoginUi::paintEvent(QPaintEvent *)
+{
+    QStyleOption opt;
+    opt.init(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+}
+
 
 //登录
 void LoginUi::loginBtn_clicked_slot()

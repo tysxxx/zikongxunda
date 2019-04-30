@@ -29,7 +29,6 @@ MainWidget::MainWidget(QWidget *parent) :
     buttonGroup->addButton(ui->videoMeetingBtn);
     buttonGroup->addButton(ui->mapBtn);
     buttonGroup->addButton(ui->videoConsultBtn);
-    buttonGroup->addButton(ui->videoConsultBtn);
     buttonGroup->addButton(ui->settingBtn);
     lastBtnId = buttonGroup->id(ui->localMonitorBtn);
     connect(buttonGroup, SIGNAL(buttonClicked(QAbstractButton*)), SLOT(btnClickedSlot(QAbstractButton*)));
@@ -83,7 +82,8 @@ void MainWidget::init()
     zkCarDevEngine::instance()->get_dev_list(&m_dev_list);
     show_all_device();
 
-    QRect rect = QRect(x(), y(), width(), height());
+    QRect rect = QRect(m_central_show_rect.s32X, m_central_show_rect.s32Y,
+                       m_central_show_rect.u32Width, m_central_show_rect.u32Height);
     intercomUi = new IntercomUi(rect);
     m_vedioMeetting = new vedioMeeting();
     m_electronicMap = new electronicMap();
@@ -107,11 +107,11 @@ void MainWidget::timerUpdate(void)
 //登录界面调用
 void MainWidget::login_btn_clicked_slot()
 {
-    if(!loginUiInstance){
-        loginUiInstance = new LoginUi();
-        connect(loginUiInstance, SIGNAL(loginUiClose()), SLOT(loginUiCloseSlot()));
-        loginUiInstance->open();
-    }
+//    if(!loginUiInstance){
+//        loginUiInstance = new LoginUi();
+//        connect(loginUiInstance, SIGNAL(loginUiClose()), SLOT(loginUiCloseSlot()));
+//        loginUiInstance->open();
+//    }
 }
 
 //登录状态(成功/失败)处理
@@ -385,6 +385,11 @@ bool MainWidget::update_central_show_rect()
     m_central_show_rect.s32Y = ui->widget_central_show->geometry().y();
     m_central_show_rect.u32Width = ui->widget_central_show->geometry().width();
     m_central_show_rect.u32Height = ui->widget_central_show->geometry().height();
+
+    qDebug()<< "m_central_show_rect: " << m_central_show_rect.s32X
+             << m_central_show_rect.s32Y
+             << m_central_show_rect.u32Width
+             << m_central_show_rect.u32Height;
     return true;
 }
 

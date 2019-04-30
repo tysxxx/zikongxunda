@@ -9,6 +9,10 @@
 #include <QListWidget>
 #include <QTreeWidgetItem>
 #include <QRect>
+#include <QStackedLayout>
+#include <QLayout>
+#include "qflowlayout.h"
+#include <QLabel>
 
 class IntercomUi : public QWidget
 {
@@ -31,7 +35,15 @@ private:
 
     QTreeWidget *userInteractList;
     QListWidget *groupInteractList;
+    QStackedLayout *listStackedLayout;
+    QFrame *userIntercomShow;
+    QFrame *groupIntercomShow;
+    QStackedLayout *intercomShowStackedLayout;
 
+    QFlowLayout *userFlowLayout;
+    QFlowLayout *groupFlowLayout;
+    QLabel *intercomStatusLabel;
+    QPushButton *intercomExitBtn;
 };
 
 #endif // INTERCOMUI_H
