@@ -592,7 +592,7 @@ background-color: rgb(0, 0, 255);</string>
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="videoConsultBtn">
+           <widget class="QPushButton" name="videoReviewBtn">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>

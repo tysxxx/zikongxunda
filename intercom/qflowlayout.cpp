@@ -42,11 +42,13 @@ int QFlowLayout::verticalSpacing() const
     }
 }
 
+//项的数目
 int QFlowLayout::count() const
 {
     return itemList.size();
 }
 
+//返回索引的项
 QLayoutItem *QFlowLayout::itemAt(int index) const
 {
     return itemList.value(index);

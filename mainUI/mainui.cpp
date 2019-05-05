@@ -74,7 +74,7 @@ void MainUi::init()
     intercomBtn = new QPushButton(tr("互动调度"));
     videoMeetingBtn = new QPushButton(tr("视频会议"));
     mapBtn = new QPushButton(tr("电子地图"));
-    videoConsultBtn = new QPushButton(tr("录像查询"));
+    videoReviewBtn = new QPushButton(tr("录像查询"));
     settingBtn = new QPushButton("设置");
 
     buttonGroup = new QButtonGroup;
@@ -82,7 +82,7 @@ void MainUi::init()
     buttonGroup->addButton(intercomBtn);
     buttonGroup->addButton(videoMeetingBtn);
     buttonGroup->addButton(mapBtn);
-    buttonGroup->addButton(videoConsultBtn);
+    buttonGroup->addButton(videoReviewBtn);
     buttonGroup->addButton(settingBtn);
     lastBtnId = buttonGroup->id(localMonitorBtn);
     connect(buttonGroup, SIGNAL(buttonClicked(QAbstractButton*)), SLOT(btnClickedSlot(QAbstractButton*)));
@@ -104,7 +104,7 @@ void MainUi::init()
     leftVBoxLayout->addWidget(intercomBtn);
     leftVBoxLayout->addWidget(videoMeetingBtn);
     leftVBoxLayout->addWidget(mapBtn);
-    leftVBoxLayout->addWidget(videoConsultBtn);
+    leftVBoxLayout->addWidget(videoReviewBtn);
     leftVBoxLayout->addWidget(settingBtn);
     leftVBoxLayout->addStretch();
 
@@ -122,7 +122,7 @@ void MainUi::init()
     intercomUi->init();
     videoMeetingUi = new VideoMeetingUi(centerFrame->rect());
     MapUi = new electronicMap();
-    videoSearchUi = new vedioSearch();
+    videoReviewUi = new VideoReviewUi(centerFrame->rect());
 
     stackedLayout = new QStackedLayout(centerFrame);
     stackedLayout->addWidget(&oneScreenUi);
@@ -133,7 +133,7 @@ void MainUi::init()
     stackedLayout->addWidget(intercomUi);
     stackedLayout->addWidget(videoMeetingUi);
     stackedLayout->addWidget(MapUi);
-    stackedLayout->addWidget(videoSearchUi);
+    stackedLayout->addWidget(videoReviewUi);
 
     stackedLayout->setCurrentWidget(&fourScreenUi);
 
@@ -179,7 +179,7 @@ void MainUi::btnClickedSlot(QAbstractButton* button)
         videoMeetingBtnClickedSlot();
     }else if(button == mapBtn){
         mapBtnClickedSlot();
-    }else if(button == videoConsultBtn){
+    }else if(button == videoReviewBtn){
         videoConsultBtnClickedSlot();
     }else if(button == settingBtn){
 
@@ -251,7 +251,7 @@ void MainUi::mapBtnClickedSlot()
 //录像查询
 void MainUi::videoConsultBtnClickedSlot()
 {
-    stackedLayout->setCurrentWidget(videoSearchUi);
+    stackedLayout->setCurrentWidget(videoReviewUi);
 }
 
 //时间更新

@@ -7,6 +7,7 @@
 #include <QStyle>
 #include <QWidget>
 
+//自定义流布局
 class QFlowLayout : public QLayout
 {
 public:

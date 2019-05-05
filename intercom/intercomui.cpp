@@ -30,16 +30,16 @@ void IntercomUi::init()
         //@.按键
     userInteractBtn = new QPushButton(tr("互动对讲"));
     userInteractBtn->setProperty("valid", true);
-    userInteractBtn->setStyleSheet("QPushButton{border: 2px solid white; border-right:none;"
-                                   "border-top-left-radius: 10px; border-bottom-left-radius: 10px;"
-                                   "background-color: transparent; color: white; height: 46px; width: 137px; font:21px}"
+    userInteractBtn->setStyleSheet("QPushButton{border: 2px solid white; border-right:none; \
+                                    border-top-left-radius: 10px; border-bottom-left-radius: 10px; \
+                                    background-color: transparent; color: white; height: 46px; width: 137px; font:21px}"
                                    "QPushButton[valid=true]{background-color: #649bf1;}");
 
     groupInteractBtn = new QPushButton(tr("群组对讲"));
     groupInteractBtn->setProperty("valid", false);
-    groupInteractBtn->setStyleSheet("QPushButton{border: 2px solid white; border-left:none; "
-                                   "border-top-right-radius: 10px; border-bottom-right-radius: 10px;"
-                                   "background-color: transparent; color: white; height: 46px; width:137px; font:21px}"
+    groupInteractBtn->setStyleSheet("QPushButton{border: 2px solid white; border-left:none; \
+                                   border-top-right-radius: 10px; border-bottom-right-radius: 10px; \
+                                   background-color: transparent; color: white; height: 46px; width:137px; font:21px}"
                                    "QPushButton[valid=true]{background-color: #649bf1;}");
 
     buttonGroup = new QButtonGroup;
@@ -58,18 +58,18 @@ void IntercomUi::init()
         //@.用户列表
     userInteractList = new QTreeWidget;
     userInteractList->setColumnCount(1);
-     QList<QTreeWidgetItem *> items;
-     for (int i = 0; i < 10; ++i)
-         items.append(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("item: %1").arg(i))));
-     userInteractList->insertTopLevelItems(0, items);
+    QList<QTreeWidgetItem *> items;
+    for (int i = 0; i < 10; ++i)
+        items.append(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("item: %1").arg(i))));
+    userInteractList->insertTopLevelItems(0, items);
 
         //@.组织列表
-     groupInteractList = new QListWidget;
+    groupInteractList = new QListWidget;
 
-     listStackedLayout = new QStackedLayout;
-     listStackedLayout->addWidget(userInteractList);
-     listStackedLayout->addWidget(groupInteractList);
-     listStackedLayout->setCurrentWidget(userInteractList);
+    listStackedLayout = new QStackedLayout;
+    listStackedLayout->addWidget(userInteractList);
+    listStackedLayout->addWidget(groupInteractList);
+    listStackedLayout->setCurrentWidget(userInteractList);
         //@.布局
     QVBoxLayout *leftMainUiVBoxLayout = new QVBoxLayout;
     leftMainUiVBoxLayout->addSpacing(20);
@@ -176,10 +176,13 @@ void IntercomUi::init()
     userInfoVBoxLayout->addSpacing(50);
 
     userFlowLayout = new QFlowLayout;
+    userFlowLayout->setContentsMargins(30, 0, 0, 0);
+    userFlowLayout->setAlignment(Qt::AlignCenter);
     userFlowLayout->addWidget(userIcon);
-    userFlowLayout->addWidget(userIcon1);
-    userFlowLayout->addWidget(userIcon2);
-    userFlowLayout->addWidget(userIcon3);
+    //userFlowLayout->addChildLayout(userInfoVBoxLayout);
+//    userFlowLayout->addWidget(userIcon1);
+//    userFlowLayout->addWidget(userIcon2);
+//    userFlowLayout->addWidget(userIcon3);
 
     intercomStatusLabel = new QLabel(tr("通话中"));
     intercomStatusLabel->setAlignment(Qt::AlignCenter);

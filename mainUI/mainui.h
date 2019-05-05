@@ -21,6 +21,7 @@
 #include "vedioSearch.h"
 #include "electronicMap.h"
 #include "videoMeeting/videomeetingui.h"
+#include "videoReview/videoreviewui.h"
 
 class MainUi : public QWidget
 {
@@ -61,7 +62,7 @@ private:
     QPushButton *intercomBtn;
     QPushButton *videoMeetingBtn;
     QPushButton *mapBtn;
-    QPushButton *videoConsultBtn;
+    QPushButton *videoReviewBtn;
     QPushButton *settingBtn;
     QButtonGroup *buttonGroup;
     int lastBtnId;
@@ -78,6 +79,7 @@ private:
     VideoMeetingUi *videoMeetingUi;
     electronicMap *MapUi;
     vedioSearch *videoSearchUi;
+    VideoReviewUi *videoReviewUi;
     LocalMonitorMenu *localMonitorMenu=nullptr;
     IntercomUi *intercomUi;
     LoginUi *loginUiInstance=nullptr;

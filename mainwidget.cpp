@@ -28,7 +28,7 @@ MainWidget::MainWidget(QWidget *parent) :
     buttonGroup->addButton(ui->intercomBtn);
     buttonGroup->addButton(ui->videoMeetingBtn);
     buttonGroup->addButton(ui->mapBtn);
-    buttonGroup->addButton(ui->videoConsultBtn);
+    buttonGroup->addButton(ui->videoReviewBtn);
     buttonGroup->addButton(ui->settingBtn);
     lastBtnId = buttonGroup->id(ui->localMonitorBtn);
     connect(buttonGroup, SIGNAL(buttonClicked(QAbstractButton*)), SLOT(btnClickedSlot(QAbstractButton*)));
@@ -147,7 +147,7 @@ void MainWidget::btnClickedSlot(QAbstractButton* button)
         videoMeetingBtnClickedSlot();
     }else if(button == ui->mapBtn){
         mapBtnClickedSlot();
-    }else if(button == ui->videoConsultBtn){
+    }else if(button == ui->videoReviewBtn){
         videoConsultBtnClickedSlot();
     }else if(button == ui->settingBtn){
 
