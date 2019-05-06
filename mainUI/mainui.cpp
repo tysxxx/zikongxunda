@@ -97,7 +97,6 @@ void MainUi::init()
 
     QVBoxLayout *leftVBoxLayout = new QVBoxLayout;
     leftVBoxLayout->setMargin(0);
-    leftVBoxLayout->setContentsMargins(0, 0, 0, 0);
     leftVBoxLayout->setSpacing(40);
     leftVBoxLayout->addSpacing(100);
     leftVBoxLayout->addWidget(localMonitorBtn);

@@ -41,7 +41,6 @@ void VideoMeetingUi::init()
     meetingList->setStyleSheet("QListWidget{background-color: transparent}");
 
     QVBoxLayout *meetingListVBoxLayout = new QVBoxLayout;
-    meetingListVBoxLayout->setMargin(0);
     meetingListVBoxLayout->setContentsMargins(0, 30, 0, 10);
     meetingListVBoxLayout->addWidget(meetingListName);
     meetingListVBoxLayout->addWidget(meetingList);

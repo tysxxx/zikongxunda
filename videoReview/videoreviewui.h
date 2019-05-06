@@ -10,6 +10,10 @@
 #include <QFormLayout>
 #include <QComboBox>
 #include <QLineEdit>
+#include <QStackedLayout>
+#include <QTableWidget>
+#include "videoplayui.h"
+#include "videoinfotableui.h"
 
 class VideoReviewUi : public QWidget
 {
@@ -23,7 +27,10 @@ public:
 signals:
 
 private slots:
+    void videoInfoBtnClickedSlot();
+    void videoPlayBtnClickedSlot();
     void btnClickedSlot(QAbstractButton* button);
+    void queryBtnClickedSlot();
 private:
     QPushButton *videoInfoBtn;
     QPushButton *videoPlayBtn;
@@ -34,7 +41,9 @@ private:
     QPushButton *dateBtn;
     QPushButton *queryBtn;
 
-    QLabel *channelLabel;
+    VideoInfoTableUi *videoInfoTableUi;
+    VideoPlayUi *videoPlayUi;
+    QStackedLayout *bottomFrameStackedLayout;
 };
 
 #endif // VIDEOREVIEWUI_H
