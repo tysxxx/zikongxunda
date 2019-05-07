@@ -15,7 +15,6 @@ VideoReviewUi::~VideoReviewUi()
 
 }
 
-
 //初始化
 void VideoReviewUi::init()
 {
@@ -64,20 +63,20 @@ void VideoReviewUi::init()
     videoChannel->addItem("channel3");
     }
     videoChannel->setFixedSize(213, 40);
-    videoChannel->setStyleSheet(".QComboBox{padding-left: 10px; background-color: transparent; color: white; font: 21px; border: 2px solid white; border-radius: 6px;} \
+    videoChannel->setStyleSheet(".QComboBox{padding-left: 10px; background-color: transparent; color: white; font: 21px; border: 2px solid white; border-radius: 10px;} \
                                  .QComboBox::down-arrow{width: 20px; height:20px; background: white;} \
                                  .QComboBox::drop-down{border: none; width: 50px;} \
-                                  .QComboBox QAbstractItemView{ \
-                                            border: 2px solid white; border-radius: 5px;\
+                                 .QComboBox QAbstractItemView{ \
+                                            background-color: #040b17; border: 2px solid white; border-radius: 5px;\
                                             color: white; selection-background-color: #649bf1;\
                                             padding-left: 0px; padding-top:10px; padding-bottom:15px; spacing: 20px;\
                                             } \
                                   .QComboBox QAbstractItemView::item{padding-left: 10px; spacing: 20px;} \
                                   .QComboBox QAbstractItemView::text{color: red; margin-left: 10px; spacing: 20px;} \
                                   .QScrollBar::vertical{ background: transparent; margin: 0px 0px 0px 0px; width: 10px; }\
-                                  QScrollBar::add-line:vertical{ height: 0px; }\
-                                  QScrollBar::sub-line:vertical{ height: 0px; }\
-                                  QScrollBar::handle:vertical{background: white; border-radius:1px;}\
+                                  .QScrollBar::add-line:vertical{ height: 0px; }\
+                                  .QScrollBar::sub-line:vertical{ height: 0px; }\
+                                  .QScrollBar::handle:vertical{background: white; border-radius:1px;}\
                                  ");
 
 
@@ -130,17 +129,15 @@ void VideoReviewUi::init()
     topVBoxLayout->addSpacing(20);
 
     QFrame *topFrame = new QFrame;
-    topFrame->setStyleSheet("QFrame{background-color: #040b17; padding-left: 70px;}");
+    topFrame->setStyleSheet(".QFrame{background-color: #040b17; padding-left: 70px;}");
     topFrame->setLayout(topVBoxLayout);
 
     //底部
-    videoInfoTableUi = new VideoInfoTableUi;
-    videoInfoTableUi->setFixedSize(981, 420);
-    //videoInfoTable->setColumnCount(5);
+    videoInfoTableUi = new VideoInfoTableUi(QRect(0, 0, 981, 420));
     videoPlayUi = new VideoPlayUi;
 
     QFrame *bottomFrame = new QFrame;
-    bottomFrame->setStyleSheet("QFrame{background-color: #040b17; padding-left: 70px;}");
+    bottomFrame->setStyleSheet(".QFrame{background-color: #040b17; padding-left: 70px;}");
     bottomFrameStackedLayout = new QStackedLayout(bottomFrame);
     bottomFrameStackedLayout->addWidget(videoInfoTableUi);
     bottomFrameStackedLayout->addWidget(videoPlayUi);
