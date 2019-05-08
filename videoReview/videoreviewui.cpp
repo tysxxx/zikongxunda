@@ -74,8 +74,8 @@ void VideoReviewUi::init()
                                   .QComboBox QAbstractItemView::item{padding-left: 10px; spacing: 20px;} \
                                   .QComboBox QAbstractItemView::text{color: red; margin-left: 10px; spacing: 20px;} \
                                   .QScrollBar::vertical{ background: transparent; margin: 0px 0px 0px 0px; width: 10px; }\
-                                  .QScrollBar::add-line:vertical{ height: 0px; }\
-                                  .QScrollBar::sub-line:vertical{ height: 0px; }\
+                                  .QScrollBar::add-line:vertical{background:transparent; height: 0px; width: 0px;}\
+                                  .QScrollBar::sub-line:vertical{background:transparent; height: 0px; width: 0px;}\
                                   .QScrollBar::handle:vertical{background: white; border-radius:1px;}\
                                  ");
 
@@ -134,11 +134,17 @@ void VideoReviewUi::init()
 
     //底部
     videoInfoTableUi = new VideoInfoTableUi(QRect(0, 0, 981, 420));
+    videoInfoTableUi->setFixedSize(1050, 420);
     videoPlayUi = new VideoPlayUi;
+    videoPlayUi->setFixedWidth(1050);
+    videoPlayUi->init();
 
-    QFrame *bottomFrame = new QFrame;
-    bottomFrame->setStyleSheet(".QFrame{background-color: #040b17; padding-left: 70px;}");
+    bottomFrame = new QFrame;
+    bottomFrame->setProperty("play", "false");
+    bottomFrame->setStyleSheet(".QFrame{background-color: #040b17; padding-left: 70px;} \
+                                .QFrame[play=true]{background-color: transparent;}");
     bottomFrameStackedLayout = new QStackedLayout(bottomFrame);
+    bottomFrameStackedLayout->setMargin(0);
     bottomFrameStackedLayout->addWidget(videoInfoTableUi);
     bottomFrameStackedLayout->addWidget(videoPlayUi);
     bottomFrameStackedLayout->setCurrentWidget(videoInfoTableUi);
@@ -181,12 +187,16 @@ void VideoReviewUi::btnClickedSlot(QAbstractButton* button)
 //录像信息界面
 void VideoReviewUi::videoInfoBtnClickedSlot()
 {
+    //bottomFrame->setProperty("play", "false");
+    //bottomFrame->style()->polish(bottomFrame);
     bottomFrameStackedLayout->setCurrentWidget(videoInfoTableUi);
 }
 
 //录像播放界面
 void VideoReviewUi::videoPlayBtnClickedSlot()
 {
+    //bottomFrame->setProperty("play", "true");
+    //bottomFrame->style()->polish(bottomFrame);
     bottomFrameStackedLayout->setCurrentWidget(videoPlayUi);
 }
 

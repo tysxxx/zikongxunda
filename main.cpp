@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 //    mainWidget.init();//只有在show以后才能获取到窗口的真实尺寸
 //    mainWidget.show();
 
-    //rect.setWidth(rect.width()-1);
+    //rect.setHeight(rect.height()-1);
     MainUi mainUi(rect);
     mainUi.setGeometry(rect);
     mainUi.init();

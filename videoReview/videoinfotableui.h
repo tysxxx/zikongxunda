@@ -14,7 +14,6 @@ public:
     ~VideoInfoTableUi();
 
     void init();
-//    void paintEvent(QPaintEvent *);
     void appendOneRow(QString fileName, qint32 fileSize, QString startTime, QString endTime);
 private:
 

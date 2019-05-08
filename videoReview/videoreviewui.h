@@ -44,6 +44,7 @@ private:
     VideoInfoTableUi *videoInfoTableUi;
     VideoPlayUi *videoPlayUi;
     QStackedLayout *bottomFrameStackedLayout;
+    QFrame *bottomFrame;
 };
 
 #endif // VIDEOREVIEWUI_H
