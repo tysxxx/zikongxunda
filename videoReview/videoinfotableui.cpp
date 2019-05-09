@@ -62,7 +62,7 @@ void VideoInfoTableUi::init()
     //设置滚动条
     verticalScrollBar()->setStyleSheet(".QScrollBar{background-color: gray; width:15px; border:2px solid white; border-radius:5px;}\
                                         .QScrollBar::handle{background: #649bf1; border:2px solid #649bf1; border-radius:5px;}\
-                                        .QScrollBar::handle:hover{background:gray;}\
+                                        .QScrollBar::handle:hover{background: blue;}\
                                         .QScrollBar::sub-line{background:transparent; width: 0px; height: 0px;}\
                                         .QScrollBar::add-line{background:transparent; width: 0px; height: 0px;}");
 }

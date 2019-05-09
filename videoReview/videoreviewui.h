@@ -31,6 +31,7 @@ private slots:
     void videoPlayBtnClickedSlot();
     void btnClickedSlot(QAbstractButton* button);
     void queryBtnClickedSlot();
+
 private:
     QPushButton *videoInfoBtn;
     QPushButton *videoPlayBtn;

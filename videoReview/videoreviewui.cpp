@@ -27,17 +27,17 @@ void VideoReviewUi::init()
         //@.按键
     videoInfoBtn = new QPushButton(tr("录像下载"));
     videoInfoBtn->setProperty("valid", true);
-    videoInfoBtn->setStyleSheet("QPushButton{border: 2px solid white; border-right:none;\
+    videoInfoBtn->setStyleSheet(".QPushButton{border: 2px solid white; border-right:none;\
                                              border-top-left-radius: 10px; border-bottom-left-radius: 10px;\
                                              background-color: transparent; color: white; height: 46px; width: 137px; font:21px}\
-                                 QPushButton[valid=true]{background-color: #649bf1;}");
+                                 .QPushButton[valid=true]{background-color: #649bf1;}");
 
     videoPlayBtn = new QPushButton(tr("实时回放"));
     videoPlayBtn->setProperty("valid", false);
-    videoPlayBtn->setStyleSheet("QPushButton{border: 2px solid white; border-left:none;\
+    videoPlayBtn->setStyleSheet(".QPushButton{border: 2px solid white; border-left:none;\
                                             border-top-right-radius: 10px; border-bottom-right-radius: 10px;\
                                             background-color: transparent; color: white; height: 46px; width:137px; font:21px}\
-                                 QPushButton[valid=true]{background-color: #649bf1;}");
+                                 .QPushButton[valid=true]{background-color: #649bf1;}");
 
     buttonGroup = new QButtonGroup;
     buttonGroup->addButton(videoInfoBtn);
@@ -54,7 +54,7 @@ void VideoReviewUi::init()
 
         //@.通道
     QLabel *channelLabel = new QLabel(tr("通道"));
-    channelLabel->setStyleSheet("QLabel{font: 21px; color: white; padding: 0px; margin: 0px;}");
+    channelLabel->setStyleSheet(".QLabel{font: 21px; color: white; padding: 0px; margin: 0px;}");
     videoChannel = new QComboBox;
     videoChannel->setEditable(false);
     for(int i=0; i< 40; i++){
@@ -66,17 +66,14 @@ void VideoReviewUi::init()
     videoChannel->setStyleSheet(".QComboBox{padding-left: 10px; background-color: transparent; color: white; font: 21px; border: 2px solid white; border-radius: 10px;} \
                                  .QComboBox::down-arrow{width: 20px; height:20px; background: white;} \
                                  .QComboBox::drop-down{border: none; width: 50px;} \
-                                 .QComboBox QAbstractItemView{ \
+                                 .QComboBox QListView{ \
                                             background-color: #040b17; border: 2px solid white; border-radius: 5px;\
-                                            color: white; selection-background-color: #649bf1;\
-                                            padding-left: 0px; padding-top:10px; padding-bottom:15px; spacing: 20px;\
-                                            } \
-                                  .QComboBox QAbstractItemView::item{padding-left: 10px; spacing: 20px;} \
-                                  .QComboBox QAbstractItemView::text{color: red; margin-left: 10px; spacing: 20px;} \
-                                  .QScrollBar::vertical{ background: transparent; margin: 0px 0px 0px 0px; width: 10px; }\
+                                            color: white; selection-background-color: #649bf1; margin-top: 1px;}\
+                                  .QComboBox QAbstractItemView::item{left: 10px;}\
+                                  .QScrollBar::vertical{background: transparent; margin: 0px; width: 10px;}\
                                   .QScrollBar::add-line:vertical{background:transparent; height: 0px; width: 0px;}\
                                   .QScrollBar::sub-line:vertical{background:transparent; height: 0px; width: 0px;}\
-                                  .QScrollBar::handle:vertical{background: white; border-radius:1px;}\
+                                  .QScrollBar::handle:vertical{background: gray; border-radius:5px; height: 20px;}\
                                  ");
 
 
@@ -88,7 +85,7 @@ void VideoReviewUi::init()
 
         //@.日期
     QLabel *dateLabel = new QLabel(tr("日期"));
-    dateLabel->setStyleSheet("QLabel{font:21px; color: white; padding: 0px; margin: 0px;}");
+    dateLabel->setStyleSheet(".QLabel{font:21px; color: white; padding: 0px; margin: 0px;}");
     videoDate = new QLabel(QDate::currentDate().toString("yyyy-MM-dd"));
     videoDate->setAlignment(Qt::AlignCenter);
     videoDate->setFixedSize(180, 40);
@@ -156,7 +153,7 @@ void VideoReviewUi::init()
     mainVBoxLayout->addWidget(topFrame);
     mainVBoxLayout->addWidget(bottomFrame);
 
-    setLayout(mainVBoxLayout);
+    setLayout(mainVBoxLayout);        
 }
 
 //重载paintEvent事件

@@ -4,7 +4,8 @@
 #include <QWidget>
 #include <QRect>
 #include <QPushButton>
-#include <QProgressBar>
+#include <QSlider>
+#include <QFrame>
 
 class VideoPlayUi : public QWidget
 {
@@ -23,7 +24,7 @@ private:
     QPushButton *fastForwardBtn;
     QPushButton *fastBackwardBtn;
     QPushButton *stopBtn;
-    QProgressBar *playProgressBar;
+    QSlider *playProgressBar;
     QPushButton *fullScreenBtn;
 };
 

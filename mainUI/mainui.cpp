@@ -115,7 +115,7 @@ void MainUi::init()
     //中间窗口
     centerFrame = new QFrame(this);
     centerFrame->setGeometry(leftFrame->width()+1, topFrame->height()+1, width()-leftFrame->width(), height()-topFrame->height());
-    centerFrame->setStyleSheet(tr("QFrame{background-color: transparent;}"));
+    centerFrame->setStyleSheet(tr(".QFrame{background-color: transparent;}"));
 
     intercomUi = new IntercomUi(centerFrame->rect());
     intercomUi->init();
