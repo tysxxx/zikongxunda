@@ -24,7 +24,7 @@ void IntercomUi::init()
     //界面设置
     setWindowFlags((Qt::FramelessWindowHint));
     setAttribute(Qt::WA_TranslucentBackground);
-    setStyleSheet("QWidget{background-color: transparent;}");
+    setStyleSheet(".QWidget{background-color: transparent;}");
 
     //左侧窗口
         //@.按键

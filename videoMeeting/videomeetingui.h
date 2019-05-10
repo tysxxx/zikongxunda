@@ -3,7 +3,11 @@
 
 #include <QWidget>
 #include <QListWidget>
+#include <QListView>
 #include <QLabel>
+#include "videomeetinglistitem.h"
+#include <QStringList>
+#include "meetingModel.h"
 
 class VideoMeetingUi : public QWidget
 {
@@ -19,7 +23,9 @@ signals:
 public slots:
 
 private:
-    QListWidget *meetingList;
+    QListView *meetingListView;
+    VideoMeetingListItem *meetingListItemDelegete;
+    MeetingListModel *meetingListModel;
 };
 
 #endif // VIDEOMEETINGUI_H

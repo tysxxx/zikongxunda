@@ -1,9 +1,11 @@
 #include "itemeditor.h"
 
-ItemEditor::ItemEditor(QWidget *parent) : QWidget(parent)
+ItemEditor::ItemEditor(QWidget *parent) : QLabel(parent)
 {
+    setWindowFlags(Qt::FramelessWindowHint);
     m_meetingName = new QLabel;
     enterMeetingBtn = new QPushButton(tr("进入会议"));
+    enterMeetingBtn->setStyleSheet(".QPushButton{color: red; font: 21px;}");
     QHBoxLayout *hBoxLayout = new QHBoxLayout;
     hBoxLayout->setMargin(0);
     hBoxLayout->setSpacing(10);

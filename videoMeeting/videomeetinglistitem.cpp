@@ -15,16 +15,18 @@ QWidget* VideoMeetingListItem::createEditor(QWidget *parent, const QStyleOptionV
 
 void VideoMeetingListItem::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    if (!index.isValid() || option.state == QStyle::State_None || !index.isValid())
-        return;
+//    if (!index.isValid() || option.state == QStyle::State_None || !index.isValid())
+//        return;
 
-    painter->fillRect(option.rect, QColor("gray"));
+    //painter->fillRect(option.rect, QColor("white"));
+    QStyledItemDelegate::paint(painter, option, index);
+
 }
 
 void VideoMeetingListItem::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
     ItemEditor *itemEditor = qobject_cast<ItemEditor*>(editor);
-    itemEditor->setMeetingName(index.data(Qt::DisplayRole).toString());
+    itemEditor->setMeetingName(index.data(Qt::EditRole).toString());
 }
 
 void VideoMeetingListItem::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
@@ -34,7 +36,8 @@ void VideoMeetingListItem::setModelData(QWidget *editor, QAbstractItemModel *mod
 
 QSize VideoMeetingListItem::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    return QSize(100, 30);
+    return QSize(100, 50);
+    //return QStyledItemDelegate::sizeHint(option, index);
 }
 
 void VideoMeetingListItem::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const

@@ -3,6 +3,7 @@
 #include <QStyleOption>
 #include <QPainter>
 #include <QVBoxLayout>
+#include <QStringListModel>
 
 VideoMeetingUi::VideoMeetingUi(QRect rect, QWidget *parent) : QWidget(parent)
 {
@@ -20,12 +21,12 @@ void VideoMeetingUi::init()
 {
     //界面设置
     setWindowFlags((Qt::FramelessWindowHint));
-    setAttribute(Qt::WA_TranslucentBackground);
-    setStyleSheet("QWidget{background-color: #040b17;}");
+    //setAttribute(Qt::WA_TranslucentBackground);
+    setStyleSheet("QWidget{background: #040b17;}");
 
     //中间会议列表显示框
     QFrame *meetingListFrame = new QFrame(this);
-    meetingListFrame->setStyleSheet("QWidget{background-color: rgba(6, 32, 70, 80%); border-radius:10px;}");
+    meetingListFrame->setStyleSheet(".QFrame{background-color: rgba(6, 32, 70, 80%); border-radius:10px;}");
     QRect rect;
     rect = QRect((width()-469)/2,
                 200,
@@ -33,19 +34,34 @@ void VideoMeetingUi::init()
                 449);
     meetingListFrame->setGeometry(rect);
 
-    QLabel *meetingListName = new QLabel(tr("视频会议列表"));
-    meetingListName->setAlignment(Qt::AlignCenter);
-    meetingListName->setStyleSheet("QLabel{font: 24px; color: #649bf1; background-color: transparent}");
+    QLabel *meetingListNameLabel = new QLabel(tr("视频会议列表"));
+    meetingListNameLabel->setAlignment(Qt::AlignCenter);
+    meetingListNameLabel->setStyleSheet("QLabel{font: 24px; color: #649bf1; background-color: transparent}");
 
-    meetingList = new QListWidget;
-    meetingList->setStyleSheet("QListWidget{background-color: transparent}");
+     QStringListModel *model = new QStringListModel();
+      QStringList list;
+      list << "a" << "b" << "c";
+      model->setStringList(list);
+
+
+    meetingListView = new QListView;
+    meetingListItemDelegete = new VideoMeetingListItem;
+    meetingListModel = new MeetingListModel;
+    meetingListView->setItemDelegate(meetingListItemDelegete);
+    meetingListView->setModel(model);
+    meetingListView->setStyleSheet(".QListView{background-color: transparent; color: red; font: 21px;}");
+
+    QStringList meetinglistName;
+    meetinglistName << "会议1" << "会议2" << "会议3";
+    meetingListModel->setMeetingListModelData(meetinglistName);
 
     QVBoxLayout *meetingListVBoxLayout = new QVBoxLayout;
     meetingListVBoxLayout->setContentsMargins(0, 30, 0, 10);
-    meetingListVBoxLayout->addWidget(meetingListName);
-    meetingListVBoxLayout->addWidget(meetingList);
+    meetingListVBoxLayout->addWidget(meetingListNameLabel);
+    meetingListVBoxLayout->addWidget(meetingListView);
 
     meetingListFrame->setLayout(meetingListVBoxLayout);
+
 }
 
 //重载paintEvent事件

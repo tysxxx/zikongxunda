@@ -6,7 +6,7 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 
-class ItemEditor : public QWidget
+class ItemEditor : public QLabel
 {
     Q_OBJECT
 public:

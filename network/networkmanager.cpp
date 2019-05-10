@@ -922,7 +922,7 @@ void NetworkManager::parseJsonConfigInfo(const Json::Value& object, ConfigType& 
 //    //qDebug() << "@3. m_groupListNode.total=" << m_groupListNode.total;
 //}
 
-//void NetworkManager::dealUserInfo(TreeModel *model)
+//void NetworkManager::dealUserInfo(MeetingListModel *model)
 //{
 //     Node *rootNode = model->rootNode();
 //     Node::nodeInfoType nodeInfo;
@@ -1037,7 +1037,7 @@ void NetworkManager::parseJsonConfigInfo(const Json::Value& object, ConfigType& 
 //    qDebug() << "dealUserInfo end";
 //}
 
-//void NetworkManager::creatCategoryNode(categoryNodeType *node, Node* parentNode, TreeModel *model)
+//void NetworkManager::creatCategoryNode(categoryNodeType *node, Node* parentNode, MeetingListModel *model)
 //{
 //    Node::nodeInfoType nodeInfo;
 //    categoryNodeType *categoryNodePtr = node;

@@ -123,7 +123,7 @@ public:
     void parseJsonAlarmListInfo(const Json::Value& object, alarmListType& alarmList);
     void parseJsonConfigInfo(const Json::Value& objec, ConfigType& configDetail);
 
-//    void creatCategoryNode(categoryNodeType *node, Node* parentNode, TreeModel *model);
+//    void creatCategoryNode(categoryNodeType *node, Node* parentNode, MeetingListModel *model);
 //    Q_INVOKABLE void jointUserInfo();
 
 //    void createMeetingListNode();
@@ -144,7 +144,7 @@ signals:
 //    void imServerPortChanged();
 //    void loginRequestSuccess();
 //    void configInfoObjectChanged();
-//    void dealUserInfoSignal(TreeModel *model);
+//    void dealUserInfoSignal(MeetingListModel *model);
 
 //    void loginStatus(QString status);
 //    void getUserDetailSignal();
@@ -167,7 +167,7 @@ public slots:
     void networkReplyError(QNetworkReply::NetworkError error);
 
 
-//    void dealUserInfo(TreeModel *model);
+//    void dealUserInfo(MeetingListModel *model);
 //    void dealUserLogin(QString status);
 //    void querySelectedNodeInfo(QString modelName, Node::nodeInfoType node, qint32 type);
 private:
