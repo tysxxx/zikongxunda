@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 
-    QWSServer::setBackground(QColor(0, 0, 0, 0));
+    QWSServer::setBackground(Qt::transparent);
 
     QApplication app(argc, argv);
     app.setFont(loadFontFamily());

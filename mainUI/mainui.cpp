@@ -6,6 +6,7 @@
 #include <QPainter>
 
 QStackedLayout *MainUi::stackedLayout = nullptr;
+MainUi::LayoutMode MainUi::currLayoutMode = MainUi::LayoutMode::one;
 
 MainUi::MainUi(QRect rect, QWidget *parent) : QWidget(parent)
 {
@@ -117,6 +118,7 @@ void MainUi::init()
     centerFrame->setGeometry(leftFrame->width()+1, topFrame->height()+1, width()-leftFrame->width(), height()-topFrame->height());
     centerFrame->setStyleSheet(tr(".QFrame{background-color: transparent;}"));
 
+    localMonitorUi = new LocalMonitorUi(centerFrame->rect());
     intercomUi = new IntercomUi(centerFrame->rect());
     intercomUi->init();
     videoMeetingUi = new VideoMeetingUi(centerFrame->rect());
@@ -124,23 +126,27 @@ void MainUi::init()
     videoReviewUi = new VideoReviewUi(centerFrame->rect());
 
     stackedLayout = new QStackedLayout(centerFrame);
-    stackedLayout->addWidget(&oneScreenUi);
-    stackedLayout->addWidget(&twoScreenUi);
-    stackedLayout->addWidget(&fourScreenUi);
-    stackedLayout->addWidget(&nineScreenUi);
-    stackedLayout->addWidget(&sixteenScreenUi);
+    stackedLayout->addWidget(localMonitorUi);
+    stackedLayout->addWidget(localMonitorUi);
+    stackedLayout->addWidget(localMonitorUi);
+    stackedLayout->addWidget(localMonitorUi);
+    stackedLayout->addWidget(localMonitorUi);
     stackedLayout->addWidget(intercomUi);
     stackedLayout->addWidget(videoMeetingUi);
     stackedLayout->addWidget(MapUi);
     stackedLayout->addWidget(videoReviewUi);
 
-    stackedLayout->setCurrentWidget(&fourScreenUi);
+    stackedLayout->setCurrentIndex(0);
+    //stackedLayout->setCurrentWidget(localMonitorUi);
+    mainMenuUi = MainMenuUi::localMonitorUi;
 
     //其他
     QTimer *timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(timerUpdate()));
     timer->start(1000);
 
+    //初始化设备接口
+    hisiInit(hisiDeviceInfo);
 }
 
 //重载paintEvent事件
@@ -188,7 +194,6 @@ void MainUi::btnClickedSlot(QAbstractButton* button)
 //布局分屏模式
 void MainUi::layoutSwitchMode(LayoutMode layoutMode)
 {
-
     switch (layoutMode) {
     case LayoutMode::one:
         stackedLayout->setCurrentIndex(0);
@@ -208,48 +213,76 @@ void MainUi::layoutSwitchMode(LayoutMode layoutMode)
     default:
         break;
     }
+
+    currLayoutMode = layoutMode;
 }
 
 //本地监控
 void MainUi::localMonitorBtnClickedSlot()
 {
-    //计算窗口放置的位置
-    QRect rect(leftFrame->width()+2,
-               localMonitorBtn->y()+topFrame->height(),
-                250,
-                264);
+    if(mainMenuUi == MainMenuUi::localMonitorUi){
+        //计算窗口放置的位置
+        QRect rect(leftFrame->width()+2,
+                   localMonitorBtn->y()+topFrame->height(),
+                    250,
+                    264);
 
-    if(localMonitorMenu){
-        localMonitorMenu->close();
-        localMonitorMenu = nullptr;
-    }else{
-        localMonitorMenu = new LocalMonitorMenu(rect);
-        localMonitorMenu->setGeometry(rect);
-        localMonitorMenu->show();
+        if(localMonitorMenu){
+            localMonitorMenu->close();
+            localMonitorMenu = nullptr;
+        }else{
+            localMonitorMenu = new LocalMonitorMenu(rect);
+            localMonitorMenu->setGeometry(rect);
+            localMonitorMenu->show();
+        }
+    }
+    else{
+        mainMenuUi = MainMenuUi::localMonitorUi;
+        layoutSwitchMode(currLayoutMode);
     }
 }
 
 //互动
 void MainUi::intercomBtnClickedSlot()
 {
+    if(localMonitorMenu){
+        localMonitorMenu->close();
+        localMonitorMenu = nullptr;
+    }
+    mainMenuUi = MainMenuUi::intercomUi;
     stackedLayout->setCurrentWidget(intercomUi);
 }
 
 //视频会议
 void MainUi::videoMeetingBtnClickedSlot()
 {
+    if(localMonitorMenu){
+        localMonitorMenu->close();
+        localMonitorMenu = nullptr;
+    }
+    mainMenuUi = MainMenuUi::videoMeetingUi;
     stackedLayout->setCurrentWidget(videoMeetingUi);
 }
 
 //地图
 void MainUi::mapBtnClickedSlot()
 {
+    if(localMonitorMenu){
+        localMonitorMenu->close();
+        localMonitorMenu = nullptr;
+    }
+    mainMenuUi = MainMenuUi::mapUi;
     stackedLayout->setCurrentWidget(MapUi);
 }
 
 //录像查询
 void MainUi::videoConsultBtnClickedSlot()
 {
+    if(localMonitorMenu){
+        localMonitorMenu->close();
+        localMonitorMenu = nullptr;
+    }
+    mainMenuUi = MainMenuUi::videoReviewUi;
     stackedLayout->setCurrentWidget(videoReviewUi);
 }
 

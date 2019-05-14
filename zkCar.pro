@@ -46,16 +46,15 @@ SOURCES += main.cpp\
     videoReview/videoinfotableui.cpp \
     videoReview/videoplayui.cpp \
     videoReview/videoreviewui.cpp \
-    intercom/qflowlayout.cpp
+    intercom/qflowlayout.cpp \
+    localMonitor/localmonitorui.cpp \
+    hisiInterface/hisiinterface.cpp
 
 HEADERS  += mainwidget.h \
     onescreen.h \
     fourscreen.h \
     window_common.h \
-    #button_localvedio_listwidget.h \
     nofocusrectstyle.h \
-    #localVedioMenu.h \
-    #screenModeMenu.h \
     pushButtonMenu.h \
     windowdefine.h \
     zkCarDevEnginge.h \
@@ -83,7 +82,9 @@ HEADERS  += mainwidget.h \
     videoReview/videoinfotableui.h \
     videoReview/videoplayui.h \
     videoReview/videoreviewui.h \
-    intercom/qflowlayout.h
+    intercom/qflowlayout.h \
+    localMonitor/localmonitorui.h \
+    hisiInterface/hisiinterface.h
 
 FORMS    += mainwidget.ui \
     onescreen.ui \

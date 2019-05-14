@@ -114,7 +114,7 @@ void LayoutSwitchMenu::paintEvent(QPaintEvent *)
 void LayoutSwitchMenu::btnClickedSlot(QAbstractButton* button)
 {
     buttonGroup->button(lastBtnId)->setStyleSheet("QPushButton{height: 40px; background-color: transparent; color: white;"
-                                                  " font: 21px; text-align:left; padding-left: 69px}");
+                                                  "font: 21px; text-align:left; padding-left: 69px}");
     button->setStyleSheet("QPushButton{height: 40px; background-color: #649bf1; color: white;"
                           "font: 21px; text-align:left; padding-left: 69px}");
     lastBtnId = buttonGroup->id(button);

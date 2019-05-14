@@ -22,6 +22,8 @@
 #include "electronicMap.h"
 #include "videoMeeting/videomeetingui.h"
 #include "videoReview/videoreviewui.h"
+#include "localMonitor/localmonitorui.h"
+#include "hisiInterface/hisiinterface.h"
 
 class MainUi : public QWidget
 {
@@ -29,6 +31,15 @@ class MainUi : public QWidget
 public:
     explicit MainUi(QRect rect,QWidget *parent = 0);
     ~MainUi();
+
+    enum class MainMenuUi{
+        localMonitorUi,
+        intercomUi,
+        videoMeetingUi,
+        mapUi,
+        videoReviewUi,
+        settingUi,
+    };
 
     enum class LayoutMode{
         one,
@@ -84,6 +95,11 @@ private:
     IntercomUi *intercomUi;
     LoginUi *loginUiInstance=nullptr;
     static QStackedLayout *stackedLayout;
+    LocalMonitorUi *localMonitorUi;
+
+    HisiDeviceInfoType hisiDeviceInfo;
+    MainMenuUi mainMenuUi = MainMenuUi::localMonitorUi;
+    static LayoutMode currLayoutMode;
 };
 
 #endif // MAINUI_H

@@ -10,7 +10,7 @@ VideoMeetingListItem::VideoMeetingListItem()
 
 QWidget* VideoMeetingListItem::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    return new ItemEditor;
+    return new ItemEditor(parent);
 }
 
 void VideoMeetingListItem::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
