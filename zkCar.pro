@@ -37,7 +37,16 @@ SOURCES += main.cpp\
     localMonitor/localmonitormenu.cpp \
     localMonitor/layoutswitchmenu.cpp \
     login/loginui.cpp \
-    intercom/intercomui.cpp
+    intercom/intercomui.cpp \
+    mainUI/mainui.cpp \
+    videoMeeting/itemeditor.cpp \
+    videoMeeting/meetingModel.cpp \
+    videoMeeting/videomeetinglistitem.cpp \
+    videoMeeting/videomeetingui.cpp \
+    videoReview/videoinfotableui.cpp \
+    videoReview/videoplayui.cpp \
+    videoReview/videoreviewui.cpp \
+    intercom/qflowlayout.cpp
 
 HEADERS  += mainwidget.h \
     onescreen.h \
@@ -65,7 +74,16 @@ HEADERS  += mainwidget.h \
     localMonitor/localmonitormenu.h \
     localMonitor/layoutswitchmenu.h \
     login/loginui.h \
-    intercom/intercomui.h
+    intercom/intercomui.h \
+    mainUI/mainui.h \
+    videoMeeting/itemeditor.h \
+    videoMeeting/meetingModel.h \
+    videoMeeting/videomeetinglistitem.h \
+    videoMeeting/videomeetingui.h \
+    videoReview/videoinfotableui.h \
+    videoReview/videoplayui.h \
+    videoReview/videoreviewui.h \
+    intercom/qflowlayout.h
 
 FORMS    += mainwidget.ui \
     onescreen.ui \
