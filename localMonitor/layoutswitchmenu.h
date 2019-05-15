@@ -7,6 +7,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
+#include "common/common.h"
 
 class LayoutSwitchMenu : public QFrame
 {
@@ -16,6 +17,9 @@ public:
 
     void init();
     void paintEvent(QPaintEvent *);
+signals:
+    void layoutSwitchChanged(LayoutMode layoutMode);
+
 private slots:
     void oneBtnClickedSlot();
     void twoBtnClickedSlot();

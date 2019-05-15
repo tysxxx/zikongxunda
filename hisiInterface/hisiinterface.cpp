@@ -14,7 +14,7 @@ void hisiInit(HisiDeviceInfoType &hisiDeviceInfo)
     getdeviceList(hisiDeviceInfo);
 
     //打开本地录像录制
-    openAllVideoRecord(hisiDeviceInfo.localVideoDeviceList);
+    openAllLocalVideoRecord(hisiDeviceInfo.localVideoDeviceList);
 }
 
 //@.获取底层设备列表，即接口有哪些摄像头等设备
@@ -50,7 +50,7 @@ void getdeviceList(HisiDeviceInfoType &deviceInfo)
 }
 
 //打开本地所有视频设备的录制
-void openAllVideoRecord(QList<DEVICEINFO_S> &localVideoDeviceList)
+void openAllLocalVideoRecord(QList<DEVICEINFO_S> &localVideoDeviceList)
 {
     for(auto device: localVideoDeviceList){
         zkCarDevEngine::instance()->zkRecordMp4(device.devType, device.devId, RECORD_LOOP, LITTLESTREAM, LOCAL_VIDEO_RECORD_PATH, 60);

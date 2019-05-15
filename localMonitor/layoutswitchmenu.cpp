@@ -6,6 +6,7 @@
 #include <QImage>
 #include "mainwidget.h"
 #include "mainUI/mainui.h"
+#include "common/common.h"
 
 LayoutSwitchMenu::LayoutSwitchMenu(QRect rect)
 {
@@ -134,31 +135,31 @@ void LayoutSwitchMenu::btnClickedSlot(QAbstractButton* button)
 //一分屏按键处理
 void LayoutSwitchMenu::oneBtnClickedSlot()
 {
-    MainUi::layoutSwitchMode(MainUi::LayoutMode::one);
+    layoutSwitchChanged(LayoutMode::one);
 }
 
 //二分屏按键处理
 void LayoutSwitchMenu::twoBtnClickedSlot()
 {
-    MainUi::layoutSwitchMode(MainUi::LayoutMode::two);
+    layoutSwitchChanged(LayoutMode::two);
 }
 
 //四分屏按键处理
 void LayoutSwitchMenu::fourBtnClickedSlot()
 {
-    MainUi::layoutSwitchMode(MainUi::LayoutMode::four);
+    layoutSwitchChanged(LayoutMode::four);
 }
 
 //九分屏按键处理
 void LayoutSwitchMenu::nineBtnClickedSlot()
 {
-    MainUi::layoutSwitchMode(MainUi::LayoutMode::nine);
+    layoutSwitchChanged(LayoutMode::nine);
 }
 
 //十六分屏按键处理
 void LayoutSwitchMenu::sixteenBtnClickedSlot()
 {
-    MainUi::layoutSwitchMode(MainUi::LayoutMode::sixteen);
+    layoutSwitchChanged(LayoutMode::sixteen);
 }
 
 

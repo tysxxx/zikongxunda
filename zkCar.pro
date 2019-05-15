@@ -84,7 +84,8 @@ HEADERS  += mainwidget.h \
     videoReview/videoreviewui.h \
     intercom/qflowlayout.h \
     localMonitor/localmonitorui.h \
-    hisiInterface/hisiinterface.h
+    hisiInterface/hisiinterface.h \
+    common/common.h
 
 FORMS    += mainwidget.ui \
     onescreen.ui \

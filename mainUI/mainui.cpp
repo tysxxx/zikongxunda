@@ -5,9 +5,6 @@
 #include <QStyleOption>
 #include <QPainter>
 
-QStackedLayout *MainUi::stackedLayout = nullptr;
-MainUi::LayoutMode MainUi::currLayoutMode = MainUi::LayoutMode::one;
-
 MainUi::MainUi(QRect rect, QWidget *parent) : QWidget(parent)
 {
     //setGeometry(rect);
@@ -127,20 +124,15 @@ void MainUi::init()
 
     stackedLayout = new QStackedLayout(centerFrame);
     stackedLayout->addWidget(localMonitorUi);
-    stackedLayout->addWidget(localMonitorUi);
-    stackedLayout->addWidget(localMonitorUi);
-    stackedLayout->addWidget(localMonitorUi);
-    stackedLayout->addWidget(localMonitorUi);
     stackedLayout->addWidget(intercomUi);
     stackedLayout->addWidget(videoMeetingUi);
     stackedLayout->addWidget(MapUi);
     stackedLayout->addWidget(videoReviewUi);
 
-    stackedLayout->setCurrentIndex(0);
-    //stackedLayout->setCurrentWidget(localMonitorUi);
     mainMenuUi = MainMenuUi::localMonitorUi;
+    stackedLayout->setCurrentWidget(localMonitorUi);
 
-    //其他
+    //更新时间
     QTimer *timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(timerUpdate()));
     timer->start(1000);
@@ -194,27 +186,7 @@ void MainUi::btnClickedSlot(QAbstractButton* button)
 //布局分屏模式
 void MainUi::layoutSwitchMode(LayoutMode layoutMode)
 {
-    switch (layoutMode) {
-    case LayoutMode::one:
-        stackedLayout->setCurrentIndex(0);
-        break;
-    case LayoutMode::two:
-        stackedLayout->setCurrentIndex(1);
-        break;
-    case LayoutMode::four:
-        stackedLayout->setCurrentIndex(2);
-        break;
-    case LayoutMode::nine:
-        stackedLayout->setCurrentIndex(3);
-        break;
-    case LayoutMode::sixteen:
-        stackedLayout->setCurrentIndex(4);
-        break;
-    default:
-        break;
-    }
-
-    currLayoutMode = layoutMode;
+    localMonitorUi->layoutSwitchHandler(layoutMode);
 }
 
 //本地监控
@@ -233,12 +205,13 @@ void MainUi::localMonitorBtnClickedSlot()
         }else{
             localMonitorMenu = new LocalMonitorMenu(rect);
             localMonitorMenu->setGeometry(rect);
+            connect(localMonitorMenu, SIGNAL(layoutSwitchChanged(LayoutMode)), this, SLOT(layoutSwitchMode(LayoutMode)));
             localMonitorMenu->show();
         }
     }
     else{
         mainMenuUi = MainMenuUi::localMonitorUi;
-        layoutSwitchMode(currLayoutMode);
+        stackedLayout->setCurrentIndex(0);
     }
 }
 

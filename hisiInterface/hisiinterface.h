@@ -5,6 +5,8 @@
 #include "zkCarDevEnginge.h"
 #include <QList>
 #include <QVector>
+#include <QRect>
+#include <QWidget>
 
 enum DeviceType{
     allDevice = 0,
@@ -21,10 +23,19 @@ typedef struct _hisiDeviceInfo
 
 }HisiDeviceInfoType;
 
+typedef struct layoutWindowInfo
+{
+    QWidget *widget; //具体的窗口
+    qint64 windId; //窗口id
+    QRect  rect;   //窗口的位置
+    INPUT_DEV_TYPE_E devType; //窗口关联的摄像头的类型
+    qint32 devId; //窗口关联的摄像头id
+
+}LayoutWindowInfoType;
 
 void hisiInit(HisiDeviceInfoType &hisiDeviceInfo);
 void getdeviceList(HisiDeviceInfoType &deviceInfo);
-void openAllVideoRecord(QList<DEVICEINFO_S> &localVideoDeviceList);
+void openAllLocalVideoRecord(QList<DEVICEINFO_S> &localVideoDeviceList);
 
 #endif // HISIINTERFACE_H
 

@@ -4,6 +4,10 @@
 #include <QWidget>
 #include <QGridLayout>
 #include <QStackedLayout>
+#include <QVector>
+#include "common/common.h"
+#include "hisiInterface/hisiinterface.h"
+#include <QEvent>
 
 class LocalMonitorUi : public QWidget
 {
@@ -13,6 +17,9 @@ public:
 
     void paintEvent(QPaintEvent *);
     void init();
+    void layoutSwitchHandler(LayoutMode layoutMode);
+    void localVideoWinShow();
+    bool eventFilter(QObject *, QEvent *);
 signals:
 
 public slots:
@@ -20,6 +27,11 @@ public slots:
 private:
     QGridLayout *gridLayout;
     QStackedLayout *gridLayoutStackedLayout;
+
+    QVector<QWidget*> widgetVector;
+    QVector<LayoutWindowInfoType*> layoutWindowInfoVector;
+    quint8 row;
+    quint8 column;
 };
 
 #endif // LOCALMONITORUI_H

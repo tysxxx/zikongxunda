@@ -145,6 +145,7 @@ void LocalMonitorMenu::layoutSwitchBtnClickedSlot()
 
     layoutSwitchMenu = new LayoutSwitchMenu(rect);
     layoutSwitchMenu->setGeometry(rect);
+    connect(layoutSwitchMenu, SIGNAL(layoutSwitchChanged(LayoutMode)), this, SIGNAL(layoutSwitchChanged(LayoutMode)));
     layoutSwitchMenu->show();
 }
 

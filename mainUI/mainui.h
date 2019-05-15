@@ -24,6 +24,7 @@
 #include "videoReview/videoreviewui.h"
 #include "localMonitor/localmonitorui.h"
 #include "hisiInterface/hisiinterface.h"
+#include "common/common.h"
 
 class MainUi : public QWidget
 {
@@ -41,17 +42,9 @@ public:
         settingUi,
     };
 
-    enum class LayoutMode{
-        one,
-        two,
-        four,
-        nine,
-        sixteen,
-    };
-
     void init();
     void paintEvent(QPaintEvent *);
-    static void layoutSwitchMode(LayoutMode layoutMode);
+
 signals:
 
 public slots:
@@ -63,6 +56,7 @@ public slots:
     void videoConsultBtnClickedSlot();
     void btnClickedSlot(QAbstractButton* button);
     void timerUpdate();
+    void layoutSwitchMode(LayoutMode layoutMode);
 private:
     QPushButton *loginBtn;
     QLabel *timeLabel;
@@ -94,12 +88,11 @@ private:
     LocalMonitorMenu *localMonitorMenu=nullptr;
     IntercomUi *intercomUi;
     LoginUi *loginUiInstance=nullptr;
-    static QStackedLayout *stackedLayout;
+    QStackedLayout *stackedLayout;
     LocalMonitorUi *localMonitorUi;
 
     HisiDeviceInfoType hisiDeviceInfo;
     MainMenuUi mainMenuUi = MainMenuUi::localMonitorUi;
-    static LayoutMode currLayoutMode;
 };
 
 #endif // MAINUI_H

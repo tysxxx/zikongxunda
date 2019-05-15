@@ -9,6 +9,7 @@
 #include <QFileDialog>
 #include <QScrollArea>
 #include "layoutswitchmenu.h"
+#include "common/common.h"
 
 class LocalMonitorMenu : public QFrame
 {
@@ -21,6 +22,10 @@ public:
     void paintEvent(QPaintEvent *);
     void focusInEvent(QFocusEvent *);
     void focusOutEvent(QFocusEvent *);
+
+signals:
+    void layoutSwitchChanged(LayoutMode layoutMode);
+
 private slots:
     void grapBtnClickedSlot();
     void layoutSwitchBtnClickedSlot();
