@@ -24,23 +24,23 @@ void IntercomUi::init()
     //界面设置
     setWindowFlags((Qt::FramelessWindowHint));
     setAttribute(Qt::WA_TranslucentBackground);
-    setStyleSheet(".QWidget{background-color: transparent;}");
+    //setStyleSheet(".QWidget{background-color: transparent;}");
 
     //左侧窗口
         //@.按键
     userInteractBtn = new QPushButton(tr("互动对讲"));
     userInteractBtn->setProperty("valid", true);
     userInteractBtn->setStyleSheet("QPushButton{border: 2px solid white; border-right:none; \
-                                    border-top-left-radius: 10px; border-bottom-left-radius: 10px; \
-                                    background-color: transparent; color: white; height: 46px; width: 137px; font:21px}"
+                                                border-top-left-radius: 10px; border-bottom-left-radius: 10px; \
+                                                background-color: transparent; color: white; height: 46px; width: 137px; font:21px}"
                                    "QPushButton[valid=true]{background-color: #649bf1;}");
 
     groupInteractBtn = new QPushButton(tr("群组对讲"));
     groupInteractBtn->setProperty("valid", false);
     groupInteractBtn->setStyleSheet("QPushButton{border: 2px solid white; border-left:none; \
-                                   border-top-right-radius: 10px; border-bottom-right-radius: 10px; \
-                                   background-color: transparent; color: white; height: 46px; width:137px; font:21px}"
-                                   "QPushButton[valid=true]{background-color: #649bf1;}");
+                                                 border-top-right-radius: 10px; border-bottom-right-radius: 10px; \
+                                                 background-color: transparent; color: white; height: 46px; width:137px; font:21px}"
+                                    "QPushButton[valid=true]{background-color: #649bf1;}");
 
     buttonGroup = new QButtonGroup;
     buttonGroup->addButton(userInteractBtn);
@@ -229,13 +229,13 @@ void IntercomUi::init()
 }
 
 //重载paintEvent事件
-void IntercomUi::paintEvent(QPaintEvent *)
-{
-    QStyleOption opt;
-    opt.init(this);
-    QPainter painter(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
-}
+//void IntercomUi::paintEvent(QPaintEvent *)
+//{
+//    QStyleOption opt;
+//    opt.init(this);
+//    QPainter painter(this);
+//    style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
+//}
 
 //按键处理
 void IntercomUi::btnClickedSlot(QAbstractButton* button)

@@ -19,11 +19,10 @@ class VideoReviewUi : public QWidget
 {
     Q_OBJECT
 public:
-    explicit VideoReviewUi(QRect rect, QWidget *parent = nullptr);
+    VideoReviewUi(QRect rect = QRect(), QWidget *parent = nullptr);
     ~VideoReviewUi();
 
     void init();
-    void paintEvent(QPaintEvent *);
 signals:
 
 private slots:

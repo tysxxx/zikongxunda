@@ -18,11 +18,11 @@ class IntercomUi : public QWidget
 {
     Q_OBJECT
 public:
-    explicit IntercomUi(QRect rect, QWidget *parent = nullptr);
+    IntercomUi(QRect rect = QRect(), QWidget *parent = nullptr);
     ~IntercomUi();
 
     void init();
-    void paintEvent(QPaintEvent *);
+    //void paintEvent(QPaintEvent *);
 signals:
 
 private slots:

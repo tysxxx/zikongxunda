@@ -8,12 +8,13 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include "common/common.h"
+#include "manager/manager.h"
 
 class LayoutSwitchMenu : public QFrame
 {
     Q_OBJECT
 public:
-    LayoutSwitchMenu(QRect rect);
+    LayoutSwitchMenu(QRect rect = QRect());
 
     void init();
     void paintEvent(QPaintEvent *);
@@ -36,6 +37,8 @@ private:
     QPushButton *sixteenBtn;
     QButtonGroup *buttonGroup;
     int lastBtnId;
+
+    QSharedPointer<Manager> manager;
 };
 
 #endif // LAYOUTSWITCHMENU_H

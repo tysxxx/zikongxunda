@@ -4,7 +4,6 @@
 #include <QDebug>
 #include <QLabel>
 #include <QDir>
-#include "windowdefine.h"
 
 LocalMonitorMenu::LocalMonitorMenu(QRect rect)
 {
@@ -17,7 +16,6 @@ LocalMonitorMenu::~LocalMonitorMenu()
 {
     if(layoutSwitchMenu)
         layoutSwitchMenu->close();
-    layoutSwitchMenu = nullptr;
 }
 
 //初始化
@@ -98,11 +96,8 @@ void LocalMonitorMenu::btnClickedSlot(QAbstractButton* button)
 
     //先关闭
     if(button != layoutSwitchBtn)
-    {
         if(layoutSwitchMenu)
             layoutSwitchMenu->close();
-        layoutSwitchMenu = nullptr;
-    }
 
     if(lastBtnId == buttonGroup->id(grabBtn)){
          grapBtnClickedSlot();
@@ -120,33 +115,30 @@ void LocalMonitorMenu::btnClickedSlot(QAbstractButton* button)
 //抓拍按键处理
 void LocalMonitorMenu::grapBtnClickedSlot()
 {
-    list<DEVICEINFO_S> dev_list;
-    zkCarDevEngine::instance()->get_dev_list(&dev_list); //获取设备列表
+//    list<DEVICEINFO_S> dev_list;
+//    zkCarDevEngine::instance()->get_dev_list(&dev_list); //获取设备列表
 
-    list<DEVICEINFO_S>::iterator it = dev_list.begin();
-    for(;it != dev_list.end();++it)
-    {
-        zkCarDevEngine::instance()->zkTakePicture((*it).devType,(*it).devId);
-    }
+//    list<DEVICEINFO_S>::iterator it = dev_list.begin();
+//    for(;it != dev_list.end();++it)
+//    {
+//        zkCarDevEngine::instance()->zkTakePicture((*it).devType,(*it).devId);
+//    }
 }
 
 //布局按键处理
 void LocalMonitorMenu::layoutSwitchBtnClickedSlot()
 {
-    qDebug() << "layoutSwitchBtnClickedSlot";
-    if(layoutSwitchMenu)
-        return;
+    if(!layoutSwitchMenu){
+        //设置窗口的位置
+        QRect rect(geometry().x() + geometry().width() + 1,
+                   geometry().y(),
+                   217,
+                   308);
 
-    //设置窗口的位置
-    QRect rect(geometry().x() + geometry().width() + 5,
-               geometry().y(),
-               217,
-               308);
-
-    layoutSwitchMenu = new LayoutSwitchMenu(rect);
-    layoutSwitchMenu->setGeometry(rect);
-    connect(layoutSwitchMenu, SIGNAL(layoutSwitchChanged(LayoutMode)), this, SIGNAL(layoutSwitchChanged(LayoutMode)));
-    layoutSwitchMenu->show();
+        layoutSwitchMenu = new LayoutSwitchMenu(rect);
+        layoutSwitchMenu->setGeometry(rect);
+        layoutSwitchMenu->show();
+    }
 }
 
 //本地录像处理

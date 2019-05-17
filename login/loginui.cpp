@@ -18,7 +18,7 @@ LoginUi::~LoginUi()
 
 void LoginUi::closeEvent(QCloseEvent *)
 {
-    emit loginUiClose();
+
 }
 
 //初始化
@@ -27,6 +27,7 @@ void LoginUi::init()
     //界面设置
     setWindowModality(Qt::WindowModal);
     setAttribute(Qt::WA_DeleteOnClose);
+    //setStyleSheet(".QDialog{background-color: white;}");
 
     loginTitle = new QLabel(tr("登录"));
     loginTitle->setAlignment(Qt::AlignCenter);
@@ -67,15 +68,6 @@ void LoginUi::init()
     connect(logoutBtn, SIGNAL(clicked()), this, SLOT(logoutBtn_clicked_slot()));
 }
 
-//重载paintEvent事件
-void LoginUi::paintEvent(QPaintEvent *)
-{
-    QStyleOption opt;
-    opt.init(this);
-    QPainter p(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-}
-
 
 //登录
 void LoginUi::loginBtn_clicked_slot()
@@ -90,10 +82,8 @@ void LoginUi::loginBtn_clicked_slot()
 //    NetworkManager::instance()->login(loginUser->text(), loginPasswd->text());
 }
 
-
 //退出
 void LoginUi::logoutBtn_clicked_slot()
 {
-    qDebug("logout");
     NetworkManager::instance()->logout();
 }

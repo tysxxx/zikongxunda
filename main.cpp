@@ -1,14 +1,15 @@
-#include "mainwidget.h"
 #include <QApplication>
 #include <QTextCodec>
 #include <QDebug>
-#include "nofocusrectstyle.h"
 #include "zkCarDevEnginge.h"
 #include <QFontDatabase>
 #include <QFile>
 #include <QtPlugin>
+#include <QWSServer>
 #include <QDesktopWidget>
 #include "mainUI/mainui.h"
+#include "common/nofocusrectstyle.h"
+#include "manager/ui.h"
 
 QString loadFontFamily();
 #define FONT_PATH   "/mnt/Anyv/php/htdocs/storage/qt4.8_arm_share/lib/font/SourceHanSans-Regular.otf"
@@ -30,24 +31,8 @@ int main(int argc, char *argv[])
     NoFocusRectStyle *style = new NoFocusRectStyle(app.style());//去掉控件被选中时的虚线框
     app.setStyle(style);
 
-    QRect rect;
-    //获取屏幕尺寸
-    QDesktopWidget *desktopWidget = QApplication::desktop();
-    if(desktopWidget){
-        rect = desktopWidget->availableGeometry();
-        qDebug() << "availableGeometry: " << rect;
-    }
-
-//    MainWidget mainWidget;
-//    mainWidget.setGeometry(rect);
-//    mainWidget.init();//只有在show以后才能获取到窗口的真实尺寸
-//    mainWidget.show();
-
-    //rect.setHeight(rect.height()-1);
-    MainUi mainUi(rect);
-    mainUi.setGeometry(rect);
-    mainUi.init();
-    mainUi.show();
+    UI ui;
+    ui.initUi();
 
     return app.exec();
 }

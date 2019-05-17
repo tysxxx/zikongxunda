@@ -26,8 +26,7 @@ typedef struct _hisiDeviceInfo
 typedef struct layoutWindowInfo
 {
     QWidget *widget; //具体的窗口
-    qint64 windId; //窗口id
-    QRect  rect;   //窗口的位置
+    qint32 windId;
     INPUT_DEV_TYPE_E devType; //窗口关联的摄像头的类型
     qint32 devId; //窗口关联的摄像头id
 

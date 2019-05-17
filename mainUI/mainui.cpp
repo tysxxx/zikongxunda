@@ -7,9 +7,7 @@
 
 MainUi::MainUi(QRect rect, QWidget *parent) : QWidget(parent)
 {
-    //setGeometry(rect);
-    //setGeometry(100, 100, 500, 500);
-    //init();
+
 }
 
 MainUi::~MainUi()
@@ -20,12 +18,9 @@ MainUi::~MainUi()
 //初始化
 void MainUi::init()
 {
-    qDebug() << "mainUi: " << geometry();
-
     //界面设置
     setWindowFlags((Qt::FramelessWindowHint));
     setAttribute(Qt::WA_TranslucentBackground);
-    setStyleSheet(".QWidget{background-color: transparent;}");
 
     //顶部窗口
     QLabel *logoIcon = new QLabel;
@@ -63,7 +58,7 @@ void MainUi::init()
 
     topFrame = new QFrame(this);
     topFrame->setGeometry(0, 0, width(), 57);
-    topFrame->setStyleSheet(tr("QFrame{background-color: #040b17;}"));
+    topFrame->setStyleSheet(tr(".QFrame{background-color: #040b17;}"));
     topFrame->setLayout(topHBoxLayout);
 
     //左侧窗口
@@ -107,55 +102,42 @@ void MainUi::init()
 
     leftFrame = new QFrame(this);
     leftFrame->setGeometry(0, topFrame->height()+1, 184, height()-(topFrame->height()+1));
-    leftFrame->setStyleSheet(tr("QFrame{background-color: #040b17;}"));
+    leftFrame->setStyleSheet(tr(".QFrame{background-color: #040b17;}"));
     leftFrame->setLayout(leftVBoxLayout);
 
     //中间窗口
     centerFrame = new QFrame(this);
     centerFrame->setGeometry(leftFrame->width()+1, topFrame->height()+1, width()-leftFrame->width(), height()-topFrame->height());
     centerFrame->setStyleSheet(tr(".QFrame{background-color: transparent;}"));
-
-    localMonitorUi = new LocalMonitorUi(centerFrame->rect());
-    intercomUi = new IntercomUi(centerFrame->rect());
-    intercomUi->init();
-    videoMeetingUi = new VideoMeetingUi(centerFrame->rect());
-    MapUi = new electronicMap();
-    videoReviewUi = new VideoReviewUi(centerFrame->rect());
-
     stackedLayout = new QStackedLayout(centerFrame);
-    stackedLayout->addWidget(localMonitorUi);
-    stackedLayout->addWidget(intercomUi);
-    stackedLayout->addWidget(videoMeetingUi);
-    stackedLayout->addWidget(MapUi);
-    stackedLayout->addWidget(videoReviewUi);
-
-    mainMenuUi = MainMenuUi::localMonitorUi;
-    stackedLayout->setCurrentWidget(localMonitorUi);
 
     //更新时间
     QTimer *timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(timerUpdate()));
     timer->start(1000);
-
-    //初始化设备接口
-    hisiInit(hisiDeviceInfo);
 }
 
-//重载paintEvent事件
-void MainUi::paintEvent(QPaintEvent *)
+//向中间区域添加窗口
+void MainUi::addCenterWidget(QWidget *widget, MainMenuUi menuUi)
 {
-    QStyleOption opt;
-    opt.init(this);
-    QPainter p(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+    currMenuUi[menuUi] = widget;
+    stackedLayout->addWidget(widget);
+}
+
+//设置当前中间窗口
+void MainUi::setCenterWidget(MainMenuUi menuUi)
+{
+    mainMenuUi = menuUi;
+    stackedLayout->setCurrentWidget(currMenuUi[menuUi]);
 }
 
 //登录
 void MainUi::loginBtnClickedSlot()
 {
-    loginUiInstance = new LoginUi(this);
-    loginUiInstance->open();
-    loginUiInstance = nullptr;
+    if(loginUi)
+        return;
+    loginUi = new LoginUi(this);
+    loginUi->open();
 }
 
 //按键组处理
@@ -164,99 +146,47 @@ void MainUi::btnClickedSlot(QAbstractButton* button)
     buttonGroup->button(lastBtnId)->setProperty("valid", false);
     buttonGroup->button(lastBtnId)->style()->polish(buttonGroup->button(lastBtnId));
     button->setProperty("valid", true);
+    button->style()->unpolish(button);
     button->style()->polish(button);
 
     lastBtnId = buttonGroup->id(button);
 
-    if(button == localMonitorBtn){
-         localMonitorBtnClickedSlot();
-    }else if(button == intercomBtn){
-        intercomBtnClickedSlot();
-    }else if(button == videoMeetingBtn){
-        videoMeetingBtnClickedSlot();
-    }else if(button == mapBtn){
-        mapBtnClickedSlot();
-    }else if(button == videoReviewBtn){
-        videoConsultBtnClickedSlot();
-    }else if(button == settingBtn){
+    //关闭本地监控菜单框
+    if(button != localMonitorBtn)
+        if(localMonitorMenu) localMonitorMenu->close();
 
-    }
-}
+    if(button == localMonitorBtn){ localMonitorBtnClickedSlot(); return;}
+    else if(button == intercomBtn) mainMenuUi = MainMenuUi::intercomUi;
+    else if(button == videoMeetingBtn) mainMenuUi = MainMenuUi::videoMeetingUi;
+    else if(button == mapBtn) mainMenuUi = MainMenuUi::mapUi;
+    else if(button == videoReviewBtn) mainMenuUi = MainMenuUi::videoReviewUi;
+    else if(button == settingBtn) mainMenuUi = MainMenuUi::settingUi;
 
-//布局分屏模式
-void MainUi::layoutSwitchMode(LayoutMode layoutMode)
-{
-    localMonitorUi->layoutSwitchHandler(layoutMode);
+    stackedLayout->setCurrentWidget(currMenuUi[mainMenuUi]);
 }
 
 //本地监控
 void MainUi::localMonitorBtnClickedSlot()
 {
-    if(mainMenuUi == MainMenuUi::localMonitorUi){
+    if(mainMenuUi != MainMenuUi::localMonitorUi){
+        mainMenuUi = MainMenuUi::localMonitorUi;
+        stackedLayout->setCurrentWidget(currMenuUi[mainMenuUi]);
+        return;
+    }
         //计算窗口放置的位置
         QRect rect(leftFrame->width()+2,
                    localMonitorBtn->y()+topFrame->height(),
-                    250,
-                    264);
+                   250,
+                   264);
 
-        if(localMonitorMenu){
-            localMonitorMenu->close();
-            localMonitorMenu = nullptr;
-        }else{
+        if(!localMonitorMenu){
             localMonitorMenu = new LocalMonitorMenu(rect);
             localMonitorMenu->setGeometry(rect);
             connect(localMonitorMenu, SIGNAL(layoutSwitchChanged(LayoutMode)), this, SLOT(layoutSwitchMode(LayoutMode)));
             localMonitorMenu->show();
-        }
-    }
-    else{
-        mainMenuUi = MainMenuUi::localMonitorUi;
-        stackedLayout->setCurrentIndex(0);
-    }
-}
+        }else
+            localMonitorMenu->close();
 
-//互动
-void MainUi::intercomBtnClickedSlot()
-{
-    if(localMonitorMenu){
-        localMonitorMenu->close();
-        localMonitorMenu = nullptr;
-    }
-    mainMenuUi = MainMenuUi::intercomUi;
-    stackedLayout->setCurrentWidget(intercomUi);
-}
-
-//视频会议
-void MainUi::videoMeetingBtnClickedSlot()
-{
-    if(localMonitorMenu){
-        localMonitorMenu->close();
-        localMonitorMenu = nullptr;
-    }
-    mainMenuUi = MainMenuUi::videoMeetingUi;
-    stackedLayout->setCurrentWidget(videoMeetingUi);
-}
-
-//地图
-void MainUi::mapBtnClickedSlot()
-{
-    if(localMonitorMenu){
-        localMonitorMenu->close();
-        localMonitorMenu = nullptr;
-    }
-    mainMenuUi = MainMenuUi::mapUi;
-    stackedLayout->setCurrentWidget(MapUi);
-}
-
-//录像查询
-void MainUi::videoConsultBtnClickedSlot()
-{
-    if(localMonitorMenu){
-        localMonitorMenu->close();
-        localMonitorMenu = nullptr;
-    }
-    mainMenuUi = MainMenuUi::videoReviewUi;
-    stackedLayout->setCurrentWidget(videoReviewUi);
 }
 
 //时间更新

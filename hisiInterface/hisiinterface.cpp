@@ -9,12 +9,13 @@ void hisiInit(HisiDeviceInfoType &hisiDeviceInfo)
 {
     //初始化设备
     zkCarDevEngine::instance()->device_init();
-
+    qDebug() << "devie_init()";
     //获取设备列表
     getdeviceList(hisiDeviceInfo);
+    qDebug() << "getdevicelist()";
 
     //打开本地录像录制
-    openAllLocalVideoRecord(hisiDeviceInfo.localVideoDeviceList);
+    //openAllLocalVideoRecord(hisiDeviceInfo.localVideoDeviceList);
 }
 
 //@.获取底层设备列表，即接口有哪些摄像头等设备
@@ -28,18 +29,19 @@ void getdeviceList(HisiDeviceInfoType &deviceInfo)
 
     //打印获取到的设备信息
     for(list<DEVICEINFO_S>::iterator iterator = pDeviceList.begin(); iterator != pDeviceList.end(); ++iterator){
-        qDebug() << "devType: " << (*iterator).devType
+        qDebug() << "---devType: " << (*iterator).devType
                  << "\tdevid: " << (*iterator).devId
                  << "\tdevname:" << (*iterator).devName;
     }
 
     for(auto device: deviceInfo.allDeviceList)
     {
-        qDebug() << "devType: " << device.devType
-                 << "\tdevid: " << device.devId
-                 << "\tdevname:" << device.devName;
         if(device.devType == LOCAL_VEDIO) //等于本地视频
         {
+            qDebug() << "local video";
+            qDebug() << "devType: " << device.devType
+                 << "\tdevid: " << device.devId
+                 << "\tdevname:" << device.devName;
             deviceInfo.localVideoDeviceList.append(device);
         }
         else if(device.devType == LOCAL_AUDIO) //等于本地音频

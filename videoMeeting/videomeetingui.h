@@ -13,7 +13,7 @@ class VideoMeetingUi : public QWidget
 {
     Q_OBJECT
 public:
-    explicit VideoMeetingUi(QRect rect, QWidget *parent = 0);
+    VideoMeetingUi(QRect rect = QRect(), QWidget *parent = 0);
     ~VideoMeetingUi();
 
     void init();

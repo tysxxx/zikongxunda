@@ -4,7 +4,6 @@
 #include <QDebug>
 #include <QIcon>
 #include <QImage>
-#include "mainwidget.h"
 #include "mainUI/mainui.h"
 #include "common/common.h"
 
@@ -19,7 +18,7 @@ void LayoutSwitchMenu::init()
 {
     //窗口设置背景和形状
     setWindowFlags((Qt::FramelessWindowHint));
-    setAttribute(Qt::WA_TranslucentBackground);
+    //setAttribute(Qt::WA_TranslucentBackground);
     setAttribute(Qt::WA_DeleteOnClose);
     setStyleSheet("QFrame{border-radius:10px; background:rgba(4, 11, 23, 80%);}"); //必须使用%
 
@@ -100,6 +99,10 @@ void LayoutSwitchMenu::init()
     btnLayout->addStretch(10);
 
     setLayout(btnLayout);
+
+    //管理控制
+    manager = Manager::instance();
+    connect(this, SIGNAL(layoutSwitchChanged(LayoutMode)), manager.data(), SIGNAL(layoutSwitchChanged(LayoutMode)));
 }
 
 //重载paintEvent事件

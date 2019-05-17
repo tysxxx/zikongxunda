@@ -5,33 +5,34 @@
 #include <QGridLayout>
 #include <QStackedLayout>
 #include <QVector>
-#include "common/common.h"
-#include "hisiInterface/hisiinterface.h"
 #include <QEvent>
+#include "common/common.h"
+#include "manager/manager.h"
 
 class LocalMonitorUi : public QWidget
 {
     Q_OBJECT
 public:
-    explicit LocalMonitorUi(QRect rect, QWidget *parent = 0);
+    LocalMonitorUi(QRect rect = QRect(), QWidget *parent = 0);
 
-    void paintEvent(QPaintEvent *);
     void init();
-    void layoutSwitchHandler(LayoutMode layoutMode);
-    void localVideoWinShow();
+
     bool eventFilter(QObject *, QEvent *);
 signals:
 
 public slots:
-
+    void layoutSwitchHandler(LayoutMode layoutMode);
 private:
     QGridLayout *gridLayout;
     QStackedLayout *gridLayoutStackedLayout;
 
-    QVector<QWidget*> widgetVector;
-    QVector<LayoutWindowInfoType*> layoutWindowInfoVector;
+    LayoutMode currLayoutMode;
+    QVector<LayoutWindowInfoType> layoutWindowInfoVector;
     quint8 row;
     quint8 column;
+    QSharedPointer<Manager> manager;
+
+    quint32 addWindId = 0;
 };
 
 #endif // LOCALMONITORUI_H

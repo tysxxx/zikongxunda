@@ -18,7 +18,13 @@ public:
 	//注册一个本地设备
 	bool regist_one_local_dev(INPUT_DEV_TYPE_E devType,int devId,char* devName);
 	//注册一个网络设备
-	int regist_one_remote_dev(INPUT_DEV_TYPE_E devType,ENCODE_TYPE_TYPE_E entype,VEDIO_SIZE_ST size,REMOTE_DEV_REGIST_INFO_ST* info);
+	int zkAddOneRemoteDev(INPUT_DEV_TYPE_E devType,int devId,const char* url);
+	//获取设备的注册信息
+	bool zkGetDevRegistInfo(INPUT_DEV_TYPE_E devType,int devId,void* regist_info);
+	//启动一个设备
+	bool zkStartDevice(INPUT_DEV_TYPE_E devType,int devId);
+	//停止一个设备
+	bool zkStopDevice(INPUT_DEV_TYPE_E devType,int devId);
 	//设置分屏模式,winNum:要分屏的总数，rect:显示区域总大小
 	bool zkSetShowModel(int winNum,RECT_ST* rect);
 	//设置单个显示窗口的位置尺寸,winNum:窗口号，rect:该窗口显示区域大小
@@ -30,13 +36,17 @@ public:
 	//清除标准分屏模式下的所有窗口
 	bool zkCleanStandardWindow();
 	//显示视频
-    bool zkShowVedio(INPUT_DEV_TYPE_E devType,int devId,long long winNum);
+	bool zkShowVedio(INPUT_DEV_TYPE_E devType,int devId,long long winFd);
 	//关闭显示
 	bool zkCloseShow(INPUT_DEV_TYPE_E devType,int devId);
 	//截屏
 	bool zkPrintScreen();
 	//拍照
 	bool zkTakePicture(INPUT_DEV_TYPE_E devType,int devId);
+	//获取视频编码数据
+	int zkGetEnData(INPUT_DEV_TYPE_E devType,int devId,VENC_STREAM_TYPE_E streamType,ENCODE_DATA_S* enData);
+	//停止获取视频编码数据
+	bool zkStopGetEnData(INPUT_DEV_TYPE_E devType,int devId,int enFd);
 	//录像
 	int zkRecordMp4(INPUT_DEV_TYPE_E devType,int devId,RECORD_MP4_TYPE_E recordType,VENC_STREAM_TYPE_E streamType,const char* path,unsigned int secs);
 	//停止录像
@@ -83,5 +93,9 @@ public:
 	bool zkGetMp4FileList(INPUT_DEV_TYPE_E devType,int devId,const char* str_time,list<FILE_PROPERTY_ST>* p_list);
 	//上传文件
 	bool zkUploadFile(const char* srcFileName,const char* url);
+	//获取内存
+	char* zkGetMemory(int size);
+	//释放内存
+	void zkDelMemory(char* buff);
 };
 #endif

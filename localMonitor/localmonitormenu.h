@@ -10,12 +10,13 @@
 #include <QScrollArea>
 #include "layoutswitchmenu.h"
 #include "common/common.h"
+#include <QPointer>
 
 class LocalMonitorMenu : public QFrame
 {
     Q_OBJECT
 public:
-    LocalMonitorMenu(QRect rect);
+    LocalMonitorMenu(QRect rect = QRect());
     ~LocalMonitorMenu();
 
     void init();
@@ -24,7 +25,6 @@ public:
     void focusOutEvent(QFocusEvent *);
 
 signals:
-    void layoutSwitchChanged(LayoutMode layoutMode);
 
 private slots:
     void grapBtnClickedSlot();
@@ -43,7 +43,7 @@ private:
     QButtonGroup *buttonGroup;
     int lastBtnId;
 
-    LayoutSwitchMenu *layoutSwitchMenu=nullptr;
+    QPointer<LayoutSwitchMenu> layoutSwitchMenu;
     QDialog *grabFileWin;
 
 };

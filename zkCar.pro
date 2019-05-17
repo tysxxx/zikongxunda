@@ -16,23 +16,8 @@ CONFIG += c++11
 QMAKE_CXXFLAGS += -std=c++11
 
 DESTDIR = /home/tys/software/nfsboot/
-target.path=/test
-INSTALLS += target
 
 SOURCES += main.cpp\
-        mainwidget.cpp \
-    onescreen.cpp \
-    fourscreen.cpp \
-    pushButtonMenu.cpp \
-    twoScreen.cpp \
-    nineScreen.cpp \
-    sixteenScreen.cpp \
-    electronicMap.cpp \
-    vedioMeeting.cpp \
-    vedioSearch.cpp \
-    dateTimeButton.cpp \
-    date.cpp \
-    mediaplayer.cpp \
     network/networkmanager.cpp \
     localMonitor/localmonitormenu.cpp \
     localMonitor/layoutswitchmenu.cpp \
@@ -48,26 +33,11 @@ SOURCES += main.cpp\
     videoReview/videoreviewui.cpp \
     intercom/qflowlayout.cpp \
     localMonitor/localmonitorui.cpp \
-    hisiInterface/hisiinterface.cpp
+    hisiInterface/hisiinterface.cpp \
+    manager/manager.cpp \
+    manager/ui.cpp
 
 HEADERS  += mainwidget.h \
-    onescreen.h \
-    fourscreen.h \
-    window_common.h \
-    nofocusrectstyle.h \
-    pushButtonMenu.h \
-    windowdefine.h \
-    zkCarDevEnginge.h \
-    zkdevdefine.h \
-    twoScreen.h \
-    nineScreen.h \
-    sixteenScreen.h \
-    electronicMap.h \
-    vedioMeeting.h \
-    vedioSearch.h \
-    dateTimeButton.h \
-    date.h \
-    mediaplayer.h \
     network/networkmanager.h \
     network/type.h \
     localMonitor/localmonitormenu.h \
@@ -85,25 +55,17 @@ HEADERS  += mainwidget.h \
     intercom/qflowlayout.h \
     localMonitor/localmonitorui.h \
     hisiInterface/hisiinterface.h \
-    common/common.h
+    common/common.h \
+    manager/manager.h \
+    manager/ui.h
 
-FORMS    += mainwidget.ui \
-    onescreen.ui \
-    fourscreen.ui \
-    twoscreen.ui \
-    ninescreen.ui \
-    sixteenscreen.ui \
-    electronicmap.ui \
-    vediomeeting.ui \
-    vediosearch.ui \
-    mediaplayer.ui
 
 RESOURCES += \
     statuslog.qrc \
     datetimeimg.qrc \
     recordimg.qrc
 
-INCLUDEPATH += $$PWD/network
+INCLUDEPATH += $$PWD/network $$PWD/lib/
 #INCLUDEPATH += /home/tys/doc/wen_doc/Hi3531A_SDK_V1.0.4.0/mpp/extdrv/tlv320aic31 /home/tys/doc/wen_doc/Hi3531A_SDK_V1.0.4.0/mpp/include
 #LIBS += -L/home/tys/doc/wen_doc/Hi3531A_SDK_V1.0.4.0/mpp/lib -lmpi -lhdmi -ljpeg -lupvqe -ldnvqe -lVoiceEngine
 
@@ -111,7 +73,7 @@ INCLUDEPATH += $$PWD/network
 #LIBS += -L/home/tys/software/hisi3531aLib/mp4v2/lib/ -L/home/tys/software/hisi3531aLib/faac/lib -L/home/tys/software/hisi3531aLib/faad/lib -L/home/tys/software/hisi3531aLib/libcurl/lib -lmp4v2 -lfaac -lfaad -lcurl
 #LIBS += -L/home/tys/software/hisi3531aLib -lzkpush -lhisicar -lzkrtsp
 
-unix:!macx: LIBS += -L$$PWD/lib/ -lzkpush
+    unix:!macx: LIBS += -L$$PWD/lib/ -lzkpush
     unix:!macx: LIBS += -L$$PWD/lib/ -lzkrtsp
 
     INCLUDEPATH += $$PWD/.

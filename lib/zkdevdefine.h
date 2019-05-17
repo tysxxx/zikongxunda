@@ -10,8 +10,10 @@
 #include <list>
 using namespace std;
 
+#define DEVCONFIGFILEPATN "/opt/ZkxdDevConfig.ini"
 #define MAXLOGFILESIZE 100*1024*1024
 #define DEBUGLOGFILEPATH "/var/log/ZkxdErrMsg.log"
+#define PICTURESTOREPATH "/mnt/pictures"
 
 #define WIDTH 1920   //屏幕的宽
 #define HEIGHT 1080  //屏幕的高
@@ -58,11 +60,11 @@ public:
 
 };
 
-#ifndef DEBUG
-    #define DEBUG 1
+#ifndef debuglog
+    #define debuglog 1
 #endif
 
-#if DEBUG
+#if debuglog
     #define DEBUGLOG(format,...) printf("FILE: %s, FUN: %s, LINE: %d " format "\n",__FILE__,__FUNCTION__,__LINE__,##__VA_ARGS__)
 
 
@@ -75,11 +77,13 @@ public:
 typedef enum input_dev_type_e
 {
     LOCAL_VEDIO = 0,
-    LOCAL_AUDIO = 1,
-    RTSP_VEDIO = 2,
-    RTSP_AUDIO = 3,
-    WBC_VEDIO = 4,
-
+    LOCAL_AUDIO,
+    RTSP_VEDIO,
+    RTSP_AUDIO,
+    PJSIP_VEDIO,
+    PJSIP_AUDIO,
+    WBC_VEDIO,
+    OTHER_VEDIO,
 
 }INPUT_DEV_TYPE_E;
 
@@ -129,6 +133,7 @@ typedef struct deviceInfo_s
 {
     INPUT_DEV_TYPE_E devType;
     int devId;
+    bool devStatu;
     char devName[500]={0};
 }DEVICEINFO_S;
 
@@ -167,13 +172,32 @@ typedef struct stream_data_s
 
 typedef struct remote_dev_regist_info_st
 {
-    char url[500];//rtsp数据源网址
+    char url[500];//远程设备地址
+    void* p_remoteFd;//远程设备对象的操作句柄
     list<STREAM_DATA_S>* p_vedio_list;//需要被解码的视频源数据链表指针
     pthread_mutex_t vedio_pthreadMutex;
     list<STREAM_DATA_S>* p_audio_list;//需要被解码的音频源数据链表指针
     pthread_mutex_t audio_pthreadMutex;
 }REMOTE_DEV_REGIST_INFO_ST;
 
+typedef struct encode_data_s
+{
+    list<STREAM_DATA_S>* p_vedio_list;//视频编码数据链表指针
+    pthread_mutex_t vedio_pthreadMutex;
+    list<STREAM_DATA_S>* p_audio_list;//音频编码数据链表指针
+    pthread_mutex_t audio_pthreadMutex;
+}ENCODE_DATA_S;
+
+typedef struct encode_data_channel_st
+{
+    int channelId;
+    ENCODE_DATA_S data;
+    VENC_STREAM_TYPE_E streamType;//码流类型
+    int venc_data_user_id;//使用的视频编码数据流用户id
+    int aenc_data_user_id;//使用的音频编码数据流用户id
+    int vedio_connectId;//视频编码通道连接ID
+    int audio_connectId;//音频编码通道连接ID
+}ENCODE_DATA_CHANNEL_ST;
 
 typedef struct file_property_st//定义一个文件属性的结构体
 {

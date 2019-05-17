@@ -21,7 +21,6 @@ void VideoReviewUi::init()
     //界面设置
     setWindowFlags((Qt::FramelessWindowHint));
     setAttribute(Qt::WA_TranslucentBackground);
-    setStyleSheet(".QWidget{background-color: transparent;}");
 
     //顶部
         //@.按键
@@ -75,7 +74,6 @@ void VideoReviewUi::init()
                                   .QScrollBar::sub-line:vertical{background:transparent; height: 0px; width: 0px;}\
                                   .QScrollBar::handle:vertical{background: gray; border-radius:5px; height: 20px;}\
                                  ");
-
 
     QHBoxLayout *videoChannelHBoxLayout = new QHBoxLayout;
     videoChannelHBoxLayout->setMargin(0);
@@ -156,14 +154,6 @@ void VideoReviewUi::init()
     setLayout(mainVBoxLayout);        
 }
 
-//重载paintEvent事件
-void VideoReviewUi::paintEvent(QPaintEvent *)
-{
-    QStyleOption opt;
-    opt.init(this);
-    QPainter p(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-}
 
 //按键处理
 void VideoReviewUi::btnClickedSlot(QAbstractButton* button)
@@ -171,6 +161,7 @@ void VideoReviewUi::btnClickedSlot(QAbstractButton* button)
     buttonGroup->button(lastBtnId)->setProperty("valid", false);
     buttonGroup->button(lastBtnId)->style()->polish(buttonGroup->button(lastBtnId));
     button->setProperty("valid", true);
+    button->style()->unpolish(button);
     button->style()->polish(button);
 
     lastBtnId = buttonGroup->id(button);
@@ -184,16 +175,12 @@ void VideoReviewUi::btnClickedSlot(QAbstractButton* button)
 //录像信息界面
 void VideoReviewUi::videoInfoBtnClickedSlot()
 {
-    //bottomFrame->setProperty("play", "false");
-    //bottomFrame->style()->polish(bottomFrame);
     bottomFrameStackedLayout->setCurrentWidget(videoInfoTableUi);
 }
 
 //录像播放界面
 void VideoReviewUi::videoPlayBtnClickedSlot()
 {
-    //bottomFrame->setProperty("play", "true");
-    //bottomFrame->style()->polish(bottomFrame);
     bottomFrameStackedLayout->setCurrentWidget(videoPlayUi);
 }
 
