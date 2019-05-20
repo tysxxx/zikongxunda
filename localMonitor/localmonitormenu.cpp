@@ -14,6 +14,7 @@ LocalMonitorMenu::LocalMonitorMenu(QRect rect)
 
 LocalMonitorMenu::~LocalMonitorMenu()
 {
+    qDebug() << "LocalMonitorMenu";
     if(layoutSwitchMenu)
         layoutSwitchMenu->close();
 }

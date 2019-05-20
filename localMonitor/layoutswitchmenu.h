@@ -15,6 +15,7 @@ class LayoutSwitchMenu : public QFrame
     Q_OBJECT
 public:
     LayoutSwitchMenu(QRect rect = QRect());
+    ~LayoutSwitchMenu();
 
     void init();
     void paintEvent(QPaintEvent *);

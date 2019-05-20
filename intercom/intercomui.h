@@ -8,11 +8,16 @@
 #include <QTreeWidget>
 #include <QListWidget>
 #include <QTreeWidgetItem>
+#include <QListWidgetItem>
 #include <QRect>
 #include <QStackedLayout>
 #include <QLayout>
+#include <QSharedPointer>
+#include "manager/manager.h"
 #include "qflowlayout.h"
 #include <QLabel>
+#include "network/type.h"
+
 
 class IntercomUi : public QWidget
 {
@@ -23,18 +28,21 @@ public:
 
     void init();
     //void paintEvent(QPaintEvent *);
+
+    void loadGroupInteractList(groupListType &group);
 signals:
 
 private slots:
     void btnClickedSlot(QAbstractButton* button);
+    void loadUserInteractList(groupListType &group, categoryListType &groupCategory, userListType &user);
 private:
     QPushButton *userInteractBtn;
     QPushButton *groupInteractBtn;
     QButtonGroup *buttonGroup;
     int lastBtnId;
 
-    QTreeWidget *userInteractList;
-    QListWidget *groupInteractList;
+    QTreeWidget *userInteractTreeWidget;
+    QListWidget *groupInteractListWidget;
     QStackedLayout *listStackedLayout;
     QFrame *userIntercomShow;
     QFrame *groupIntercomShow;
@@ -44,6 +52,8 @@ private:
     QFlowLayout *groupFlowLayout;
     QLabel *intercomStatusLabel;
     QPushButton *intercomExitBtn;
+
+    QSharedPointer<Manager> manager;
 };
 
 #endif // INTERCOMUI_H

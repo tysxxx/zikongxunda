@@ -6,6 +6,8 @@ QSharedPointer<Manager> Manager::m_instance(new Manager, Manager::destroyInstanc
 Manager::Manager(QObject *parent) : QObject(parent)
 {
     qDebug() << "Manager Construct";
+
+    connect(&networkManager, SIGNAL(getAllListInfoSuccessed()), this, SLOT(allListInfoHandler()));
 }
 
 Manager::~Manager()
@@ -32,6 +34,18 @@ void Manager::init()
 {
      //初始化设备接口
     hisiInit(hisiDeviceInfo);
+}
+
+//登录
+void Manager::login(QString &name, QString &password)
+{
+    networkManager.login(name, password);
+}
+
+//退出
+void Manager::logout()
+{
+    networkManager.logout();
 }
 
 //设置分屏窗口的信息
@@ -84,5 +98,10 @@ void Manager::localVideoWinShow(qint8 row, qint8 column, QVector<LayoutWindowInf
                                                     winInfo.at(i).widget->winId());
         }
     }
+}
+
+void Manager::allListInfoHandler()
+{
+    loadUserInteractList(networkManager.groupListInfo(), networkManager.categoryListInfo(), networkManager.userListInfo());
 }
 

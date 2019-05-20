@@ -66,14 +66,18 @@ void LoginUi::init()
 
     connect(loginBtn, SIGNAL(clicked()), this, SLOT(loginBtn_clicked_slot()));
     connect(logoutBtn, SIGNAL(clicked()), this, SLOT(logoutBtn_clicked_slot()));
+
+    //
+    manager = Manager::instance();
 }
 
 
 //登录
 void LoginUi::loginBtn_clicked_slot()
 {
-    qDebug("login");
-    NetworkManager::instance()->login("xytest001", "123456");
+    QString name = "xytest001";
+    QString password = "123456";
+    manager->login(name, password);
     loginUser->setText("xytest001");
     loginPasswd->setText("123456");
 //    if(loginUser->text().isEmpty() || loginPasswd->text().isEmpty()){
@@ -85,5 +89,5 @@ void LoginUi::loginBtn_clicked_slot()
 //退出
 void LoginUi::logoutBtn_clicked_slot()
 {
-    NetworkManager::instance()->logout();
+    manager->logout();
 }

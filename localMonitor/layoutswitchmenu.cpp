@@ -13,6 +13,11 @@ LayoutSwitchMenu::LayoutSwitchMenu(QRect rect)
     init();
 }
 
+LayoutSwitchMenu::~LayoutSwitchMenu()
+{
+    qDebug() << "LayoutSwitchMenu";
+}
+
 //初始化
 void LayoutSwitchMenu::init()
 {

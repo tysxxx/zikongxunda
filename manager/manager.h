@@ -5,6 +5,7 @@
 #include <QSharedPointer>
 #include "hisiInterface/hisiinterface.h"
 #include "common/common.h"
+#include "network/networkmanager.h"
 
 class Manager : public QObject
 {
@@ -20,14 +21,20 @@ public:
 
     void localVideoWinShow(qint8 row, qint8 column, QVector<LayoutWindowInfoType> &winInfo);
     void setLayoutWindowInfo();
+
+    void login(QString &name, QString &password);
+    void logout();   
 signals:
     void layoutSwitchChanged(LayoutMode layoutMode);
+    void loadUserInteractList(groupListType &group, categoryListType &groupCategory, userListType &user);
 public slots:
-
+    void allListInfoHandler();
 private:
     //Q_DISABLE_COPY(Manager)
     static QSharedPointer<Manager> m_instance;
     HisiDeviceInfoType hisiDeviceInfo;
+
+    NetworkManager networkManager;
 };
 
 #endif // MANAGER_H

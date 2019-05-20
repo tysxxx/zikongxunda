@@ -173,19 +173,19 @@ void MainUi::localMonitorBtnClickedSlot()
         stackedLayout->setCurrentWidget(currMenuUi[mainMenuUi]);
         return;
     }
-        //计算窗口放置的位置
-        QRect rect(leftFrame->width()+2,
-                   localMonitorBtn->y()+topFrame->height(),
-                   250,
-                   264);
 
-        if(!localMonitorMenu){
-            localMonitorMenu = new LocalMonitorMenu(rect);
-            localMonitorMenu->setGeometry(rect);
-            connect(localMonitorMenu, SIGNAL(layoutSwitchChanged(LayoutMode)), this, SLOT(layoutSwitchMode(LayoutMode)));
-            localMonitorMenu->show();
-        }else
-            localMonitorMenu->close();
+    //计算窗口放置的位置
+    QRect rect(leftFrame->width()+2,
+               localMonitorBtn->y()+topFrame->height(),
+               250,
+               264);
+
+    if(!localMonitorMenu){
+        localMonitorMenu = new LocalMonitorMenu(rect);
+        localMonitorMenu->setGeometry(rect);
+        localMonitorMenu->show();
+    }else
+        localMonitorMenu->close();
 
 }
 

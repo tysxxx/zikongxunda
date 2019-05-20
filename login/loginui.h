@@ -7,6 +7,8 @@
 #include <QLabel>
 #include <QObject>
 #include <QCloseEvent>
+#include <QSharedPointer>
+#include "manager/manager.h"
 #include "network/networkmanager.h"
 
 class LoginUi : public QDialog
@@ -34,6 +36,7 @@ private:
     QPushButton *logoutBtn;
     QLineEdit *loginUser;
     QLineEdit *loginPasswd;
+    QSharedPointer<Manager> manager;
 };
 
 #endif // LOGINUI_H

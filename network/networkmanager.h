@@ -123,8 +123,13 @@ public:
     void parseJsonAlarmListInfo(const Json::Value& object, alarmListType& alarmList);
     void parseJsonConfigInfo(const Json::Value& objec, ConfigType& configDetail);
 
+    //获取各列表
+    userListType& userListInfo();
+    categoryListType& categoryListInfo();
+    groupListType& groupListInfo();
+
 //    void creatCategoryNode(categoryNodeType *node, Node* parentNode, MeetingListModel *model);
-//    Q_INVOKABLE void jointUserInfo();
+    void jointUserInfo();
 
 //    void createMeetingListNode();
 //    void createIntercomListNode();
@@ -135,7 +140,9 @@ public:
 //    void queryDeviceListNodeInfo(Node::nodeInfoType node);
 signals:
     void getListInfoSuccessed();
+    void getAllListInfoSuccessed();
     void userLoginStatus(bool status);
+
 //    void loginUserNameChanged();
 //    void loginUserPasswordChanged();
 //    void platfromServerAddressChanged();
@@ -166,7 +173,6 @@ public slots:
     void getListInfo();
     void networkReplyError(QNetworkReply::NetworkError error);
 
-
 //    void dealUserInfo(MeetingListModel *model);
 //    void dealUserLogin(QString status);
 //    void querySelectedNodeInfo(QString modelName, Node::nodeInfoType node, qint32 type);
@@ -194,8 +200,6 @@ private:
     ConfigType m_configInfo;
 
 //    groupListNodeType m_groupListNode;
-
-
 //    QThread *parseJsonWork;
 //    HttpJson *httpJson;
 };

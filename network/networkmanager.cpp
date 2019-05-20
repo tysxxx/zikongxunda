@@ -260,7 +260,7 @@ void NetworkManager::getListInfo()
             getGroupCategoryListInfoRequest();
            break;
         case PostGetCategory::getGroupCategoryListInfo:
-           getMeetingListInfoRequest();
+            getMeetingListInfoRequest();
            break;
         case PostGetCategory::getMeetingListInfo:
             getDeviceListInfoRequest();
@@ -273,6 +273,7 @@ void NetworkManager::getListInfo()
             break;
         case PostGetCategory::getConfigInfo:
             //jointUserInfo();
+            getAllListInfoSuccessed();
             disconnect(this, SIGNAL(getListInfoSuccessed()), this, SLOT(getListInfo()));
             emit userLoginStatus(true);
             break;
@@ -1252,6 +1253,21 @@ void NetworkManager::parseJsonConfigInfo(const Json::Value& object, ConfigType& 
 //    }
 //}
 
+
+userListType& NetworkManager::userListInfo()
+{
+    return m_userListInfo;
+}
+
+categoryListType& NetworkManager::categoryListInfo()
+{
+    return m_categoryListInfo;
+}
+
+groupListType& NetworkManager::groupListInfo()
+{
+    return m_groupListInfo;
+}
 
 
 
