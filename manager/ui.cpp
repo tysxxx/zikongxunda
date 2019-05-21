@@ -35,18 +35,18 @@ void UI::initUi()
 
     //各分界面
         //@.本地监控界面
-    localMonitorUi = new LocalMonitorUi();
+    localMonitorUi = new LocalMonitorUi(mainUi->getCenterFrame());
     connect(manager.data(), SIGNAL(layoutSwitchChanged(LayoutMode)), localMonitorUi, SLOT(layoutSwitchHandler(LayoutMode)));
     localMonitorUi->init();
         //@.互动交互
-    intercomUi = new IntercomUi();
+    intercomUi = new IntercomUi(mainUi->getCenterFrame());
     intercomUi->init();
         //@.视频会议
-    videoMeetingUi = new VideoMeetingUi();
+    videoMeetingUi = new VideoMeetingUi(mainUi->getCenterFrame());
         //@.地图
     //MapUi = new electronicMap();
         //@.视频查询
-    videoReviewUi = new VideoReviewUi();
+    videoReviewUi = new VideoReviewUi(mainUi->getCenterFrame());
 
     mainUi->addCenterWidget(localMonitorUi, MainUi::MainMenuUi::localMonitorUi);
     mainUi->addCenterWidget(intercomUi, MainUi::MainMenuUi::intercomUi);

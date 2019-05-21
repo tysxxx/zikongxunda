@@ -1269,7 +1269,15 @@ groupListType& NetworkManager::groupListInfo()
     return m_groupListInfo;
 }
 
+intercomListType& NetworkManager::intercomListInfo()
+{
+    return m_intercomListInfo;
+}
 
+meetingListType& NetworkManager::meetinglistInfo()
+{
+    return m_meetingListInfo;
+}
 
 
 

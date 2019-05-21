@@ -27,6 +27,8 @@ public:
 signals:
     void layoutSwitchChanged(LayoutMode layoutMode);
     void loadUserInteractList(groupListType &group, categoryListType &groupCategory, userListType &user);
+    void loadGroupInteractList(intercomListType &intercom);
+    void loadMeetingList(meetingListType &meeting);
 public slots:
     void allListInfoHandler();
 private:

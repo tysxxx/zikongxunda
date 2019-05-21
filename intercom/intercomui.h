@@ -29,12 +29,13 @@ public:
     void init();
     //void paintEvent(QPaintEvent *);
 
-    void loadGroupInteractList(groupListType &group);
+
 signals:
 
 private slots:
     void btnClickedSlot(QAbstractButton* button);
     void loadUserInteractList(groupListType &group, categoryListType &groupCategory, userListType &user);
+    void loadGroupInteractList(intercomListType &intercom);
 private:
     QPushButton *userInteractBtn;
     QPushButton *groupInteractBtn;

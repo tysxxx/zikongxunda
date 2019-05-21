@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     localMonitor/localmonitorui.cpp \
     hisiInterface/hisiinterface.cpp \
     manager/manager.cpp \
-    manager/ui.cpp
+    manager/ui.cpp \
+    videoMeeting/listwidgetitem.cpp
 
 HEADERS  += mainwidget.h \
     network/networkmanager.h \
@@ -57,7 +58,8 @@ HEADERS  += mainwidget.h \
     hisiInterface/hisiinterface.h \
     common/common.h \
     manager/manager.h \
-    manager/ui.h
+    manager/ui.h \
+    videoMeeting/listwidgetitem.h
 
 
 RESOURCES += \

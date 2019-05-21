@@ -40,6 +40,7 @@ public:
     void init();
     void addCenterWidget(QWidget *widget, MainMenuUi menuUi);
     void setCenterWidget(MainMenuUi menuUi);
+    QRect getCenterFrame();
 signals:
 
 public slots:

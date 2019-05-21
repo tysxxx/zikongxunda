@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QApplication>
 #include <QDebug>
+#include <QScrollBar>
 
 IntercomUi::IntercomUi(QRect rect, QWidget *parent) : QWidget(parent)
 {
@@ -57,14 +58,27 @@ void IntercomUi::init()
 
         //@.用户列表
     userInteractTreeWidget = new QTreeWidget;
-    userInteractTreeWidget->setStyleSheet(".QTreeWidget{background-color: transparent; font: 21px; spacing: 10px; margin: 0px;}\
-                                           .QTreeWidget::item{padding: 0px; background-color: transparent;}");
+    //userInteractTreeWidget->setFixedSize(600, 300);
+    userInteractTreeWidget->setStyleSheet(".QTreeWidget{background-color: transparent; font: 21px; color: white; border: none; padding-left:0px;}\
+                                           .QTreeWidget::item{margin: 10px;}");
     userInteractTreeWidget->setAutoFillBackground(true);
     userInteractTreeWidget->setHeaderHidden(true);
     userInteractTreeWidget->setColumnCount(1);
+    userInteractTreeWidget->verticalScrollBar()->setStyleSheet(".QScrollBar{background-color: transparent; width:10px; border:none; border-radius:5px;}\
+                                        .QScrollBar::handle{background: gray; border:2px solid gray; border-radius:5px;}\
+                                        .QScrollBar::sub-line{background:transparent; width: 0px; height: 0px;}\
+                                        .QScrollBar::add-line{background:transparent; width: 0px; height: 0px;}");
 
         //@.组织列表
     groupInteractListWidget = new QListWidget;
+    //groupInteractListWidget->setFixedSize(600, 300);
+    groupInteractListWidget->setStyleSheet(".QListWidget{background-color: transparent; font: 21px; color: white; border: none; padding-left:0px;}\
+                                           .QListWidget::item{margin: 10px;}");
+
+    groupInteractListWidget->verticalScrollBar()->setStyleSheet(".QScrollBar{background-color: transparent; width:10px; border:none; border-radius:5px;}\
+                                        .QScrollBar::handle{background: gray; border:2px solid gray; border-radius:5px;}\
+                                        .QScrollBar::sub-line{background:transparent; width: 0px; height: 0px;}\
+                                        .QScrollBar::add-line{background:transparent; width: 0px; height: 0px;}");
 
     listStackedLayout = new QStackedLayout;
     listStackedLayout->setMargin(0);
@@ -232,6 +246,8 @@ void IntercomUi::init()
     manager = Manager::instance();
     connect(manager.data(), SIGNAL(loadUserInteractList(groupListType&,categoryListType&,userListType&)),
             this, SLOT(loadUserInteractList(groupListType&,categoryListType&,userListType&)));
+    connect(manager.data(), SIGNAL(loadGroupInteractList(intercomListType&)),
+            this, SLOT(loadGroupInteractList(intercomListType&)));
 }
 
 //重载paintEvent事件
@@ -300,8 +316,9 @@ void IntercomUi::loadUserInteractList(groupListType &group, categoryListType &gr
     QList<userDetailType> userDetailList;
     for(quint32 i = 0; i < user.total; i++){
         QTreeWidgetItem *item = new QTreeWidgetItem;
-        item->setForeground(0, QColor("white"));
+        //item->setForeground(0, QColor("white"));
         item->setText(0, user.items.at(i).name);
+        item->setBackgroundColor(0, QColor("transparent"));
         userListItem.append(item);
 
         userDetailType detail;
@@ -349,41 +366,53 @@ void IntercomUi::loadUserInteractList(groupListType &group, categoryListType &gr
     }
 
 
+    //清空
+    userInteractTreeWidget->clear();
 
     //添加总的列表
     userInteractTreeWidget->addTopLevelItems(groupListItem);
     qApp->processEvents();
 
-    for(quint32 userIndex=0; userIndex < userListItem.size(); userIndex++)
-    {
-        //
-        QFrame *frame = new QFrame;
-        QLabel *userName = new QLabel;
-        userName->setText(userListItem.at(userIndex)->text(0));
-        userName->setStyleSheet(".QLabel{background-color: transparent; color: white; font: 21px;}");
-        QPushButton *voiceBtn = new QPushButton(tr("对讲"));
-        voiceBtn->setStyleSheet(".QPushButton{background-color: transparent; color: white; font: 21px;}");
-        QPushButton *videoBtn = new QPushButton(tr("视频"));
-        videoBtn->setStyleSheet(".QPushButton{background-color: transparent; color: white; font: 21px;}");
+//    for(quint32 userIndex=0; userIndex < userListItem.size(); userIndex++)
+//    {
+//        //
+//        QFrame *frame = new QFrame;
+//        frame->setAttribute(Qt::WA_TranslucentBackground);
+//        //frame->setStyleSheet("QFrame{background-color: transparent; padding: 0px;}");
+//        qApp->processEvents();
+//        QLabel *userName = new QLabel;
+//        userName->setText(userListItem.at(userIndex)->text(0));
+//        userName->setStyleSheet(".QLabel{background-color: transparent; color: white; font: 21px;}");
+//        QPushButton *voiceBtn = new QPushButton(tr("对讲"));
+//        voiceBtn->setStyleSheet(".QPushButton{background-color: transparent; color: white; font: 21px;}");
+//        QPushButton *videoBtn = new QPushButton(tr("视频"));
+//        videoBtn->setStyleSheet(".QPushButton{background-color: transparent; color: white; font: 21px;}");
 
-        QHBoxLayout *HBoxLayout = new QHBoxLayout;
-        HBoxLayout->setMargin(0);
-        HBoxLayout->addWidget(userName);
-        HBoxLayout->addStretch();
-        HBoxLayout->addWidget(voiceBtn);
-        HBoxLayout->addWidget(videoBtn);
+//        QHBoxLayout *HBoxLayout = new QHBoxLayout;
+//        HBoxLayout->setMargin(0);
+//        HBoxLayout->addWidget(userName);
+//        HBoxLayout->addStretch();
+//        HBoxLayout->addWidget(voiceBtn);
+//        HBoxLayout->addWidget(videoBtn);
 
-        frame->setLayout(HBoxLayout);
-        qApp->processEvents();
-        userInteractTreeWidget->setItemWidget(userListItem.at(userIndex), 0, frame);
-        qApp->processEvents();
-    }
+//        frame->setLayout(HBoxLayout);
+//        qApp->processEvents();
+//        userInteractTreeWidget->setItemWidget(userListItem.at(userIndex), 0, frame);
+//        qApp->processEvents();
+//    }
 }
 
 
 //加载群组互动对讲列表
-void IntercomUi::loadGroupInteractList(groupListType &group)
+void IntercomUi::loadGroupInteractList(intercomListType &intercom)
 {
+    //清空
+    groupInteractListWidget->clear();
 
+    //加载
+    for(qint32 i=0; i < intercom.total; i++){
+        QListWidgetItem *item = new QListWidgetItem(groupInteractListWidget);
+        item->setText(intercom.items.at(i).name);
+    }
 }
 

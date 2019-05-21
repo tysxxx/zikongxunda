@@ -127,6 +127,9 @@ public:
     userListType& userListInfo();
     categoryListType& categoryListInfo();
     groupListType& groupListInfo();
+    intercomListType& intercomListInfo();
+    meetingListType& meetinglistInfo();
+
 
 //    void creatCategoryNode(categoryNodeType *node, Node* parentNode, MeetingListModel *model);
     void jointUserInfo();

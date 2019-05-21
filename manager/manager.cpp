@@ -103,5 +103,7 @@ void Manager::localVideoWinShow(qint8 row, qint8 column, QVector<LayoutWindowInf
 void Manager::allListInfoHandler()
 {
     loadUserInteractList(networkManager.groupListInfo(), networkManager.categoryListInfo(), networkManager.userListInfo());
+    loadGroupInteractList(networkManager.intercomListInfo());
+    loadMeetingList(networkManager.meetinglistInfo());
 }
 

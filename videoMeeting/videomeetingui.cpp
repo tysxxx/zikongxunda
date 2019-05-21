@@ -4,6 +4,8 @@
 #include <QPainter>
 #include <QVBoxLayout>
 #include <QStringListModel>
+#include <QScrollBar>
+#include <QScrollArea>
 
 VideoMeetingUi::VideoMeetingUi(QRect rect, QWidget *parent) : QWidget(parent)
 {
@@ -32,36 +34,91 @@ void VideoMeetingUi::init()
                 200,
                 469,
                 449);
+
+    qDebug() << "meeting rect:" << rect;
     meetingListFrame->setGeometry(rect);
 
     QLabel *meetingListNameLabel = new QLabel(tr("视频会议列表"));
     meetingListNameLabel->setAlignment(Qt::AlignCenter);
     meetingListNameLabel->setStyleSheet("QLabel{font: 24px; color: #649bf1; background-color: transparent}");
 
-     QStringListModel *model = new QStringListModel();
-      QStringList list;
-      list << "a" << "b" << "c";
-      model->setStringList(list);
+    meetingListWidget = new QListWidget;
+    meetingListWidget->setStyleSheet(".QListWidget{background-color: transparent; border: none; color: white; font: 21px;}\
+                                      .QListWidget::item{margin: 10px;}\
+                                      ");
+    //meetingListWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerItem); //默认项滚动
+    meetingListWidget->verticalScrollBar()->setStyleSheet(".QScrollBar{background-color: rgba(6, 32, 70, 80%); width:10px; border:none; border-radius:5px;}\
+                                        .QScrollBar::handle{background: gray; border:2px solid gray; border-radius:5px;}\
+                                        .QScrollBar::sub-line{background:transparent; width: 0px; height: 0px;}\
+                                        .QScrollBar::add-line{background:transparent; width: 0px; height: 0px;}");
+
+    connect(meetingListWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClickedSlot(QListWidgetItem*)));
+
+//    QList<QListWidgetItem *> list;
+//    for(qint32 i=0; i < 20; i++){
+//        QListWidgetItem *item = new QListWidgetItem(meetingListWidget);
+//        item->setForeground(QBrush(QColor("white")));
+//        item->setBackground(QBrush(QColor("transparent")));
+//        QFont font = item->font();
+//        font.setPixelSize(21);
+//        item->setFont(font);
+//        item->setText(tr("会议%1").arg(i));
+//        list.append(item);
+//    }
+
+//    QList<ListWidgetItem *> list;
+//    for(qint32 i=0; i < 20; i++){
+//        ListWidgetItem *item = new ListWidgetItem(meetingListWidget);
+//        item->setText(tr("会议%1").arg(i));
+//        //ListWidgetItem::ItemInfoType itemInfo = item->itemInfo();
+//        item->itemInfo().id = i;
+//        list.append(item);
+//    }
+
+    QFrame *widget = new QFrame;
+    QVBoxLayout *Hlayout = new QVBoxLayout;
+    for(int i=0; i< 10; i++){
+        QFrame *frame = new QFrame;
+        QLabel *label = new QLabel;
+        label->setStyleSheet("color: white; font:21px;");
+        label->setText("item->text()");
+        QPushButton *button = new QPushButton;
+        button->setStyleSheet("color: white; font:21px;");
+        button->setText("进入会议");
+        QHBoxLayout *layout = new QHBoxLayout;
+        layout->addWidget(label);
+        layout->addWidget(button);
+        frame->setLayout(layout);
+
+        Hlayout->addWidget(frame);
+    }
+
+    widget->setLayout(Hlayout);
 
 
-    meetingListView = new QListView;
-    meetingListItemDelegete = new VideoMeetingListItem;
-    meetingListModel = new MeetingListModel;
-    meetingListView->setItemDelegate(meetingListItemDelegete);
-    meetingListView->setModel(model);
-    meetingListView->setStyleSheet(".QListView{background-color: transparent; color: red; font: 21px;}");
+    QListWidgetItem *item = new QListWidgetItem(meetingListWidget);
+    //QSize size = item->sizeHint();
+    //item->setSizeHint(QSize(size.width(), 600));
+    widget->setFixedSize(460, 440);
+    QScrollArea *scroll = new QScrollArea;
+    scroll->setWidgetResizable(true);
+    scroll->setFixedSize(460, 440);
+    scroll->setWidget(widget);
 
-    QStringList meetinglistName;
-    meetinglistName << "会议1" << "会议2" << "会议3";
-    meetingListModel->setMeetingListModelData(meetinglistName);
+    meetingListWidget->setItemWidget(item, scroll);
 
     QVBoxLayout *meetingListVBoxLayout = new QVBoxLayout;
     meetingListVBoxLayout->setContentsMargins(0, 30, 0, 10);
+    meetingListVBoxLayout->setSpacing(10);
     meetingListVBoxLayout->addWidget(meetingListNameLabel);
-    meetingListVBoxLayout->addWidget(meetingListView);
+    meetingListVBoxLayout->addWidget(meetingListWidget);
 
     meetingListFrame->setLayout(meetingListVBoxLayout);
 
+    //
+    manager = Manager::instance();
+    connect(manager.data(), SIGNAL(loadMeetingList(meetingListType&)),
+            this, SLOT(loadMeetingList(meetingListType&)));
 }
 
 //重载paintEvent事件
@@ -73,3 +130,26 @@ void VideoMeetingUi::paintEvent(QPaintEvent *)
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
 }
 
+//加载视频列表
+void VideoMeetingUi::loadMeetingList(meetingListType &meeting)
+{
+    //清空
+    meetingListWidget->clear();
+
+    //加载
+    for(qint32 i=0; i < meeting.total; i++){
+        ListWidgetItem *item = new ListWidgetItem(meetingListWidget);
+        item->setText(meeting.items.at(i).name);
+        item->itemInfo().id = meeting.items.at(i).id;
+        item->itemInfo().categoryId = meeting.items.at(i).group_category_id;
+        item->itemInfo().groupId = meeting.items.at(i).group_id;
+        item->itemInfo().name = meeting.items.at(i).name;
+    }
+}
+
+//项选择处理
+void VideoMeetingUi::itemClickedSlot(QListWidgetItem *item)
+{
+    //ListWidgetItem *myItem = dynamic_cast<ListWidgetItem*>(item);
+    //qDebug() << "item clicked" << myItem->text() << myItem->itemInfo().id << myItem->itemInfo().groupId;
+}

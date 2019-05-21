@@ -194,3 +194,9 @@ void MainUi::timerUpdate()
 {
     timeLabel->setText(QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss"));
 }
+
+//返回中间区域的信息
+QRect MainUi::getCenterFrame()
+{
+    return centerFrame->rect();
+}
