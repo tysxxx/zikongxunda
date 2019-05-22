@@ -19,6 +19,7 @@ public:
     static QSharedPointer<Manager> instance();
     void init();
 
+    QList<DEVICEINFO_S>& localVideoDevice();
     void localVideoWinShow(qint8 row, qint8 column, QVector<LayoutWindowInfoType> &winInfo);
     void setLayoutWindowInfo();
 
@@ -29,6 +30,7 @@ signals:
     void loadUserInteractList(groupListType &group, categoryListType &groupCategory, userListType &user);
     void loadGroupInteractList(intercomListType &intercom);
     void loadMeetingList(meetingListType &meeting);
+    void updateVideoChannel(QList<DEVICEINFO_S> &localVideoDeviceList);
 public slots:
     void allListInfoHandler();
 private:

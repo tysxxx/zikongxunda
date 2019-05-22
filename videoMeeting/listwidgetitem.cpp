@@ -6,7 +6,7 @@ ListWidgetItem::ListWidgetItem(QListWidget *parent, int type)
 
 }
 
-ListWidgetItem::ItemInfoType& ListWidgetItem::itemInfo()
+ItemInfoType& ListWidgetItem::itemInfo()
 {
     return m_itemInfo;
 }

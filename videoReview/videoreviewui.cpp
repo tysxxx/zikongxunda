@@ -3,11 +3,11 @@
 #include <QPainter>
 #include <QDate>
 #include <QDebug>
+#include <QTextCharFormat>
 
 VideoReviewUi::VideoReviewUi(QRect rect, QWidget *parent) : QWidget(parent)
 {
     resize(rect.width(), rect.height());
-    init();
 }
 
 VideoReviewUi::~VideoReviewUi()
@@ -56,10 +56,11 @@ void VideoReviewUi::init()
     channelLabel->setStyleSheet(".QLabel{font: 21px; color: white; padding: 0px; margin: 0px;}");
     videoChannel = new QComboBox;
     videoChannel->setEditable(false);
+    connect(videoChannel, SIGNAL(activated(int)), this, SLOT(videoChannelChanged(int)));
     for(int i=0; i< 40; i++){
-    videoChannel->addItem("channel1");
-    videoChannel->addItem("channel2");
-    videoChannel->addItem("channel3");
+    videoChannel->addItem("channel1", "hello");
+    videoChannel->addItem("channel2", "world");
+    videoChannel->addItem("channel3", "!!!");
     }
     videoChannel->setFixedSize(213, 40);
     videoChannel->setStyleSheet(".QComboBox{padding-left: 10px; background-color: transparent; color: white; font: 21px; border: 2px solid white; border-radius: 10px;} \
@@ -93,6 +94,7 @@ void VideoReviewUi::init()
     QImage backgroundImage(":/recordImg/resource/recordImg/日历（选中）.png");
     dateBtn->setFixedSize(backgroundImage.size());
     dateBtn->setStyleSheet(tr(".QPushButton{background: transparent url(%1); background-position: center;}").arg(":/recordImg/resource/recordImg/日历（选中）.png"));
+    connect(dateBtn, SIGNAL(clicked()), this, SLOT(dateBtnClickedSlot()));
 
     QHBoxLayout *dateHBoxLayout = new QHBoxLayout;
     dateHBoxLayout->setMargin(0);
@@ -151,7 +153,11 @@ void VideoReviewUi::init()
     mainVBoxLayout->addWidget(topFrame);
     mainVBoxLayout->addWidget(bottomFrame);
 
-    setLayout(mainVBoxLayout);        
+    setLayout(mainVBoxLayout);
+
+    //
+    manager = Manager::instance();
+    connect(manager.data(), SIGNAL(updateVideoChannel(QList<DEVICEINFO_S>&)), this, SLOT(setVideoChannel(QList<DEVICEINFO_S>&)));
 }
 
 
@@ -188,5 +194,79 @@ void VideoReviewUi::videoPlayBtnClickedSlot()
 void VideoReviewUi::queryBtnClickedSlot()
 {
     qDebug() << "查询";
+
+    //查询文件列表
+    if(videoChannel->count() && videoChannel->currentIndex()){
+        QMap<QString, QVariant> deviceInfoMap = videoChannel->itemData(videoChannel->currentIndex()).toMap();
+        INPUT_DEV_TYPE_E type = static_cast<INPUT_DEV_TYPE_E>(deviceInfoMap["type"].toInt());
+        list<FILE_PROPERTY_ST> fileList;
+
+        zkCarDevEngine::instance()->zkGetMp4FileList(type, deviceInfoMap["id"].toInt(),
+                                    videoDate->text().toUtf8().data(), &fileList);
+
+        videoFileList = QList<FILE_PROPERTY_ST>::fromStdList(fileList);
+
+        //更新表格文件信息
+        for(auto fileInfo: videoFileList){
+            videoInfoTableUi->appendOneRow(QString(fileInfo.fileName), fileInfo.size,
+                                           QString(fileInfo.time), QString::number(fileInfo.cnt));
+        }
+    }
 }
 
+//日期选择按键
+void VideoReviewUi::dateBtnClickedSlot()
+{
+    if(calender){
+        calender->close();
+    }else{
+        //QDate date = QDate::fromString(videoDate->text(), "yyyy-MM-dd");
+
+        QPoint point = dateBtn->mapToGlobal(QPoint(dateBtn->rect().x(), dateBtn->rect().y()));
+        QRect calenderRect = QRect(point.x()+dateBtn->size().width(),
+                               point.y()+dateBtn->size().height()+25,
+                               300,
+                               300);
+        //日历
+        calender = new QCalendarWidget;
+        calender->setGeometry(calenderRect);
+        calender->setAttribute(Qt::WA_DeleteOnClose);
+        connect(calender.data(), SIGNAL(clicked(QDate)), this, SLOT(setVideoDate(QDate)));
+//        QTextCharFormat format;
+//        format = calender->dateTextFormat(date);
+//        calender->setDateTextFormat(date, format);
+        calender->show();
+    }
+}
+
+//设置查询的日期
+void VideoReviewUi::setVideoDate(const QDate &date)
+{
+    videoDate->setText(date.toString("yyyy-MM-dd"));
+}
+
+
+//设置本地视频的通道名称
+void VideoReviewUi::setVideoChannel(QList<DEVICEINFO_S> &localVideoDeviceList)
+{
+    qDebug() << "setVideoChannel";
+    //删除
+    if(localVideoDeviceList.size())
+        videoChannel->clear();
+
+    //更新
+    for(auto device: localVideoDeviceList){
+        QMap<QString, QVariant> deviceInfoMap;
+        deviceInfoMap["id"] = device.devId;
+        deviceInfoMap["name"] = device.devName;
+        deviceInfoMap["status"] = device.devStatu;
+        deviceInfoMap["type"] = device.devType;
+        videoChannel->addItem(deviceInfoMap["name"].toString(), deviceInfoMap);
+    }
+}
+
+//选择不同的通道视频
+void VideoReviewUi::videoChannelChanged(int index)
+{
+    qDebug() << "vidoe channel changed: " << videoChannel->itemData(index);
+}

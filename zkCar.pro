@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     hisiInterface/hisiinterface.cpp \
     manager/manager.cpp \
     manager/ui.cpp \
-    videoMeeting/listwidgetitem.cpp
+    videoMeeting/listwidgetitem.cpp \
+    intercom/treewidgetitem.cpp
 
 HEADERS  += mainwidget.h \
     network/networkmanager.h \
@@ -59,7 +60,8 @@ HEADERS  += mainwidget.h \
     common/common.h \
     manager/manager.h \
     manager/ui.h \
-    videoMeeting/listwidgetitem.h
+    videoMeeting/listwidgetitem.h \
+    intercom/treewidgetitem.h
 
 
 RESOURCES += \

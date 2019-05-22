@@ -2,7 +2,7 @@
 #include "hisiinterface.h"
 #include <QDebug>
 
-#define LOCAL_VIDEO_RECORD_PATH "/home"
+#define LOCAL_VIDEO_RECORD_PATH "/mnt/tys"
 
 //@.hisi接口初始化
 void hisiInit(HisiDeviceInfoType &hisiDeviceInfo)
@@ -15,7 +15,7 @@ void hisiInit(HisiDeviceInfoType &hisiDeviceInfo)
     qDebug() << "getdevicelist()";
 
     //打开本地录像录制
-    //openAllLocalVideoRecord(hisiDeviceInfo.localVideoDeviceList);
+    openAllLocalVideoRecord(hisiDeviceInfo.localVideoDeviceList);
 }
 
 //@.获取底层设备列表，即接口有哪些摄像头等设备

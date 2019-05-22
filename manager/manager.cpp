@@ -32,8 +32,11 @@ void Manager::destroyInstance(Manager *instance)
 //初始化
 void Manager::init()
 {
-     //初始化设备接口
+    //初始化设备接口
     hisiInit(hisiDeviceInfo);
+
+    //更新本地视频通道
+    updateVideoChannel(hisiDeviceInfo.localVideoDeviceList);
 }
 
 //登录
@@ -100,10 +103,18 @@ void Manager::localVideoWinShow(qint8 row, qint8 column, QVector<LayoutWindowInf
     }
 }
 
+//请求列表完成后的处理
 void Manager::allListInfoHandler()
 {
     loadUserInteractList(networkManager.groupListInfo(), networkManager.categoryListInfo(), networkManager.userListInfo());
     loadGroupInteractList(networkManager.intercomListInfo());
     loadMeetingList(networkManager.meetinglistInfo());
+}
+
+
+//返回本地视频列表信息
+QList<DEVICEINFO_S>& Manager::localVideoDevice()
+{
+    return hisiDeviceInfo.localVideoDeviceList;
 }
 

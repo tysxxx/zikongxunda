@@ -82,8 +82,6 @@ public:
     static NetworkManager *NetworkManagerInstance;
     void initNetWorkManager();
 public:
-//    QVariantMap configInfoObject() const;
-//    void setConfigInfoObject(QVariantMap configInfoObject);
     static NetworkManager* instance();
     void destroy();
     //post请求
@@ -130,61 +128,22 @@ public:
     intercomListType& intercomListInfo();
     meetingListType& meetinglistInfo();
 
-
-//    void creatCategoryNode(categoryNodeType *node, Node* parentNode, MeetingListModel *model);
     void jointUserInfo();
-
-//    void createMeetingListNode();
-//    void createIntercomListNode();
-
-//    void queryMeetingListNodeInfo(Node::nodeInfoType node);
-//    void queryIntercomListNodeInfo(Node::nodeInfoType node);
-//    void queryUserListNodeInfo(Node::nodeInfoType node);
-//    void queryDeviceListNodeInfo(Node::nodeInfoType node);
 signals:
     void getListInfoSuccessed();
     void getAllListInfoSuccessed();
     void userLoginStatus(bool status);
-
-//    void loginUserNameChanged();
-//    void loginUserPasswordChanged();
-//    void platfromServerAddressChanged();
-//    void platfromServerPortChanged();
-//    void imServerAddressChanged();
-//    void imServerPortChanged();
-//    void loginRequestSuccess();
-//    void configInfoObjectChanged();
-//    void dealUserInfoSignal(MeetingListModel *model);
-
-//    void loginStatus(QString status);
-//    void getUserDetailSignal();
-//    void getUserListSignal(qint32 page_index, qint32 page_size, qint32 group_id, qint32 group_category_id);
-//    void getIntercomDetailSignal(qint32 id);
-//    void getIntercomListSignal(qint32 page_index, qint32 page_size, qint32 group_id, qint32 group_category_id);
-//    void getGroupDetailSignal(qint32 id);
-//    void getGroupListSignal(qint32 page_index, qint32 page_size);
-//    void getGroupCategoryListSignal(qint32 id, qint32 page_index, qint32 page_size);
-//    void getMeetingDetailSignal(qint32 id);
-//    void getMeetingListSignal(qint32 page_index, qint32 page_size, qint32 group_id, qint32 group_category_id);
-//    void getDeviceDetailSignal(qint32 id);
-//    void getDeviceListSignal(qint32 page_index, qint32 page_size, qint32 group_id, qint32 group_category_id);
-//    void getAlarmDetailSignal(qint32 id);
-//    void getAlarmListSignal(qint32 page_index, qint32 page_size, qint32 type, quint64 from_time, quint64 to_time);
 public slots:
     void networkReplyFinished(QNetworkReply *reply);
     void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
     void getListInfo();
     void networkReplyError(QNetworkReply::NetworkError error);
 
-//    void dealUserInfo(MeetingListModel *model);
-//    void dealUserLogin(QString status);
-//    void querySelectedNodeInfo(QString modelName, Node::nodeInfoType node, qint32 type);
 private:
     QNetworkAccessManager *netManager = nullptr;
     QNetworkReply *netReply; //不是自己手动分配空间，不需要在析构函数中判断释放
     PostGetCategory postGetCategory; //请求分类
 
-//    QString httpCommonAddress;
     QString httpRequestHeader; //请求数据要求使用的头信息
     QByteArray PostGetReplyData;
 //    qint32 m_pageIndex;
@@ -201,10 +160,6 @@ private:
     deviceListType m_deviceListInfo;
     alarmListType m_alarmListInfo;
     ConfigType m_configInfo;
-
-//    groupListNodeType m_groupListNode;
-//    QThread *parseJsonWork;
-//    HttpJson *httpJson;
 };
 
 #endif // NETWORKMANAGER_H

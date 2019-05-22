@@ -37,8 +37,11 @@ void VideoInfoTableUi::init()
         setHorizontalHeaderItem(i, headerItem);
     }
 
-    for(int i = 0; i < 50; i++){
+    for(int i = 0; i < 20; i++){
         appendOneRow("hello", 32, "2222", "3333");
+    }
+    for(int i = 0; i < 5; i++){
+        appendOneRow("world", 32, "4444", "555");
     }
 
     //设置列的宽度

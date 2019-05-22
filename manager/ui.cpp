@@ -16,10 +16,6 @@ UI::~UI()
 
 void UI::initUi()
 {
-    //管理实例
-    manager = Manager::instance();
-    manager->init();
-
     //获取屏幕尺寸
     QRect rect;
     QDesktopWidget *desktopWidget = QApplication::desktop();
@@ -47,6 +43,7 @@ void UI::initUi()
     //MapUi = new electronicMap();
         //@.视频查询
     videoReviewUi = new VideoReviewUi(mainUi->getCenterFrame());
+    videoReviewUi->init();
 
     mainUi->addCenterWidget(localMonitorUi, MainUi::MainMenuUi::localMonitorUi);
     mainUi->addCenterWidget(intercomUi, MainUi::MainMenuUi::intercomUi);
@@ -56,9 +53,15 @@ void UI::initUi()
 
     //设置当前中间要显示的窗口
     mainUi->setCenterWidget(MainUi::MainMenuUi::localMonitorUi);
-    mainUi->show();
 
     //设置初始分屏
     localMonitorUi->layoutSwitchHandler(LayoutMode::four);
+
+    //管理实例
+    manager = Manager::instance();
+    manager->init();
+
+    //界面显示
+    mainUi->show();
 }
 

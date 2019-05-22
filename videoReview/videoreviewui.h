@@ -12,8 +12,14 @@
 #include <QLineEdit>
 #include <QStackedLayout>
 #include <QTableWidget>
+#include <QCalendarWidget>
+#include <QPointer>
+#include <QDate>
+#include <QSharedPointer>
 #include "videoplayui.h"
 #include "videoinfotableui.h"
+#include "hisiInterface/hisiinterface.h"
+#include "manager/manager.h"
 
 class VideoReviewUi : public QWidget
 {
@@ -30,7 +36,10 @@ private slots:
     void videoPlayBtnClickedSlot();
     void btnClickedSlot(QAbstractButton* button);
     void queryBtnClickedSlot();
-
+    void dateBtnClickedSlot();
+    void setVideoDate(const QDate &date);
+    void setVideoChannel(QList<DEVICEINFO_S> &localVideoDeviceList);
+    void videoChannelChanged(int index);
 private:
     QPushButton *videoInfoBtn;
     QPushButton *videoPlayBtn;
@@ -40,11 +49,15 @@ private:
     QLabel *videoDate;
     QPushButton *dateBtn;
     QPushButton *queryBtn;
+    QPointer<QCalendarWidget> calender;
 
     VideoInfoTableUi *videoInfoTableUi;
     VideoPlayUi *videoPlayUi;
     QStackedLayout *bottomFrameStackedLayout;
     QFrame *bottomFrame;
+
+    QSharedPointer<Manager> manager;
+    QList<FILE_PROPERTY_ST> videoFileList;
 };
 
 #endif // VIDEOREVIEWUI_H

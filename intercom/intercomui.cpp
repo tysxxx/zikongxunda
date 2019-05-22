@@ -58,7 +58,9 @@ void IntercomUi::init()
 
         //@.用户列表
     userInteractTreeWidget = new QTreeWidget;
-    //userInteractTreeWidget->setFixedSize(600, 300);
+    userInteractTreeWidget->setExpandsOnDoubleClick(false);
+    connect(userInteractTreeWidget, SIGNAL(itemClicked(QTreeWidgetItem*,int)),
+            this, SLOT(userInteractItemClickedSlot(QTreeWidgetItem*,int)));
     userInteractTreeWidget->setStyleSheet(".QTreeWidget{background-color: transparent; font: 21px; color: white; border: none; padding-left:0px;}\
                                            .QTreeWidget::item{margin: 10px;}");
     userInteractTreeWidget->setAutoFillBackground(true);
@@ -71,7 +73,8 @@ void IntercomUi::init()
 
         //@.组织列表
     groupInteractListWidget = new QListWidget;
-    //groupInteractListWidget->setFixedSize(600, 300);
+    connect(groupInteractListWidget, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(groupInteractItemClickedSlot(QListWidgetItem*)));
     groupInteractListWidget->setStyleSheet(".QListWidget{background-color: transparent; font: 21px; color: white; border: none; padding-left:0px;}\
                                            .QListWidget::item{margin: 10px;}");
 
@@ -282,10 +285,10 @@ void IntercomUi::btnClickedSlot(QAbstractButton* button)
 void IntercomUi::loadUserInteractList(groupListType &group, categoryListType &groupCategory, userListType &user)
 {
     //创建组节点
-    QList<QTreeWidgetItem *> groupListItem;
+    QList<TreeWidgetItem *> groupListItem;
     QList<groupDetailType> groupDetailList;
     for (quint32 i = 0; i < group.total; ++i){
-        QTreeWidgetItem *item = new QTreeWidgetItem;
+        TreeWidgetItem *item = new TreeWidgetItem(userInteractTreeWidget);
         item->setForeground(0, QColor("white"));
         item->setText(0, group.items.at(i).name);
         groupListItem.append(item);
@@ -297,10 +300,10 @@ void IntercomUi::loadUserInteractList(groupListType &group, categoryListType &gr
 
 
     //创建组织分类节点
-    QList<QTreeWidgetItem *> groupCategoryListItem;
+    QList<TreeWidgetItem *> groupCategoryListItem;
     QList<groupCategoryDetailType> groupCategoryDetailList;
     for(quint32 i = 0; i < groupCategory.total; i++){
-        QTreeWidgetItem *item = new QTreeWidgetItem;
+        TreeWidgetItem *item = new TreeWidgetItem;
         item->setForeground(0, QColor("white"));
         item->setText(0, groupCategory.items.at(i).name);
         groupCategoryListItem.append(item);
@@ -312,10 +315,10 @@ void IntercomUi::loadUserInteractList(groupListType &group, categoryListType &gr
     }
 
     //添加用户节点
-    QList<QTreeWidgetItem *> userListItem;
+    QList<TreeWidgetItem *> userListItem;
     QList<userDetailType> userDetailList;
     for(quint32 i = 0; i < user.total; i++){
-        QTreeWidgetItem *item = new QTreeWidgetItem;
+        TreeWidgetItem *item = new TreeWidgetItem;
         //item->setForeground(0, QColor("white"));
         item->setText(0, user.items.at(i).name);
         item->setBackgroundColor(0, QColor("transparent"));
@@ -367,10 +370,10 @@ void IntercomUi::loadUserInteractList(groupListType &group, categoryListType &gr
 
 
     //清空
-    userInteractTreeWidget->clear();
+    //userInteractTreeWidget->clear();
 
     //添加总的列表
-    userInteractTreeWidget->addTopLevelItems(groupListItem);
+    //userInteractTreeWidget->addTopLevelItems(groupListItem);
     qApp->processEvents();
 
 //    for(quint32 userIndex=0; userIndex < userListItem.size(); userIndex++)
@@ -411,8 +414,31 @@ void IntercomUi::loadGroupInteractList(intercomListType &intercom)
 
     //加载
     for(qint32 i=0; i < intercom.total; i++){
-        QListWidgetItem *item = new QListWidgetItem(groupInteractListWidget);
+        ListWidgetItem *item = new ListWidgetItem(groupInteractListWidget);
         item->setText(intercom.items.at(i).name);
     }
+}
+
+
+//项选择处理
+void IntercomUi::userInteractItemClickedSlot(QTreeWidgetItem *item, int column)
+{
+    TreeWidgetItem *myItem = dynamic_cast<TreeWidgetItem*>(item);
+    qDebug() << "child count:" << item->childCount();
+    if(item->childCount()){
+        if(item->isExpanded())
+        item->setExpanded(false);
+        else
+          item->setExpanded(true);
+
+        }
+    qDebug() << "tree item" << myItem->text(column);
+}
+
+
+void IntercomUi::groupInteractItemClickedSlot(QListWidgetItem *item)
+{
+    ListWidgetItem *myItem = dynamic_cast<ListWidgetItem*>(item);
+    qDebug() << "item clicked" << myItem->text();// << myItem->itemInfo().id << myItem->itemInfo().groupId;
 }
 

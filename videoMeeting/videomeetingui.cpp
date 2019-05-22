@@ -54,58 +54,16 @@ void VideoMeetingUi::init()
 
     connect(meetingListWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClickedSlot(QListWidgetItem*)));
 
-//    QList<QListWidgetItem *> list;
-//    for(qint32 i=0; i < 20; i++){
-//        QListWidgetItem *item = new QListWidgetItem(meetingListWidget);
-//        item->setForeground(QBrush(QColor("white")));
-//        item->setBackground(QBrush(QColor("transparent")));
-//        QFont font = item->font();
-//        font.setPixelSize(21);
-//        item->setFont(font);
-//        item->setText(tr("会议%1").arg(i));
-//        list.append(item);
-//    }
 
-//    QList<ListWidgetItem *> list;
-//    for(qint32 i=0; i < 20; i++){
-//        ListWidgetItem *item = new ListWidgetItem(meetingListWidget);
-//        item->setText(tr("会议%1").arg(i));
-//        //ListWidgetItem::ItemInfoType itemInfo = item->itemInfo();
-//        item->itemInfo().id = i;
-//        list.append(item);
-//    }
-
-    QFrame *widget = new QFrame;
-    QVBoxLayout *Hlayout = new QVBoxLayout;
-    for(int i=0; i< 10; i++){
-        QFrame *frame = new QFrame;
-        QLabel *label = new QLabel;
-        label->setStyleSheet("color: white; font:21px;");
-        label->setText("item->text()");
-        QPushButton *button = new QPushButton;
-        button->setStyleSheet("color: white; font:21px;");
-        button->setText("进入会议");
-        QHBoxLayout *layout = new QHBoxLayout;
-        layout->addWidget(label);
-        layout->addWidget(button);
-        frame->setLayout(layout);
-
-        Hlayout->addWidget(frame);
+    QList<ListWidgetItem *> list;
+    for(qint32 i=0; i < 20; i++){
+        ListWidgetItem *item = new ListWidgetItem(meetingListWidget);
+        item->setText(tr("会议%1").arg(i));
+        //ListWidgetItem::ItemInfoType itemInfo = item->itemInfo();
+        item->itemInfo().id = i;
+        list.append(item);
     }
 
-    widget->setLayout(Hlayout);
-
-
-    QListWidgetItem *item = new QListWidgetItem(meetingListWidget);
-    //QSize size = item->sizeHint();
-    //item->setSizeHint(QSize(size.width(), 600));
-    widget->setFixedSize(460, 440);
-    QScrollArea *scroll = new QScrollArea;
-    scroll->setWidgetResizable(true);
-    scroll->setFixedSize(460, 440);
-    scroll->setWidget(widget);
-
-    meetingListWidget->setItemWidget(item, scroll);
 
     QVBoxLayout *meetingListVBoxLayout = new QVBoxLayout;
     meetingListVBoxLayout->setContentsMargins(0, 30, 0, 10);
@@ -150,6 +108,6 @@ void VideoMeetingUi::loadMeetingList(meetingListType &meeting)
 //项选择处理
 void VideoMeetingUi::itemClickedSlot(QListWidgetItem *item)
 {
-    //ListWidgetItem *myItem = dynamic_cast<ListWidgetItem*>(item);
-    //qDebug() << "item clicked" << myItem->text() << myItem->itemInfo().id << myItem->itemInfo().groupId;
+    ListWidgetItem *myItem = dynamic_cast<ListWidgetItem*>(item);
+    qDebug() << "item clicked" << myItem->text() << myItem->itemInfo().id << myItem->itemInfo().groupId;
 }

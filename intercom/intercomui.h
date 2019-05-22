@@ -17,7 +17,8 @@
 #include "qflowlayout.h"
 #include <QLabel>
 #include "network/type.h"
-
+#include "treewidgetitem.h"
+#include "videoMeeting/listwidgetitem.h"
 
 class IntercomUi : public QWidget
 {
@@ -29,13 +30,14 @@ public:
     void init();
     //void paintEvent(QPaintEvent *);
 
-
 signals:
 
 private slots:
     void btnClickedSlot(QAbstractButton* button);
     void loadUserInteractList(groupListType &group, categoryListType &groupCategory, userListType &user);
     void loadGroupInteractList(intercomListType &intercom);
+    void userInteractItemClickedSlot(QTreeWidgetItem *item, int column);
+    void groupInteractItemClickedSlot(QListWidgetItem *item);
 private:
     QPushButton *userInteractBtn;
     QPushButton *groupInteractBtn;
