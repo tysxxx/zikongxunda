@@ -5,7 +5,9 @@
 #include <QFontDatabase>
 #include <QFile>
 #include <QtPlugin>
+#if (QT_VERSION <= QT_VERSION_CHECK(5,0,0))
 #include <QWSServer>
+#endif
 #include <QDesktopWidget>
 #include "mainUI/mainui.h"
 #include "common/nofocusrectstyle.h"

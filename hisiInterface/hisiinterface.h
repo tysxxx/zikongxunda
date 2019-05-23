@@ -20,7 +20,6 @@ typedef struct _hisiDeviceInfo
    QList<DEVICEINFO_S> localVideoDeviceList; //1:本地视频列表
    QList<DEVICEINFO_S> localAudioDeviceList; //2:本地音频设备列表
    bool openLocalVideoRecord;  //打开本地视频录像
-
 }HisiDeviceInfoType;
 
 typedef struct layoutWindowInfo

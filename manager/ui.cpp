@@ -32,15 +32,15 @@ void UI::initUi()
     //各分界面
         //@.本地监控界面
     localMonitorUi = new LocalMonitorUi(mainUi->getCenterFrame());
-    connect(manager.data(), SIGNAL(layoutSwitchChanged(LayoutMode)), localMonitorUi, SLOT(layoutSwitchHandler(LayoutMode)));
     localMonitorUi->init();
         //@.互动交互
     intercomUi = new IntercomUi(mainUi->getCenterFrame());
     intercomUi->init();
         //@.视频会议
     videoMeetingUi = new VideoMeetingUi(mainUi->getCenterFrame());
+    videoMeetingUi->init();
         //@.地图
-    //MapUi = new electronicMap();
+    mapUi = new MapUi();
         //@.视频查询
     videoReviewUi = new VideoReviewUi(mainUi->getCenterFrame());
     videoReviewUi->init();
@@ -48,18 +48,21 @@ void UI::initUi()
     mainUi->addCenterWidget(localMonitorUi, MainUi::MainMenuUi::localMonitorUi);
     mainUi->addCenterWidget(intercomUi, MainUi::MainMenuUi::intercomUi);
     mainUi->addCenterWidget(videoMeetingUi, MainUi::MainMenuUi::videoMeetingUi);
-    //mainUi->addCenterWidget(MapUi);
+    mainUi->addCenterWidget(mapUi, MainUi::MainMenuUi::mapUi);
     mainUi->addCenterWidget(videoReviewUi, MainUi::MainMenuUi::videoReviewUi);
 
     //设置当前中间要显示的窗口
     mainUi->setCenterWidget(MainUi::MainMenuUi::localMonitorUi);
 
-    //设置初始分屏
-    localMonitorUi->layoutSwitchHandler(LayoutMode::four);
-
     //管理实例
     manager = Manager::instance();
     manager->init();
+
+    //信号槽链接
+    connect(manager.data(), SIGNAL(layoutSwitchChanged(LayoutMode)), localMonitorUi, SLOT(layoutSwitchHandler(LayoutMode)));
+
+    //设置初始分屏
+    localMonitorUi->layoutSwitchHandler(LayoutMode::four);
 
     //界面显示
     mainUi->show();

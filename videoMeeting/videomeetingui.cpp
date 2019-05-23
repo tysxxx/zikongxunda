@@ -10,7 +10,6 @@
 VideoMeetingUi::VideoMeetingUi(QRect rect, QWidget *parent) : QWidget(parent)
 {
     resize(rect.width(), rect.height());
-    init();
 }
 
 VideoMeetingUi::~VideoMeetingUi()

@@ -158,6 +158,8 @@ void VideoReviewUi::init()
     //
     manager = Manager::instance();
     connect(manager.data(), SIGNAL(updateVideoChannel(QList<DEVICEINFO_S>&)), this, SLOT(setVideoChannel(QList<DEVICEINFO_S>&)));
+
+    connect(videoInfoTableUi, SIGNAL(playSingleVideoFile(QString)), this, SLOT(playSingleVideoFile(QString)));
 }
 
 
@@ -193,21 +195,32 @@ void VideoReviewUi::videoPlayBtnClickedSlot()
 //查询按键
 void VideoReviewUi::queryBtnClickedSlot()
 {
-    qDebug() << "查询";
+    qDebug() << "查询" << videoChannel->count() << videoChannel->currentIndex();
 
     //查询文件列表
-    if(videoChannel->count() && videoChannel->currentIndex()){
+    if(!videoChannel->currentText().isEmpty()){
         QMap<QString, QVariant> deviceInfoMap = videoChannel->itemData(videoChannel->currentIndex()).toMap();
         INPUT_DEV_TYPE_E type = static_cast<INPUT_DEV_TYPE_E>(deviceInfoMap["type"].toInt());
         list<FILE_PROPERTY_ST> fileList;
 
+        qDebug() << "type:" << type << deviceInfoMap["id"].toInt() << videoDate->text().toUtf8().data();
         zkCarDevEngine::instance()->zkGetMp4FileList(type, deviceInfoMap["id"].toInt(),
                                     videoDate->text().toUtf8().data(), &fileList);
 
         videoFileList = QList<FILE_PROPERTY_ST>::fromStdList(fileList);
 
+        if(videoFileList.size())
+        {
+            //清空列表
+            videoInfoTableUi->clearContents();
+            qint32 rowCount = videoInfoTableUi->rowCount();
+            for(qint32 i = 0; i < rowCount; i++)
+                videoInfoTableUi->removeRow(0);
+        }
+
         //更新表格文件信息
         for(auto fileInfo: videoFileList){
+            qDebug() << "fileName" << fileInfo.fileName;
             videoInfoTableUi->appendOneRow(QString(fileInfo.fileName), fileInfo.size,
                                            QString(fileInfo.time), QString::number(fileInfo.cnt));
         }
@@ -225,7 +238,7 @@ void VideoReviewUi::dateBtnClickedSlot()
         QPoint point = dateBtn->mapToGlobal(QPoint(dateBtn->rect().x(), dateBtn->rect().y()));
         QRect calenderRect = QRect(point.x()+dateBtn->size().width(),
                                point.y()+dateBtn->size().height()+25,
-                               300,
+                               320,
                                300);
         //日历
         calender = new QCalendarWidget;
@@ -269,4 +282,25 @@ void VideoReviewUi::setVideoChannel(QList<DEVICEINFO_S> &localVideoDeviceList)
 void VideoReviewUi::videoChannelChanged(int index)
 {
     qDebug() << "vidoe channel changed: " << videoChannel->itemData(index);
+}
+
+//选择播放视频文件
+void VideoReviewUi::playSingleVideoFile(QString fileName)
+{
+    qDebug() << "fileName: " << fileName;
+
+    //切换到视频播放的界面
+    videoPlayBtnClickedSlot();
+
+    qDebug() << "area: " << videoPlayUi->videoPlayShowArea();
+
+    RECT_ST rect;
+    rect.s32X = videoPlayUi->videoPlayShowArea().x();
+    rect.s32Y = videoPlayUi->videoPlayShowArea().y();
+    rect.u32Width = videoPlayUi->videoPlayShowArea().width();
+    rect.u32Height = videoPlayUi->videoPlayShowArea().height();
+    zkCarDevEngine::instance()->zkStartMediaPlayer(0, &rect);
+
+    fileName = "local3$866&2019-05-23-14:25:04";
+    zkCarDevEngine::instance()->zkPlayMedia(fileName.toUtf8().data());
 }

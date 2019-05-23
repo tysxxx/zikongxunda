@@ -296,7 +296,7 @@ void NetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
     qDebug() << "---recv:" <<bytesReceived << "---total:" << bytesTotal;
 
     //数据量大时，一次接收不完全,需要多次接收
-    QNetworkReply *reply = static_cast<QNetworkReply *>(sender());
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
     PostGetReplyData += reply->read(reply->bytesAvailable());
 
     //接收完成

@@ -55,12 +55,13 @@ void VideoInfoTableUi::init()
     horizontalHeader()->setStyleSheet(".QHeaderView{background-color: transparent;}\
                                        .QHeaderView::section{background-color: transparent; border: 0.5px solid white;}");
     horizontalHeader()->setFixedHeight(60);
-    horizontalHeader()->setStretchLastSection(true);
+    horizontalHeader()->setStretchLastSection(true); //最后一项自动伸展
 
     setVerticalScrollMode(QAbstractItemView::ScrollPerItem);
     setEditTriggers(QAbstractItemView::NoEditTriggers); //不可编辑
-    setStyleSheet(".QTableWidget{background-color: transparent; border:none; font: 21px; color: white; }\
-                   .QTableWidget::item{background-color: transparent;}");
+    setSelectionBehavior(QAbstractItemView::SelectRows);
+    setStyleSheet("QTableWidget{background-color: transparent; border:none; font: 21px; color: white; }\
+                   QTableWidget::item{background-color: transparent;}");
 
     //设置滚动条
     verticalScrollBar()->setStyleSheet(".QScrollBar{background-color: gray; width:15px; border:2px solid white; border-radius:5px;}\
@@ -107,6 +108,9 @@ void VideoInfoTableUi::appendOneRow(QString fileName, qint32 fileSize, QString s
    queryBtn->setFixedHeight(40);
    queryBtn->setStyleSheet(".QPushButton{font:bold 20px; color: #649bf1; background-color: transparent}");
    //queryBtn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+   connect(queryBtn, SIGNAL(clicked()), this, SLOT(querySingleVideoBtnClickedSLot()));
+   queryBtn->setProperty("fileName", fileName);
+
    QFrame *btnFrame = new QFrame;
    QHBoxLayout *btnHBoxLayout = new QHBoxLayout;
    btnHBoxLayout->setMargin(0);
@@ -117,5 +121,12 @@ void VideoInfoTableUi::appendOneRow(QString fileName, qint32 fileSize, QString s
    btnFrame->setStyleSheet(".QFrame{padding: 0px; padding-left: 2px; padding-right: 2px; margin: 0px;}");
    setCellWidget(rowCount, 4, btnFrame);
 
+}
+
+//播放单个视频按键
+void VideoInfoTableUi::querySingleVideoBtnClickedSLot()
+{
+    QPushButton *button = qobject_cast<QPushButton*>(sender());
+    playSingleVideoFile(button->property("fileName").toString());
 }
 

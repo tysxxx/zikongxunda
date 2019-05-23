@@ -6,6 +6,9 @@
 #include <QPushButton>
 #include <QSlider>
 #include <QFrame>
+#include <QTimer>
+#include "zkCarDevEnginge.h"
+#include "zkdevdefine.h"
 
 class VideoPlayUi : public QWidget
 {
@@ -15,9 +18,16 @@ public:
 
     void init();
     void paintEvent(QPaintEvent *);
+
+    QRect videoPlayShowArea();
 signals:
 
 public slots:
+    void videoPlayPause();
+    void videoStop();
+    void videoFastForward();
+    void videoBackForward();
+    void timeUpSlot();
 private:
     QRect playArea;
     QPushButton *playPauseBtn;
@@ -26,6 +36,10 @@ private:
     QPushButton *stopBtn;
     QSlider *playProgressBar;
     QPushButton *fullScreenBtn;
+
+    QWidget *videoPlayShowAreaWiget;
+    QTimer *timer;
+private:
 };
 
 #endif // VIDEOPLAYUI_H

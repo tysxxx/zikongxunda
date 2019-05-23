@@ -40,6 +40,7 @@ private slots:
     void setVideoDate(const QDate &date);
     void setVideoChannel(QList<DEVICEINFO_S> &localVideoDeviceList);
     void videoChannelChanged(int index);
+    void playSingleVideoFile(QString fileName);
 private:
     QPushButton *videoInfoBtn;
     QPushButton *videoPlayBtn;

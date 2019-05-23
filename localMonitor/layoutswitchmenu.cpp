@@ -23,7 +23,7 @@ void LayoutSwitchMenu::init()
 {
     //窗口设置背景和形状
     setWindowFlags((Qt::FramelessWindowHint));
-    //setAttribute(Qt::WA_TranslucentBackground);
+    setAttribute(Qt::WA_TranslucentBackground);
     setAttribute(Qt::WA_DeleteOnClose);
     setStyleSheet("QFrame{border-radius:10px; background:rgba(4, 11, 23, 80%);}"); //必须使用%
 

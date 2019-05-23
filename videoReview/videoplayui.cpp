@@ -91,6 +91,18 @@ void VideoPlayUi::init()
     playToolFrame->setLayout(btnProgressHBoxLayout);
     playToolFrame->move(playArea.x(), playArea.y() + playArea.height() + 1);
     playToolFrame->setFixedWidth(playArea.width());
+
+    //视频播放显示区域
+    videoPlayShowAreaWiget = new QWidget(this);
+    videoPlayShowAreaWiget->setGeometry(playArea);
+
+    //定时器
+    timer = new QTimer;
+    connect(timer, SIGNAL(timeout()), SLOT(timeUpSlot()));
+    timer->start(1000);
+
+    connect(playPauseBtn, SIGNAL(clicked(bool)), SLOT(videoPlayPause()));
+    connect(stopBtn, SIGNAL(clicked(bool)), SLOT(videoStop()));
 }
 
 
@@ -101,3 +113,74 @@ void VideoPlayUi::paintEvent(QPaintEvent *)
     painter.setCompositionMode(QPainter::CompositionMode_Clear);
     painter.fillRect(playArea, QBrush(Qt::transparent));
 }
+
+//返回视频播放的区域
+QRect VideoPlayUi::videoPlayShowArea()
+{
+    QPoint point(videoPlayShowAreaWiget->x(), videoPlayShowAreaWiget->y());
+    point = videoPlayShowAreaWiget->mapToGlobal(point);
+    return QRect(point.x(),
+                 point.y(),
+                 videoPlayShowAreaWiget->width(),
+                 videoPlayShowAreaWiget->height());
+}
+
+//视频播放暂停
+void VideoPlayUi::videoPlayPause()
+{
+    qDebug() << "video pause";
+    zkCarDevEngine::instance()->zkStopPlayMedia();
+}
+
+//单个视频停止
+void VideoPlayUi::videoStop()
+{
+    qDebug() << "video stop";
+    zkCarDevEngine::instance()->zkEndPlayMedia();
+}
+
+//单个视频快进
+void VideoPlayUi::videoFastForward()
+{
+    zkCarDevEngine::instance()->zkPlayMediaAhead(5);
+}
+
+//单个视频快退
+void VideoPlayUi::videoBackForward()
+{
+    zkCarDevEngine::instance()->zkPlayMediaBack(5);
+}
+
+//视频播放时,更新视频播放的进度
+void VideoPlayUi::timeUpSlot()
+{
+   quint32 playSec = zkCarDevEngine::instance()->zkGetMediaPlayTime();
+   quint32 videoSumPlayTime = 60;
+   qint32 value = playSec*100/videoSumPlayTime;
+   playProgressBar->setValue(value);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

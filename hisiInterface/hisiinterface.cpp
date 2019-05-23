@@ -2,7 +2,8 @@
 #include "hisiinterface.h"
 #include <QDebug>
 
-#define LOCAL_VIDEO_RECORD_PATH "/mnt/tys"
+#define LOCAL_VIDEO_RECORD_PATH "/mnt/recordVedio"
+//#define LOCAL_VIDEO_RECORD_PATH "/mnt/tys"
 
 //@.hisi接口初始化
 void hisiInit(HisiDeviceInfoType &hisiDeviceInfo)

@@ -4,9 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui webkit script webkitwidgets network
-QT += network
-UI_DIR=./UI  #解决ui.h不及时更新的问题
+QT += core gui  network
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = zkCar
@@ -15,7 +14,6 @@ TEMPLATE = app
 CONFIG += c++11
 QMAKE_CXXFLAGS += -std=c++11
 
-DESTDIR = /home/tys/software/nfsboot/
 
 SOURCES += main.cpp\
     network/networkmanager.cpp \
@@ -37,7 +35,8 @@ SOURCES += main.cpp\
     manager/manager.cpp \
     manager/ui.cpp \
     videoMeeting/listwidgetitem.cpp \
-    intercom/treewidgetitem.cpp
+    intercom/treewidgetitem.cpp \
+    map/mapui.cpp
 
 HEADERS  += mainwidget.h \
     network/networkmanager.h \
@@ -61,7 +60,8 @@ HEADERS  += mainwidget.h \
     manager/manager.h \
     manager/ui.h \
     videoMeeting/listwidgetitem.h \
-    intercom/treewidgetitem.h
+    intercom/treewidgetitem.h \
+    map/mapui.h
 
 
 RESOURCES += \
@@ -69,13 +69,16 @@ RESOURCES += \
     datetimeimg.qrc \
     recordimg.qrc
 
-INCLUDEPATH += $$PWD/network $$PWD/lib/
-#INCLUDEPATH += /home/tys/doc/wen_doc/Hi3531A_SDK_V1.0.4.0/mpp/extdrv/tlv320aic31 /home/tys/doc/wen_doc/Hi3531A_SDK_V1.0.4.0/mpp/include
-#LIBS += -L/home/tys/doc/wen_doc/Hi3531A_SDK_V1.0.4.0/mpp/lib -lmpi -lhdmi -ljpeg -lupvqe -ldnvqe -lVoiceEngine
+INCLUDEPATH += $$PWD/network
 
-#INCLUDEPATH += /home/tys/software/hisi3531aLib/mp4v2/include /home/tys/software/hisi3531aLib/faac/include /home/tys/software/hisi3531aLib/faad/include /home/tys/software/hisi3531aLib/libcurl/include ./common
-#LIBS += -L/home/tys/software/hisi3531aLib/mp4v2/lib/ -L/home/tys/software/hisi3531aLib/faac/lib -L/home/tys/software/hisi3531aLib/faad/lib -L/home/tys/software/hisi3531aLib/libcurl/lib -lmp4v2 -lfaac -lfaad -lcurl
-#LIBS += -L/home/tys/software/hisi3531aLib -lzkpush -lhisicar -lzkrtsp
+equals(QMAKE_CXX, arm-hisiv300-linux-g++) {
+
+    QT += webkit script webkitwidgets
+
+    DEFINES += HISI_PLATFORM
+    DESTDIR = /home/tys/software/nfsboot/
+
+    INCLUDEPATH += $$PWD/lib/
 
     unix:!macx: LIBS += -L$$PWD/lib/ -lzkpush
     unix:!macx: LIBS += -L$$PWD/lib/ -lzkrtsp
@@ -112,3 +115,4 @@ INCLUDEPATH += $$PWD/network $$PWD/lib/
 
     INCLUDEPATH += $$PWD/lib/json_hisi/include
     DEPENDPATH += $$PWD/lib/json_hisi/include
+ }

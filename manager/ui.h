@@ -10,6 +10,7 @@
 #include "videoMeeting/videomeetingui.h"
 #include "videoReview/videoreviewui.h"
 #include "localMonitor/localmonitorui.h"
+#include "map/mapui.h"
 
 class UI : public QObject
 {
@@ -26,7 +27,7 @@ public slots:
 private:
     MainUi *mainUi;
     VideoMeetingUi *videoMeetingUi;
-    //electronicMap *MapUi;
+    MapUi *mapUi;
     VideoReviewUi *videoReviewUi;
     IntercomUi *intercomUi;
     QStackedLayout *stackedLayout;
