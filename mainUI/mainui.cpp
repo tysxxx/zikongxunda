@@ -102,14 +102,17 @@ void MainUi::init()
 
     leftFrame = new QFrame(this);
     leftFrame->setGeometry(0, topFrame->height()+1, 184, height()-(topFrame->height()+1));
-    leftFrame->setStyleSheet(tr(".QFrame{background-color: #040b17;}"));
+    leftFrame->setStyleSheet(tr(".QFrame{background-color: #040b17; border-top: 1px solid green;}"));
     leftFrame->setLayout(leftVBoxLayout);
 
     //中间窗口
-    centerFrame = new QFrame(this);
+    centerFrame = new QWidget(this);
+    centerFrame->setObjectName("centerFrame");
     centerFrame->setGeometry(leftFrame->width()+1, topFrame->height()+1, width()-leftFrame->width(), height()-topFrame->height());
-    centerFrame->setStyleSheet(tr(".QFrame{background-color: transparent;}"));
+    centerFrame->setStyleSheet(tr(".QWidget{background-color: transparent;}"));
     stackedLayout = new QStackedLayout(centerFrame);
+
+    qDebug()<< "center frame geometry: " << centerFrame->geometry();
 
     //更新时间
     QTimer *timer = new QTimer(this);
@@ -198,5 +201,8 @@ void MainUi::timerUpdate()
 //返回中间区域的信息
 QRect MainUi::getCenterFrame()
 {
-    return centerFrame->rect();
+    return QRect(centerFrame->geometry().x()+2,
+                 centerFrame->geometry().y()+2,
+                 centerFrame->geometry().width()-4,
+                 centerFrame->geometry().height()-4);
 }

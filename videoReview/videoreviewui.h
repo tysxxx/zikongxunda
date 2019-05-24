@@ -16,10 +16,12 @@
 #include <QPointer>
 #include <QDate>
 #include <QSharedPointer>
+#include <QStackedWidget>
 #include "videoplayui.h"
 #include "videoinfotableui.h"
 #include "hisiInterface/hisiinterface.h"
 #include "manager/manager.h"
+#include "videofullscreen.h"
 
 class VideoReviewUi : public QWidget
 {
@@ -41,6 +43,8 @@ private slots:
     void setVideoChannel(QList<DEVICEINFO_S> &localVideoDeviceList);
     void videoChannelChanged(int index);
     void playSingleVideoFile(QString fileName);
+    void videoPlayFullScreen();
+    void exitVideoPlayFullScreen();
 private:
     QPushButton *videoInfoBtn;
     QPushButton *videoPlayBtn;
@@ -56,6 +60,7 @@ private:
     VideoPlayUi *videoPlayUi;
     QStackedLayout *bottomFrameStackedLayout;
     QFrame *bottomFrame;
+    QPointer<VideoFullScreen> videoFullScreenUi;
 
     QSharedPointer<Manager> manager;
     QList<FILE_PROPERTY_ST> videoFileList;

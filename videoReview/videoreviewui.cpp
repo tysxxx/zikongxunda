@@ -153,6 +153,9 @@ void VideoReviewUi::init()
     mainVBoxLayout->addWidget(topFrame);
     mainVBoxLayout->addWidget(bottomFrame);
 
+    //QWidget *mywidget = new QWidget;
+    //QStackedWidget *stackedWidget = new QStackedWidget;
+
     setLayout(mainVBoxLayout);
 
     //
@@ -160,6 +163,7 @@ void VideoReviewUi::init()
     connect(manager.data(), SIGNAL(updateVideoChannel(QList<DEVICEINFO_S>&)), this, SLOT(setVideoChannel(QList<DEVICEINFO_S>&)));
 
     connect(videoInfoTableUi, SIGNAL(playSingleVideoFile(QString)), this, SLOT(playSingleVideoFile(QString)));
+    connect(videoPlayUi, SIGNAL(videoFullScreenSignal()), SLOT(videoPlayFullScreen()));
 }
 
 
@@ -291,6 +295,7 @@ void VideoReviewUi::playSingleVideoFile(QString fileName)
 
     //切换到视频播放的界面
     videoPlayBtnClickedSlot();
+    videoPlayUi->setVideoPlayStatus(true);
 
     qDebug() << "area: " << videoPlayUi->videoPlayShowArea();
 
@@ -299,8 +304,42 @@ void VideoReviewUi::playSingleVideoFile(QString fileName)
     rect.s32Y = videoPlayUi->videoPlayShowArea().y();
     rect.u32Width = videoPlayUi->videoPlayShowArea().width();
     rect.u32Height = videoPlayUi->videoPlayShowArea().height();
-    zkCarDevEngine::instance()->zkStartMediaPlayer(0, &rect);
+    zkCarDevEngine::instance()->zkStartMediaPlayer(2, &rect);
 
-    fileName = "local3$866&2019-05-23-14:25:04";
     zkCarDevEngine::instance()->zkPlayMedia(fileName.toUtf8().data());
+}
+
+//设置全屏播放
+void VideoReviewUi::videoPlayFullScreen()
+{
+    if(videoFullScreenUi)
+        return;
+
+    QPoint point(this->rect().x(), this->rect().y());
+    point = this->mapToGlobal(point);
+
+    videoFullScreenUi = new VideoFullScreen;
+    videoFullScreenUi->setGeometry(point.x(), point.y(), geometry().width(), geometry().height());
+    videoFullScreenUi->init();
+    connect(videoFullScreenUi, SIGNAL(exitFullScreenSignal()), SLOT(exitVideoPlayFullScreen()));
+    videoFullScreenUi->show();
+    setVisible(false);
+
+    RECT_ST rect;
+    rect.s32X = videoFullScreenUi->geometry().x();
+    rect.s32Y = videoFullScreenUi->geometry().y();
+    rect.u32Width = videoFullScreenUi->geometry().width();
+    rect.u32Height = videoFullScreenUi->geometry().height();
+    zkCarDevEngine::instance()->zkStartMediaPlayer(2, &rect);
+
+    //qDebug() << "geometry: " << geometry() << point;
+}
+
+//退出全屏
+void VideoReviewUi::exitVideoPlayFullScreen()
+{
+    if(videoFullScreenUi){
+        setVisible(true);
+        videoFullScreenUi->close();
+    }
 }

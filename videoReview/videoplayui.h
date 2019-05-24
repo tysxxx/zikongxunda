@@ -20,14 +20,17 @@ public:
     void paintEvent(QPaintEvent *);
 
     QRect videoPlayShowArea();
+    QWidget& videoShowAreaWiget();
+    void setVideoPlayStatus(bool);
 signals:
-
+    void videoFullScreenSignal();
 public slots:
     void videoPlayPause();
     void videoStop();
     void videoFastForward();
     void videoBackForward();
     void timeUpSlot();
+    void videoFullScreen();
 private:
     QRect playArea;
     QPushButton *playPauseBtn;
@@ -39,6 +42,9 @@ private:
 
     QWidget *videoPlayShowAreaWiget;
     QTimer *timer;
+
+    bool videoplaying = false;
+    bool videoPlayMode;  //0:单文件播放 1:多文件播放
 private:
 };
 

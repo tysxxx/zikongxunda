@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     manager/ui.cpp \
     videoMeeting/listwidgetitem.cpp \
     intercom/treewidgetitem.cpp \
-    map/mapui.cpp
+    map/mapui.cpp \
+    videoReview/videofullscreen.cpp
 
 HEADERS  += mainwidget.h \
     network/networkmanager.h \
@@ -61,7 +62,8 @@ HEADERS  += mainwidget.h \
     manager/ui.h \
     videoMeeting/listwidgetitem.h \
     intercom/treewidgetitem.h \
-    map/mapui.h
+    map/mapui.h \
+    videoReview/videofullscreen.h
 
 
 RESOURCES += \

@@ -11,6 +11,7 @@
 #include "layoutswitchmenu.h"
 #include "common/common.h"
 #include <QPointer>
+#include <QSharedPointer>
 
 class LocalMonitorMenu : public QFrame
 {
@@ -45,7 +46,6 @@ private:
 
     QPointer<LayoutSwitchMenu> layoutSwitchMenu;
     QDialog *grabFileWin;
-
 };
 
 #endif // LOCALMONITORMENU_H

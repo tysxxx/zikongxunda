@@ -65,7 +65,7 @@ private:
 
     QFrame *topFrame;
     QFrame *leftFrame;
-    QFrame *centerFrame;
+    QWidget *centerFrame;
     QPointer<LoginUi> loginUi;
     QPointer<LocalMonitorMenu> localMonitorMenu;
     QStackedLayout *stackedLayout;

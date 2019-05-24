@@ -10,8 +10,10 @@
 IntercomUi::IntercomUi(QRect rect, QWidget *parent) : QWidget(parent)
 {
     qDebug() << "IntercomUi: " << rect;
-    resize(rect.width(), rect.height());
-    //init();
+    //resize(rect.width(), rect.height());
+    setGeometry(rect);
+    init();
+
 }
 
 IntercomUi::~IntercomUi()
@@ -22,10 +24,11 @@ IntercomUi::~IntercomUi()
 //初始化
 void IntercomUi::init()
 {
+    qDebug()<< "IntercomUi geometry: " << geometry();
     //界面设置
     setWindowFlags((Qt::FramelessWindowHint));
-    setAttribute(Qt::WA_TranslucentBackground);
-    //setStyleSheet(".QWidget{background-color: transparent;}");
+    //setAttribute(Qt::WA_TranslucentBackground);
+    //setStyleSheet(".QWidget{border: 1px solid gray;}");
 
     //左侧窗口
         //@.按键
@@ -96,15 +99,15 @@ void IntercomUi::init()
     leftMainUiVBoxLayout->addLayout(listStackedLayout);
 
     QFrame *leftFrame = new QFrame;
-    leftFrame->resize(width()/2, height());
-    //leftFrame->setFixedSize(width()/2-4, height());
+    //leftFrame->resize(width()/2, height());
+    leftFrame->setFixedSize(width()/2, height());
     leftFrame->setStyleSheet("QFrame{background-color: #040b17; padding-left: 70px;}");
     leftFrame->setLayout(leftMainUiVBoxLayout);
 
     //右侧窗口
     QFrame *rightFrame = new QFrame;
-    rightFrame->resize(width()/2, height());
-    //rightFrame->setFixedSize(width()/2, height());
+    //rightFrame->resize(width()/2, height());
+    rightFrame->setFixedSize(width()/2, height());
     rightFrame->setStyleSheet("QFrame{background-color: transparent}");
 
     qDebug() << "rightFrame: " << rightFrame->size();
@@ -254,13 +257,13 @@ void IntercomUi::init()
 }
 
 //重载paintEvent事件
-//void IntercomUi::paintEvent(QPaintEvent *)
-//{
-//    QStyleOption opt;
-//    opt.init(this);
-//    QPainter painter(this);
-//    style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
-//}
+void IntercomUi::paintEvent(QPaintEvent *)
+{
+    QStyleOption opt;
+    opt.init(this);
+    QPainter painter(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
+}
 
 //按键处理
 void IntercomUi::btnClickedSlot(QAbstractButton* button)

@@ -104,6 +104,9 @@ void VideoInfoTableUi::appendOneRow(QString fileName, qint32 fileSize, QString s
    uploadBtn->setStyleSheet(".QPushButton{font:bold 20px; color: green; background-color: transparent;}\
                              .QPushButton:hover{ border: 1px solid #649bf1; border-radius: 5px;}");
    //uploadBtn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+   uploadBtn->setProperty("fileName", fileName);
+   connect(uploadBtn, SIGNAL(clicked(bool)), SLOT(uploadFile()));
+
    QPushButton *queryBtn = new QPushButton(tr("查看"));
    queryBtn->setFixedHeight(40);
    queryBtn->setStyleSheet(".QPushButton{font:bold 20px; color: #649bf1; background-color: transparent}");
@@ -128,5 +131,12 @@ void VideoInfoTableUi::querySingleVideoBtnClickedSLot()
 {
     QPushButton *button = qobject_cast<QPushButton*>(sender());
     playSingleVideoFile(button->property("fileName").toString());
+}
+
+//上传文件
+void VideoInfoTableUi::uploadFile()
+{
+    QPushButton *button = qobject_cast<QPushButton*>(sender());
+    zkCarDevEngine::instance()->zkUploadFile(button->property("fileName").toString().toUtf8().data(), "");
 }
 

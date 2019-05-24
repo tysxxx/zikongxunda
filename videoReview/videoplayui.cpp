@@ -15,12 +15,14 @@ VideoPlayUi::VideoPlayUi(QWidget *parent) : QWidget(parent)
 void VideoPlayUi::init()
 {
     //视频显示区域
+    videoplaying = false;
     playArea.setRect((width()-598)/2, 0, 598, 320);
 
     QImage backgroundImage;
     //按键
         //@播放暂停
     playPauseBtn = new QPushButton;
+    playPauseBtn->setToolTip("play");
     backgroundImage.load(":/recordImg/resource/recordImg/暂停（选中）.png");
     playPauseBtn->setFixedSize(backgroundImage.size());
     playPauseBtn->setProperty("playing", "false");
@@ -51,6 +53,7 @@ void VideoPlayUi::init()
 
         //@.停止
     stopBtn = new QPushButton;
+    stopBtn->setToolTip("stop");
     backgroundImage.load(":/recordImg/resource/recordImg/暂停（选中）.png");
     stopBtn->setFixedSize(backgroundImage.size());
     stopBtn->setStyleSheet(tr("QPushButton{padding: 0px; margin: 0px; background-image:url(%1); background-color: transparent;}")
@@ -95,6 +98,7 @@ void VideoPlayUi::init()
     //视频播放显示区域
     videoPlayShowAreaWiget = new QWidget(this);
     videoPlayShowAreaWiget->setGeometry(playArea);
+    //videoPlayShowAreaWiget->setStyleSheet("background-color: gray;");
 
     //定时器
     timer = new QTimer;
@@ -103,6 +107,9 @@ void VideoPlayUi::init()
 
     connect(playPauseBtn, SIGNAL(clicked(bool)), SLOT(videoPlayPause()));
     connect(stopBtn, SIGNAL(clicked(bool)), SLOT(videoStop()));
+    connect(fastForwardBtn, SIGNAL(clicked(bool)), SLOT(videoFastForward()));
+    connect(fastBackwardBtn, SIGNAL(clicked(bool)), SLOT(videoBackForward()));
+    connect(fullScreenBtn, SIGNAL(clicked(bool)), SLOT(videoFullScreen()));
 }
 
 
@@ -110,8 +117,19 @@ void VideoPlayUi::init()
 void VideoPlayUi::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
-    painter.setCompositionMode(QPainter::CompositionMode_Clear);
-    painter.fillRect(playArea, QBrush(Qt::transparent));
+
+    if(videoplaying){
+        painter.setCompositionMode(QPainter::CompositionMode_Clear);
+        painter.fillRect(playArea, QBrush(Qt::transparent));
+        }
+    else
+        painter.fillRect(playArea, QBrush(Qt::gray));
+}
+
+//返回视频显示区域的窗口部件
+QWidget& VideoPlayUi::videoShowAreaWiget()
+{
+    return *videoPlayShowAreaWiget;
 }
 
 //返回视频播放的区域
@@ -129,35 +147,70 @@ QRect VideoPlayUi::videoPlayShowArea()
 void VideoPlayUi::videoPlayPause()
 {
     qDebug() << "video pause";
-    zkCarDevEngine::instance()->zkStopPlayMedia();
+    if(videoPlayMode)
+        zkCarDevEngine::instance()->zkStopPlayMedias();
+    else
+        zkCarDevEngine::instance()->zkStopPlayMedia();
+
+    setVideoPlayStatus(true);
 }
 
 //单个视频停止
 void VideoPlayUi::videoStop()
 {
     qDebug() << "video stop";
-    zkCarDevEngine::instance()->zkEndPlayMedia();
+    if(videoPlayMode)
+        zkCarDevEngine::instance()->zkEndPlayMedias();
+    else
+        zkCarDevEngine::instance()->zkEndPlayMedia();
+
+    setVideoPlayStatus(false);
 }
 
 //单个视频快进
 void VideoPlayUi::videoFastForward()
 {
-    zkCarDevEngine::instance()->zkPlayMediaAhead(5);
+    if(videoPlayMode)
+        zkCarDevEngine::instance()->zkPlayMediasAhead(5);
+    else
+        zkCarDevEngine::instance()->zkPlayMediaAhead(5);
 }
 
 //单个视频快退
 void VideoPlayUi::videoBackForward()
 {
-    zkCarDevEngine::instance()->zkPlayMediaBack(5);
+    if(videoPlayMode)
+        zkCarDevEngine::instance()->zkPlayMediasBack(5);
+    else
+        zkCarDevEngine::instance()->zkPlayMediaBack(5);
 }
 
 //视频播放时,更新视频播放的进度
 void VideoPlayUi::timeUpSlot()
 {
-   quint32 playSec = zkCarDevEngine::instance()->zkGetMediaPlayTime();
-   quint32 videoSumPlayTime = 60;
-   qint32 value = playSec*100/videoSumPlayTime;
-   playProgressBar->setValue(value);
+   if(videoPlayMode){
+       quint32 playSec = zkCarDevEngine::instance()->zkGetMediasPlayTime();
+       quint32 videoSumPlayTime = 60;
+       qint32 value = playSec*100/videoSumPlayTime;
+       playProgressBar->setValue(value);
+   }else{
+       quint32 playSec = zkCarDevEngine::instance()->zkGetMediaPlayTime();
+       quint32 videoSumPlayTime = 60;
+       qint32 value = playSec*100/videoSumPlayTime;
+       playProgressBar->setValue(value);
+   }
+}
+
+//点击全屏显示
+void VideoPlayUi::videoFullScreen()
+{
+    videoFullScreenSignal();
+}
+
+void VideoPlayUi::setVideoPlayStatus(bool status)
+{
+    videoplaying = status;
+    update();
 }
 
 

@@ -35,7 +35,8 @@ void UI::initUi()
     localMonitorUi->init();
         //@.互动交互
     intercomUi = new IntercomUi(mainUi->getCenterFrame());
-    intercomUi->init();
+    intercomUi->setGeometry(mainUi->getCenterFrame());
+    //intercomUi->init();
         //@.视频会议
     videoMeetingUi = new VideoMeetingUi(mainUi->getCenterFrame());
     videoMeetingUi->init();

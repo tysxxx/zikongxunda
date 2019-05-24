@@ -23,6 +23,7 @@ signals:
     void playSingleVideoFile(QString fileName);
 private slots:
     void querySingleVideoBtnClickedSLot();
+    void uploadFile();
 private:
 
 };

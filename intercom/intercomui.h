@@ -28,7 +28,7 @@ public:
     ~IntercomUi();
 
     void init();
-    //void paintEvent(QPaintEvent *);
+    void paintEvent(QPaintEvent *);
 
 signals:
 
