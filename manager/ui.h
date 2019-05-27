@@ -11,6 +11,7 @@
 #include "videoReview/videoreviewui.h"
 #include "localMonitor/localmonitorui.h"
 #include "map/mapui.h"
+#include "setting/settingui.h"
 
 class UI : public QObject
 {
@@ -30,6 +31,7 @@ private:
     MapUi *mapUi;
     VideoReviewUi *videoReviewUi;
     IntercomUi *intercomUi;
+    SettingUi *settingUi;
     QStackedLayout *stackedLayout;
     LocalMonitorUi *localMonitorUi;
     QSharedPointer<Manager> manager;

@@ -147,7 +147,7 @@ QRect VideoPlayUi::videoPlayShowArea()
 void VideoPlayUi::videoPlayPause()
 {
     qDebug() << "video pause";
-    if(videoPlayMode)
+    if(videoPlayMode == PlayMode::singleFilePlay)
         zkCarDevEngine::instance()->zkStopPlayMedias();
     else
         zkCarDevEngine::instance()->zkStopPlayMedia();
@@ -159,7 +159,7 @@ void VideoPlayUi::videoPlayPause()
 void VideoPlayUi::videoStop()
 {
     qDebug() << "video stop";
-    if(videoPlayMode)
+    if(videoPlayMode == PlayMode::singleFilePlay)
         zkCarDevEngine::instance()->zkEndPlayMedias();
     else
         zkCarDevEngine::instance()->zkEndPlayMedia();
@@ -170,7 +170,7 @@ void VideoPlayUi::videoStop()
 //单个视频快进
 void VideoPlayUi::videoFastForward()
 {
-    if(videoPlayMode)
+    if(videoPlayMode == PlayMode::singleFilePlay)
         zkCarDevEngine::instance()->zkPlayMediasAhead(5);
     else
         zkCarDevEngine::instance()->zkPlayMediaAhead(5);
@@ -179,7 +179,7 @@ void VideoPlayUi::videoFastForward()
 //单个视频快退
 void VideoPlayUi::videoBackForward()
 {
-    if(videoPlayMode)
+    if(videoPlayMode == PlayMode::singleFilePlay)
         zkCarDevEngine::instance()->zkPlayMediasBack(5);
     else
         zkCarDevEngine::instance()->zkPlayMediaBack(5);
@@ -188,7 +188,7 @@ void VideoPlayUi::videoBackForward()
 //视频播放时,更新视频播放的进度
 void VideoPlayUi::timeUpSlot()
 {
-   if(videoPlayMode){
+   if(videoPlayMode == PlayMode::singleFilePlay){
        quint32 playSec = zkCarDevEngine::instance()->zkGetMediasPlayTime();
        quint32 videoSumPlayTime = 60;
        qint32 value = playSec*100/videoSumPlayTime;
@@ -207,10 +207,17 @@ void VideoPlayUi::videoFullScreen()
     videoFullScreenSignal();
 }
 
+//视频播放状态
 void VideoPlayUi::setVideoPlayStatus(bool status)
 {
     videoplaying = status;
     update();
+}
+
+//视频播放模式: 单文件,多文件
+void VideoPlayUi::setVideoPlayMode(PlayMode mode)
+{
+    videoPlayMode = mode;
 }
 
 

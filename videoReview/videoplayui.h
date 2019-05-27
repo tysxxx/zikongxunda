@@ -16,12 +16,18 @@ class VideoPlayUi : public QWidget
 public:
     explicit VideoPlayUi(QWidget *parent = 0);
 
+    enum PlayMode{
+        singleFilePlay,
+        multFilesPlay,
+    };
+
     void init();
     void paintEvent(QPaintEvent *);
 
     QRect videoPlayShowArea();
     QWidget& videoShowAreaWiget();
     void setVideoPlayStatus(bool);
+    void setVideoPlayMode(PlayMode mode);
 signals:
     void videoFullScreenSignal();
 public slots:
@@ -44,7 +50,7 @@ private:
     QTimer *timer;
 
     bool videoplaying = false;
-    bool videoPlayMode;  //0:单文件播放 1:多文件播放
+    PlayMode videoPlayMode;  //0:单文件播放 1:多文件播放
 private:
 };
 

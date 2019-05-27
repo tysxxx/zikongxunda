@@ -205,15 +205,15 @@ void VideoReviewUi::queryBtnClickedSlot()
     if(!videoChannel->currentText().isEmpty()){
         QMap<QString, QVariant> deviceInfoMap = videoChannel->itemData(videoChannel->currentIndex()).toMap();
         INPUT_DEV_TYPE_E type = static_cast<INPUT_DEV_TYPE_E>(deviceInfoMap["type"].toInt());
-        list<FILE_PROPERTY_ST> fileList;
+        //list<FILE_PROPERTY_ST> fileList;
 
         qDebug() << "type:" << type << deviceInfoMap["id"].toInt() << videoDate->text().toUtf8().data();
         zkCarDevEngine::instance()->zkGetMp4FileList(type, deviceInfoMap["id"].toInt(),
-                                    videoDate->text().toUtf8().data(), &fileList);
+                                    videoDate->text().toUtf8().data(), &videoFileList);
 
-        videoFileList = QList<FILE_PROPERTY_ST>::fromStdList(fileList);
+       QList<FILE_PROPERTY_ST> videoFileListTmp = QList<FILE_PROPERTY_ST>::fromStdList(videoFileList);
 
-        if(videoFileList.size())
+        if(videoFileListTmp.size())
         {
             //清空列表
             videoInfoTableUi->clearContents();
@@ -223,7 +223,7 @@ void VideoReviewUi::queryBtnClickedSlot()
         }
 
         //更新表格文件信息
-        for(auto fileInfo: videoFileList){
+        for(auto fileInfo: videoFileListTmp){
             qDebug() << "fileName" << fileInfo.fileName;
             videoInfoTableUi->appendOneRow(QString(fileInfo.fileName), fileInfo.size,
                                            QString(fileInfo.time), QString::number(fileInfo.cnt));
@@ -296,6 +296,7 @@ void VideoReviewUi::playSingleVideoFile(QString fileName)
     //切换到视频播放的界面
     videoPlayBtnClickedSlot();
     videoPlayUi->setVideoPlayStatus(true);
+    videoPlayUi->setVideoPlayMode(VideoPlayUi::PlayMode::singleFilePlay);
 
     qDebug() << "area: " << videoPlayUi->videoPlayShowArea();
 
@@ -307,6 +308,15 @@ void VideoReviewUi::playSingleVideoFile(QString fileName)
     zkCarDevEngine::instance()->zkStartMediaPlayer(2, &rect);
 
     zkCarDevEngine::instance()->zkPlayMedia(fileName.toUtf8().data());
+}
+
+//播放多文件
+void VideoReviewUi::playMultVideoFiles()
+{
+    if(bottomFrameStackedLayout->currentWidget() == videoPlayUi){
+        zkCarDevEngine::instance()->zkPlayMedias(&videoFileList);
+        videoPlayUi->setVideoPlayMode(VideoPlayUi::PlayMode::multFilesPlay);
+    }
 }
 
 //设置全屏播放

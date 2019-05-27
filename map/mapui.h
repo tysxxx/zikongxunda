@@ -7,8 +7,9 @@ class MapUi : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MapUi(QWidget *parent = 0);
+    explicit MapUi(QRect rect, QWidget *parent = 0);
 
+    void init();
 signals:
 
 public slots:

@@ -22,6 +22,7 @@
 #include "hisiInterface/hisiinterface.h"
 #include "manager/manager.h"
 #include "videofullscreen.h"
+#include <list>
 
 class VideoReviewUi : public QWidget
 {
@@ -31,6 +32,7 @@ public:
     ~VideoReviewUi();
 
     void init();
+    void playMultVideoFiles();
 signals:
 
 private slots:
@@ -63,7 +65,7 @@ private:
     QPointer<VideoFullScreen> videoFullScreenUi;
 
     QSharedPointer<Manager> manager;
-    QList<FILE_PROPERTY_ST> videoFileList;
+    list<FILE_PROPERTY_ST> videoFileList;
 };
 
 #endif // VIDEOREVIEWUI_H

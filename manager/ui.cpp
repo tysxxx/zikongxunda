@@ -41,10 +41,14 @@ void UI::initUi()
     videoMeetingUi = new VideoMeetingUi(mainUi->getCenterFrame());
     videoMeetingUi->init();
         //@.地图
-    mapUi = new MapUi();
+    mapUi = new MapUi(mainUi->getCenterFrame());
+    mapUi->init();
         //@.视频查询
     videoReviewUi = new VideoReviewUi(mainUi->getCenterFrame());
     videoReviewUi->init();
+        //@.设置
+    settingUi = new SettingUi(mainUi->getCenterFrame());
+    settingUi->init();
 
     mainUi->addCenterWidget(localMonitorUi, MainUi::MainMenuUi::localMonitorUi);
     mainUi->addCenterWidget(intercomUi, MainUi::MainMenuUi::intercomUi);
