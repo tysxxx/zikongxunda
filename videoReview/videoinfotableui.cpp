@@ -79,12 +79,26 @@ void VideoInfoTableUi::appendOneRow(QString fileName, qint32 fileSize, QString s
     setRowCount(rowCount+1);
     setRowHeight(rowCount, 60);
     //文件名
-    item = new QTableWidgetItem(fileName, ctFileName);
+    int index = fileName.lastIndexOf('&');
+    QString file = fileName.mid(index); //获取文件名
+    item = new QTableWidgetItem(file, ctFileName);
     item->setTextAlignment(Qt::AlignCenter);
     setItem(rowCount, 0, item);
 
     //文件大小
-    item = new QTableWidgetItem(QString::number(fileSize), ctFileSize);
+    QString fileSizeString;
+    qreal fileSizeTmp = fileSize;
+    if(fileSize >= 1000*1000){
+        fileSizeTmp /= 1000*1000;
+        fileSizeString = QString::number(fileSizeTmp,'f', 2) + "M";
+    }else if(fileSize >= 1000){
+        fileSizeTmp /=1000;
+        fileSizeString = QString::number(fileSizeTmp,'f', 2) + "KB";
+    }else{
+        fileSizeString = QString::number(fileSize) + "B";
+    }
+
+    item = new QTableWidgetItem(fileSizeString, ctFileSize);
     item->setTextAlignment(Qt::AlignCenter);
     setItem(rowCount, 1, item);
 

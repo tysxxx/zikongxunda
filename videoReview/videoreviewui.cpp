@@ -130,16 +130,19 @@ void VideoReviewUi::init()
     topFrame->setLayout(topVBoxLayout);
 
     //底部
-    videoInfoTableUi = new VideoInfoTableUi(QRect(0, 0, 981, 420));
-    videoInfoTableUi->setFixedSize(1050, 420);
-    videoPlayUi = new VideoPlayUi;
-    videoPlayUi->setFixedWidth(1050);
-    videoPlayUi->init();
-
     bottomFrame = new QFrame;
+    bottomFrame->setFixedWidth(width());
     bottomFrame->setProperty("play", "false");
     bottomFrame->setStyleSheet(".QFrame{background-color: #040b17; padding-left: 70px;} \
                                 .QFrame[play=true]{background-color: transparent;}");
+
+    videoInfoTableUi = new VideoInfoTableUi(QRect(0, 0, 981, 420));
+    videoInfoTableUi->setFixedSize(1050, 420);
+
+    videoPlayUi = new VideoPlayUi;
+    videoPlayUi->setFixedWidth(bottomFrame->width());
+    videoPlayUi->init();
+
     bottomFrameStackedLayout = new QStackedLayout(bottomFrame);
     bottomFrameStackedLayout->setMargin(0);
     bottomFrameStackedLayout->addWidget(videoInfoTableUi);
@@ -147,16 +150,11 @@ void VideoReviewUi::init()
     bottomFrameStackedLayout->setCurrentWidget(videoInfoTableUi);
 
     //总布局
-    QVBoxLayout *mainVBoxLayout = new QVBoxLayout;
+    QVBoxLayout *mainVBoxLayout = new QVBoxLayout(this);
     mainVBoxLayout->setMargin(0);
     mainVBoxLayout->setSpacing(0);
     mainVBoxLayout->addWidget(topFrame);
     mainVBoxLayout->addWidget(bottomFrame);
-
-    //QWidget *mywidget = new QWidget;
-    //QStackedWidget *stackedWidget = new QStackedWidget;
-
-    setLayout(mainVBoxLayout);
 
     //
     manager = Manager::instance();
@@ -298,15 +296,19 @@ void VideoReviewUi::playSingleVideoFile(QString fileName)
     videoPlayUi->setVideoPlayStatus(true);
     videoPlayUi->setVideoPlayMode(VideoPlayUi::PlayMode::singleFilePlay);
 
-    qDebug() << "area: " << videoPlayUi->videoPlayShowArea();
-
     RECT_ST rect;
     rect.s32X = videoPlayUi->videoPlayShowArea().x();
     rect.s32Y = videoPlayUi->videoPlayShowArea().y();
     rect.u32Width = videoPlayUi->videoPlayShowArea().width();
     rect.u32Height = videoPlayUi->videoPlayShowArea().height();
-    zkCarDevEngine::instance()->zkStartMediaPlayer(2, &rect);
 
+    if(rect.s32X%2 !=0 ) rect.s32X--;
+    if(rect.s32Y%2 !=0 ) rect.s32Y--;
+    if(rect.u32Width%2 !=0) rect.u32Width--;
+    if(rect.u32Height%2 !=0) rect.u32Height--;
+
+    qDebug() << "area: " << videoPlayUi->videoPlayShowArea() << QRect(rect.s32X, rect.s32Y, rect.u32Width, rect.u32Height);
+    zkCarDevEngine::instance()->zkStartMediaPlayer(2, &rect);
     zkCarDevEngine::instance()->zkPlayMedia(fileName.toUtf8().data());
 }
 

@@ -16,7 +16,9 @@ void VideoPlayUi::init()
 {
     //视频显示区域
     videoplaying = false;
-    playArea.setRect((width()-598)/2, 0, 598, 320);
+    //playArea.setRect((width()-598)/2, 0, 598, 320);
+    playArea.setRect(226, 0, 598, 320);
+    qDebug() << "width() "<< width() <<"play area" << playArea;
 
     QImage backgroundImage;
     //按键
@@ -89,6 +91,7 @@ void VideoPlayUi::init()
     btnProgressHBoxLayout->addWidget(playProgressBar, Qt::AlignHCenter);
     btnProgressHBoxLayout->addWidget(fullScreenBtn, Qt::AlignHCenter);
 
+    //视频按键操作区域
     QFrame *playToolFrame = new QFrame(this);
     playToolFrame->setStyleSheet(".QFrame{padding: 0px;}");
     playToolFrame->setLayout(btnProgressHBoxLayout);
@@ -99,6 +102,7 @@ void VideoPlayUi::init()
     videoPlayShowAreaWiget = new QWidget(this);
     videoPlayShowAreaWiget->setGeometry(playArea);
     //videoPlayShowAreaWiget->setStyleSheet("background-color: gray;");
+    qDebug() << "videoPlayShowAreaWiget" << videoPlayShowAreaWiget->geometry();
 
     //定时器
     timer = new QTimer;
@@ -135,8 +139,9 @@ QWidget& VideoPlayUi::videoShowAreaWiget()
 //返回视频播放的区域
 QRect VideoPlayUi::videoPlayShowArea()
 {
-    QPoint point(videoPlayShowAreaWiget->x(), videoPlayShowAreaWiget->y());
+    QPoint point(videoPlayShowAreaWiget->rect().x(), videoPlayShowAreaWiget->rect().y());
     point = videoPlayShowAreaWiget->mapToGlobal(point);
+    qDebug() << "point " << point;
     return QRect(point.x(),
                  point.y(),
                  videoPlayShowAreaWiget->width(),
