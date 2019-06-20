@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     intercom/treewidgetitem.cpp \
     map/mapui.cpp \
     videoReview/videofullscreen.cpp \
-    setting/settingui.cpp
+    setting/settingui.cpp \
+    test.cpp
 
 HEADERS  += mainwidget.h \
     network/networkmanager.h \
@@ -65,7 +66,9 @@ HEADERS  += mainwidget.h \
     intercom/treewidgetitem.h \
     map/mapui.h \
     videoReview/videofullscreen.h \
-    setting/settingui.h
+    setting/settingui.h \
+    common/keyborder.h \
+    test.h
 
 
 RESOURCES += \
@@ -81,6 +84,7 @@ equals(QMAKE_CXX, arm-hisiv300-linux-g++) {
 
     DEFINES += HISI_PLATFORM
     DESTDIR = /home/tys/software/nfsboot/
+    system("cp /home/tys/software/zkCar/lib/keyborder /home/tys/software/nfsboot/ -r")
 
     INCLUDEPATH += $$PWD/lib/
 
@@ -119,4 +123,10 @@ equals(QMAKE_CXX, arm-hisiv300-linux-g++) {
 
     INCLUDEPATH += $$PWD/lib/json_hisi/include
     DEPENDPATH += $$PWD/lib/json_hisi/include
+
+    unix:!macx: LIBS += -L$$PWD/lib/keyborder/ -lKeyBorder
+    INCLUDEPATH += $$PWD/lib/keyborder
+    DEPENDPATH += $$PWD/lib/keyborder
  }
+
+

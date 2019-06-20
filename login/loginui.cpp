@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QStyleOption>
 #include <QPainter>
+#include <QApplication>
 
 LoginUi::LoginUi(QWidget *parent)
     :QDialog(parent)
@@ -27,7 +28,9 @@ void LoginUi::init()
     //界面设置
     setWindowModality(Qt::WindowModal);
     setAttribute(Qt::WA_DeleteOnClose);
+    qApp->setAttribute(Qt::AA_DontShowIconsInMenus);
     //setStyleSheet(".QDialog{background-color: white;}");
+    setObjectName("loginUi");
 
     loginTitle = new QLabel(tr("登录"));
     loginTitle->setAlignment(Qt::AlignCenter);
@@ -40,11 +43,13 @@ void LoginUi::init()
     loginUser->setPlaceholderText("请输入账号");
     loginUser->setAlignment(Qt::AlignCenter);
     loginUser->setStyleSheet("font-size: 15px; height: 30px");
+    loginUser->setObjectName("loginUser");
 
     loginPasswd = new QLineEdit;
     loginPasswd->setPlaceholderText("请输入密码");
     loginPasswd->setAlignment(Qt::AlignCenter);
     loginPasswd->setStyleSheet("font-size: 15px; height: 30px");
+    loginPasswd->setObjectName("loginPasswd");
 
     loginBtn = new QPushButton;
     loginBtn->setText("登录");

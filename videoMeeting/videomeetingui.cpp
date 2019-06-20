@@ -104,9 +104,11 @@ void VideoMeetingUi::loadMeetingList(meetingListType &meeting)
     }
 }
 
-//项选择处理
+//项选择处理(选择具体的视频会议)
 void VideoMeetingUi::itemClickedSlot(QListWidgetItem *item)
 {
     ListWidgetItem *myItem = dynamic_cast<ListWidgetItem*>(item);
     qDebug() << "item clicked" << myItem->text() << myItem->itemInfo().id << myItem->itemInfo().groupId;
+
+    NetworkManager::instance()->getMeetingMemberRequest(myItem->itemInfo().id);
 }

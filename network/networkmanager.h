@@ -27,6 +27,7 @@ const QString GROUP_LIST_PART_ADDRESS("/v1/group/index");
 const QString GROUP_CATEGORY_PART_ADDRESS("/v1/group/category/index");
 const QString MEETING_DETAIL_PART_ADDRESS("/v1/meeting/show");
 const QString MEETING_LIST_PART_ADDRESS("/v1/meeting/index");
+const QString MEETING_MEMBER_PART_ADDRESS("/v1/meeting/member/index");
 const QString DEVICE_DETAIL_PART_ADDRESS("/v1/device/show");
 const QString DEVICE_LIST_PART_ADDRESS("/v1/device/index");
 const QString ALARM_DETAIL_PART_ADDRESS("/v1/alarm/index");
@@ -80,10 +81,10 @@ public:
     ~NetworkManager();
 
     static NetworkManager *NetworkManagerInstance;
+    static void destroyInstance();
     void initNetWorkManager();
 public:
     static NetworkManager* instance();
-    void destroy();
     //post请求
     void login(QString name, QString password);
     void logout();
@@ -97,6 +98,7 @@ public:
     void getGroupCategoryListInfoRequest(qint32 id = 0, qint32 page_index = 0, qint32 page_size = 0);
     void getMeetingDetailInfoRequest(qint32 id = 0);
     void getMeetingListInfoRequest(qint32 page_index = 0, qint32 page_size = 0, qint32 group_id = 0, qint32 group_category_id = 0);
+    void getMeetingMemberRequest(qint32 id);
     void getDeviceDetailInfoRequest(qint32 id = 0);
     void getDeviceListInfoRequest(qint32 page_index = 0, qint32 page_size = 0, qint32 group_id = 0, qint32 group_category_id = 0);
     void getAlarmDetailInfoRequest(qint32 id = 0);

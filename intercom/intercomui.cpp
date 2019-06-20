@@ -430,11 +430,11 @@ void IntercomUi::userInteractItemClickedSlot(QTreeWidgetItem *item, int column)
     qDebug() << "child count:" << item->childCount();
     if(item->childCount()){
         if(item->isExpanded())
-        item->setExpanded(false);
+            item->setExpanded(false);
         else
-          item->setExpanded(true);
+            item->setExpanded(true);
 
-        }
+    }
     qDebug() << "tree item" << myItem->text(column);
 }
 

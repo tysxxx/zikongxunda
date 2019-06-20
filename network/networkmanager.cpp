@@ -23,7 +23,7 @@ NetworkManager *NetworkManager::instance()
 }
 
 //销毁实例
-void NetworkManager::destroy()
+void NetworkManager::destroyInstance()
 {
     if(NetworkManagerInstance)
         delete NetworkManagerInstance;
@@ -154,6 +154,15 @@ void NetworkManager::getMeetingListInfoRequest(qint32 page_index, qint32 page_si
             .append(tr("&page_size=%1").arg(page_size))
             .append(tr("&group_id=%1").arg(group_id))
             .append(tr("&group_category_id=%1").arg(group_category_id));*/;
+    httpGet(url);
+}
+
+//查询某一具体会议的所有成员
+void NetworkManager::getMeetingMemberRequest(qint32 id)
+{
+    QUrl url = QString(HTTP_ADDRESS).append(MEETING_MEMBER_PART_ADDRESS).append("?").append(tr("id=%1").arg(id));
+    url = "http://106.14.93.204/api/v1/meeting/member/index?id=213";
+    qDebug() << "member: " << url;
     httpGet(url);
 }
 
@@ -302,7 +311,7 @@ void NetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
     //接收完成
     if(bytesReceived == bytesTotal)
     {
-        //qDebug() << PostGetReplyData;
+        qDebug() << PostGetReplyData; //输出接收的数据
         Json::Reader reader;
         Json::Value root;
 
